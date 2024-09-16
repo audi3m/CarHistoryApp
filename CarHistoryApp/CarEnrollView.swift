@@ -8,31 +8,51 @@
 import SwiftUI
 
 struct CarEnrollView: View {
-    @State private var manufacturer = ""
-    @State private var number = ""
-    @State private var year = ""
-    @State private var fuelType = ""
-    
+    @State private var manufacturer = "현대자동차"
+    @State private var number = "123주1234"
+    @State private var year = "2023"
+    @State private var color = Color.black
+    @State private var fuelType = FuelCategory.gasoline
     
     var body: some View {
         ScrollView {
-            Image("car")
-                .resizable()
-                .scaledToFill()
-                .frame(height: 250)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding()
-            
             VStack {
-                TextField("제조사", text: $manufacturer)
-                TextField("차번호", text: $number)
-                TextField("연식", text: $year)
-                TextField("연료", text: $fuelType)
+                Image("car")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding()
+                
+                VStack {
+                    TextField("제조사", text: $manufacturer)
+                    TextField("차번호", text: $number)
+                    TextField("연식", text: $year)               
+                }
+                .textFieldStyle(.roundedBorder)
+                .padding()
+                
+                VStack {
+                    Picker("연료", selection: $fuelType) {
+                        ForEach(FuelCategory.allCases, id: \.self) { type in
+                            Text(type.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    
+                    ColorPicker("차량 색상", selection: $color)
+                }
+                .padding()
             }
-            .textFieldStyle(.roundedBorder)
-            
-            
         }
+    }
+}
+
+extension CarEnrollView {
+    enum FuelCategory: String, CaseIterable {
+        case gasoline = "휘발유"
+        case diesel = "경유"
+        case electric = "전기"
+        case hydrogen = "수소"
     }
 }
 

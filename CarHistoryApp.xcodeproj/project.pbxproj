@@ -14,6 +14,11 @@
 		D408C4682C90832A001464E7 /* PlaceMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4672C90832A001464E7 /* PlaceMapView.swift */; };
 		D408C46A2C908740001464E7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4692C908740001464E7 /* HomeView.swift */; };
 		D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C46B2C9087BF001464E7 /* CarEnrollView.swift */; };
+		D408C4DE2C97142F001464E7 /* NewHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4DD2C97142F001464E7 /* NewHistoryView.swift */; };
+		D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4DF2C971A1C001464E7 /* SettingsView.swift */; };
+		D408C4E22C971A97001464E7 /* MonthlyStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E12C971A97001464E7 /* MonthlyStatisticsView.swift */; };
+		D408C4E42C971AAA001464E7 /* CarRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarRepository.swift */; };
+		D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +30,11 @@
 		D408C4672C90832A001464E7 /* PlaceMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMapView.swift; sourceTree = "<group>"; };
 		D408C4692C908740001464E7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D408C46B2C9087BF001464E7 /* CarEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollView.swift; sourceTree = "<group>"; };
+		D408C4DD2C97142F001464E7 /* NewHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHistoryView.swift; sourceTree = "<group>"; };
+		D408C4DF2C971A1C001464E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D408C4E12C971A97001464E7 /* MonthlyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStatisticsView.swift; sourceTree = "<group>"; };
+		D408C4E32C971AAA001464E7 /* CarRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRepository.swift; sourceTree = "<group>"; };
+		D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +72,10 @@
 				D408C4672C90832A001464E7 /* PlaceMapView.swift */,
 				D408C4692C908740001464E7 /* HomeView.swift */,
 				D408C46B2C9087BF001464E7 /* CarEnrollView.swift */,
+				D408C4E72C97F7BC001464E7 /* NewHistory */,
+				D408C4E52C97E7CE001464E7 /* Settings */,
+				D408C4E62C97F090001464E7 /* Calendar */,
+				D408C4E32C971AAA001464E7 /* CarRepository.swift */,
 				D408C45D2C9081CC001464E7 /* Assets.xcassets */,
 				D408C45F2C9081CC001464E7 /* Preview Content */,
 			);
@@ -74,6 +88,31 @@
 				D408C4602C9081CC001464E7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D408C4E52C97E7CE001464E7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D408C4DF2C971A1C001464E7 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D408C4E62C97F090001464E7 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				D408C4E12C971A97001464E7 /* MonthlyStatisticsView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		D408C4E72C97F7BC001464E7 /* NewHistory */ = {
+			isa = PBXGroup;
+			children = (
+				D408C4DD2C97142F001464E7 /* NewHistoryView.swift */,
+				D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */,
+			);
+			path = NewHistory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,6 +157,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
+				ja,
 			);
 			mainGroup = D408C44D2C9081CA001464E7;
 			productRefGroup = D408C4572C9081CA001464E7 /* Products */;
@@ -146,11 +187,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
+				D408C4E42C971AAA001464E7 /* CarRepository.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
+				D408C4DE2C97142F001464E7 /* NewHistoryView.swift in Sources */,
 				D408C45C2C9081CA001464E7 /* ContentView.swift in Sources */,
+				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
 				D408C4682C90832A001464E7 /* PlaceMapView.swift in Sources */,
+				D408C4E22C971A97001464E7 /* MonthlyStatisticsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
