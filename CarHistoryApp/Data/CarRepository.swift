@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import RealmSwift
+
+final class CarRepository {
+    static let shared = CarRepository()
+    private init() {
+        
+    }
+    
+    
+    
+    
+}

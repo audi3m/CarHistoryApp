@@ -8,5 +8,5 @@
 import Foundation
 
 enum DummyData {
-    static let recent = [
+    static let recent = ""
 }

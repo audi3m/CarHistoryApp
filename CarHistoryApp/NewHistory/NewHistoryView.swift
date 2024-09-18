@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewHistoryView: View {
     
-    @State private var type = HistoryType.refuel
+    @State private var type = HistoryType123.refuel
     @State private var date = Date.now
     @State private var content = ""
     @State private var cost = ""
@@ -32,7 +32,7 @@ struct NewHistoryView: View {
                 
                 VStack {
                     Picker("타입", selection: $type) {
-                        ForEach(HistoryType.allCases, id: \.self) { type in
+                        ForEach(HistoryType123.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
                     }
@@ -105,7 +105,7 @@ struct NewHistoryView: View {
 }
 
 extension NewHistoryView {
-    enum HistoryType: String, CaseIterable {
+    enum HistoryType123: String, CaseIterable {
         case refuel = "주유"
         case maintenance = "정비"
         case carWash = "세차"
