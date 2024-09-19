@@ -8,22 +8,26 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var car = Car.ferrari
+    @State private var car = CarSelection.first
+    @State private var showAddNewSheet = false
+    
     let columns = Array(repeating: GridItem(.flexible()), count: 4)
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 summary()
+                thisMonth()
                 grid()
                 nearby()
                 recent()
                     .padding(.bottom, 100)
             }
+            .background(.appBackground)
             .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
             .overlay(alignment: .bottomTrailing) {
-                addNewHistoryButtom()
+                addNewHistoryButton()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -35,6 +39,9 @@ struct HomeView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $showAddNewSheet) {
+            NewHistorySheet()
+        }
     }
 }
 
@@ -42,7 +49,7 @@ struct HomeView: View {
 extension HomeView {
     private func carSelector() -> some View {
         Menu {
-            ForEach(Car.allCases, id: \.self) { option in
+            ForEach(CarSelection.allCases, id: \.self) { option in
                 Button {
                     car = option
                 } label: {
@@ -52,6 +59,7 @@ extension HomeView {
         } label: {
             HStack {
                 Text(car.rawValue)
+                    .font(.title2)
                     .bold()
                 Image(systemName: "chevron.down")
                     .font(.caption)
@@ -72,22 +80,52 @@ extension HomeView {
 
 // Other Views
 extension HomeView {
-    private func addNewHistoryButtom() -> some View {
+    private func addNewHistoryButton() -> some View {
         Button {
-            
+            showAddNewSheet.toggle()
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
                 .foregroundStyle(.whiteBlack, .blue)
         }
         .padding()
+        .contentShape(Circle())
     }
-    
-    
 }
 
 // Main Views
 extension HomeView {
+    
+    private func thisMonth() -> some View {
+        VStack(alignment: .leading) {
+            
+            Text("이번 달")
+                .font(.title3)
+                .bold()
+            
+            HStack {
+                ForEach(MonthlySummary.allCases, id: \.self) { summary in
+                    NavigationLink {
+                        
+                    } label: {
+                        VStack(spacing: 4) {
+                            Text(summary.value)
+                            Text(summary.rawValue)
+                                .font(.caption)
+                        }
+                        .foregroundStyle(.blackWhite)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(.gray.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    
+                }
+            }
+            
+        }
+        .padding()
+    }
     
     private func grid() -> some View {
         VStack(alignment: .leading) {
@@ -98,30 +136,33 @@ extension HomeView {
             
             LazyVGrid(columns: columns) {
                 ForEach(ShortcutLink.allCases, id: \.self) { link in
-                    VStack(spacing: 4) {
-                        Image(systemName: link.image)
-                        Text(link.rawValue)
-                            .font(.caption)
+                    NavigationLink {
+                        
+                    } label: {
+                        VStack(spacing: 4) {
+                            Image(systemName: link.image)
+                            Text(link.rawValue)
+                                .font(.caption)
+                        }
+                        .foregroundStyle(.blackWhite)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(.gray.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity)
-                    .background(.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-            }
-            
+            } 
         }
         .padding()
-        
     }
     
     private func summary() -> some View {
         VStack {
-            Image("ferrari")
+            Image("tesla")
                 .resizable()
-                .scaledToFill()
-                .frame(width: 300)
-                .padding(.vertical, 30)
+                .scaledToFit()
+                .frame(width: 300, height: 120)
+                .padding(.vertical, 30) 
             
             HStack {
                 Text("123주1234")
@@ -183,6 +224,7 @@ extension HomeView {
                         .font(.caption)
                 }
                 .padding(10)
+                .padding(.vertical, 5)
                 .background(.gray.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
@@ -192,9 +234,10 @@ extension HomeView {
 }
 
 extension HomeView {
-    enum Car: String, CaseIterable {
-        case ferrari = "Ferrari"
-        case asd = "asd"
+    enum CarSelection: String, CaseIterable {
+        case first = "123주1234"
+        case second = "26나5566"
+        case third = "111가1234"
     }
 }
 

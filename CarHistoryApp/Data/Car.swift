@@ -52,5 +52,6 @@ enum FuelType: String, PersistableEnum, CaseIterable {
     case gasoline = "Gasoline"
     case diesel = "Diesel"
     case electric = "Electric"
+    case hydrogen = "Hydrogen"
 }
  

@@ -12,7 +12,7 @@ struct CarEnrollView: View {
     @State private var number = "123주1234"
     @State private var year = "2023"
     @State private var color = Color.black
-    @State private var fuelType = FuelCategory.gasoline
+    @State private var fuelType = FuelType.gasoline
     
     var body: some View {
         ScrollView {
@@ -33,7 +33,7 @@ struct CarEnrollView: View {
                 
                 VStack {
                     Picker("연료", selection: $fuelType) {
-                        ForEach(FuelCategory.allCases, id: \.self) { type in
+                        ForEach(FuelType.allCases, id: \.self) { type in
                             Text(type.rawValue)
                         }
                     }
@@ -44,15 +44,6 @@ struct CarEnrollView: View {
                 .padding()
             }
         }
-    }
-}
-
-extension CarEnrollView {
-    enum FuelCategory: String, CaseIterable {
-        case gasoline = "휘발유"
-        case diesel = "경유"
-        case electric = "전기"
-        case hydrogen = "수소"
     }
 }
 
