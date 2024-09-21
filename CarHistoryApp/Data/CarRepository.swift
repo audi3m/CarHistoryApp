@@ -10,11 +10,20 @@ import RealmSwift
 
 final class CarRepository {
     static let shared = CarRepository()
-    private init() {
-        
+    private init() { }
+    
+    @ObservedResults(Car.self) var cars
+    
+    
+    func addNewCar(car: Car) {
+        $cars.append(car)
     }
     
+    func deleteCar(car: Car) {
+        $cars.remove(car)
+    }
     
-    
-    
+    func printDirectory() {
+        print(Realm.Configuration.defaultConfiguration.fileURL ?? "NOT FOUND")
+    }
 }

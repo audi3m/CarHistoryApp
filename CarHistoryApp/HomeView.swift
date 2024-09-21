@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var car = CarSelection.first
-    @State private var showAddNewSheet = false
+    @State private var showAddNewHistorySheet = false
+    @State private var showAddNewCarSheet = false
     
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
@@ -39,8 +40,13 @@ struct HomeView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showAddNewSheet) {
+        .fullScreenCover(isPresented: $showAddNewHistorySheet) {
             NewHistorySheet()
+                .interactiveDismissDisabled(true)
+        }
+        .sheet(isPresented: $showAddNewCarSheet) {
+            CarEnrollView()
+                .interactiveDismissDisabled(true)
         }
     }
 }
@@ -70,7 +76,7 @@ extension HomeView {
     
     private func side() -> some View {
         Button {
-            
+            showAddNewCarSheet = true
         } label: {
             Image(systemName: "line.3.horizontal")
                 .foregroundStyle(.blackWhite)
@@ -82,7 +88,7 @@ extension HomeView {
 extension HomeView {
     private func addNewHistoryButton() -> some View {
         Button {
-            showAddNewSheet.toggle()
+            showAddNewHistorySheet.toggle()
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
@@ -98,13 +104,14 @@ extension HomeView {
     
     private func carProfile() -> some View {
         VStack {
-            Image("car")
+            Image("ferrari")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 120)
-                .padding(20)
+                .frame(height: 150)
+//                .background(.gray.opacity(0.3))
+                .padding(.horizontal)
         }
-        .padding()
+        .padding([.top, .horizontal])
     }
     
     private func monthlySummary() -> some View {
@@ -145,6 +152,10 @@ extension HomeView {
                         .padding(.vertical, 12)
                         .frame(maxWidth: .infinity)
                         .background(
+//                            .background
+//                                .shadow(.drop(color: .gray.opacity(0.3), radius: 2)),
+//                            in: .rect(cornerRadius: 10)
+                            
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(.gray.opacity(0.15))
                         )
@@ -211,23 +222,31 @@ extension HomeView {
             }
             .padding(.horizontal, 6)
             
-            ForEach(DummyData.recent) { recent in
+            ForEach(DummyData.recent.prefix(5)) { recent in
                 HStack {
                     RoundedRectangle(cornerRadius: 8)
-                        .frame(width: 2, height: 30)
+                        .frame(width: 3, height: 35)
                         .foregroundStyle(recent.color)
 
                     VStack {
                         Image(systemName: recent.image)
                     }
-                    Text(recent.description)
-                        .font(.footnote)
+                    
+                    VStack(alignment: .leading) {
+                        Text(recent.description)
+                            .font(.footnote)
+                        Text(recent.subDesc)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    
                     Spacer()
                     Text(recent.date)
                         .font(.caption)
                 }
                 .padding(10)
                 .padding(.vertical, 5)
+                .frame(height: 60)
                 .background(.gray.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
