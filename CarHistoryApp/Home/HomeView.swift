@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var car = CarSelection.first
+    @State private var selectedCar: Car?
     @State private var showAddNewHistorySheet = false
     @State private var showAddNewCarSheet = false
     
@@ -40,13 +40,19 @@ struct HomeView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showAddNewHistorySheet) {
-            NewHistorySheet()
+        .onAppear {
+            // 선택된 차로 설정
+        }
+        .sheet(isPresented: $showAddNewHistorySheet) {
+            NewHistorySheet(car: selectedCar ?? Car())
                 .interactiveDismissDisabled(true)
         }
         .sheet(isPresented: $showAddNewCarSheet) {
             CarEnrollView()
                 .interactiveDismissDisabled(true)
+        }
+        .onAppear {
+            print("Home Appeared")
         }
     }
 }
@@ -55,16 +61,16 @@ struct HomeView: View {
 extension HomeView {
     private func carSelector() -> some View {
         Menu {
-            ForEach(CarSelection.allCases, id: \.self) { option in
+            ForEach(CarRepository.shared.cars) { car in
                 Button {
-                    car = option
+                    selectedCar = car
                 } label: {
-                    Text(option.rawValue)
+                    Text(car.plateNumber)
                 }
             }
         } label: {
             HStack {
-                Text(car.rawValue)
+                Text(selectedCar?.plateNumber ?? "없음")
                     .font(.title2)
                     .bold()
                 Image(systemName: "chevron.down")
@@ -108,10 +114,10 @@ extension HomeView {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 150)
-//                .background(.gray.opacity(0.3))
                 .padding(.horizontal)
         }
-        .padding([.top, .horizontal])
+        .padding(.top, 30)
+        .padding(.horizontal)
     }
     
     private func monthlySummary() -> some View {
@@ -152,10 +158,6 @@ extension HomeView {
                         .padding(.vertical, 12)
                         .frame(maxWidth: .infinity)
                         .background(
-//                            .background
-//                                .shadow(.drop(color: .gray.opacity(0.3), radius: 2)),
-//                            in: .rect(cornerRadius: 10)
-                            
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(.gray.opacity(0.15))
                         )
@@ -228,9 +230,8 @@ extension HomeView {
                         .frame(width: 3, height: 35)
                         .foregroundStyle(recent.color)
 
-                    VStack {
-                        Image(systemName: recent.image)
-                    }
+                    Image(systemName: recent.image)
+                        .padding(.horizontal, 2)
                     
                     VStack(alignment: .leading) {
                         Text(recent.description)

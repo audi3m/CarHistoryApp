@@ -10,6 +10,33 @@ import SwiftUI
 struct CustomTextField: View {
     let image: String
     let placeHolder: String
+    var axis = Axis.horizontal
+    
+    @FocusState private var focusField
+    
+    @Binding var text: String
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: image)
+                .frame(width: 21)
+            
+            TextField(placeHolder, text: $text) 
+                .focused($focusField)
+                .onSubmit {
+                    focusField = false
+                }
+        }
+    }
+}
+
+struct CustomTextField2: View {
+    let image: String
+    let placeHolder: String
+    var axis = Axis.horizontal
+    
+    @FocusState private var focusField
+    
     @Binding var text: String
     
     var body: some View {
@@ -23,7 +50,12 @@ struct CustomTextField: View {
                 .background(.gray.opacity(0.2))
                 .clipShape(Circle())
             
-            TextField(placeHolder, text: $text, axis: .vertical)
+            TextField(placeHolder, text: $text, axis: axis)
+                .lineLimit(1)
+                .focused($focusField)
+                .onSubmit {
+                    focusField = false
+                }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .frame(minHeight: 40)
@@ -32,6 +64,8 @@ struct CustomTextField: View {
         }
     }
 }
+
+
 
 #Preview {
     CustomTextField(image: "car", placeHolder: "테스트", text: .constant("ㅁㄴㅇ"))
