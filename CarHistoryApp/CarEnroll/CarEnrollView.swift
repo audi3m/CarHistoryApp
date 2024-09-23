@@ -17,120 +17,125 @@ struct CarEnrollView: View {
     @State private var carColor = Color.black
     @State private var fuelType = FuelType.gasoline
     
-    @State private var showPicker = false
+    @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
+    
+    @State private var carAlreadyExists = false
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
-                    Button {
-                        showPicker = true
-                    } label: {
-                        if let selectedImage {
-                            Image(uiImage: selectedImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 300, height: 150)
-                        } else {
-                            VStack(spacing: 10){
-                                Image(systemName: "car.side")
-                                    .font(.system(size: 60, weight: .ultraLight))
-                                    .foregroundStyle(.secondary)
-                                Text("이미지를 선택하려면 탭하세요")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .foregroundStyle(.blackWhite)
-                            .frame(width: 300, height: 150)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(lineWidth: 0.3)
-                                    .foregroundStyle(.blackWhite)
-                            )
-                        }
-                    }
-                    .padding(20)
-                    
-                    VStack(spacing: 12) {
-                        CustomTextField(image: "licenseplate", placeHolder: "[필수] 차번호", text: $plateNumber)
-                        CustomTextField(image: "building", placeHolder: "[선택] 제조사", text: $manufacturer)
-                        CustomTextField(image: "calendar", placeHolder: "[선택] 연식", text: $year)
-                    }
-                    .padding()
-                    
-                    HStack {
-                        ForEach(FuelType.allCases, id: \.self) { type in
-                            VStack {
-                                Text(type.rawValue)
-                                    .font(.caption)
-                                    .foregroundStyle(fuelType == type ? .white : .blackWhite)
-                                    .fontWeight(.semibold)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 10)
-                                    .background(
-                                        fuelType == type ? .red : .gray.opacity(0.15)
-                                    )
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .onTapGesture {
-                                        withAnimation(.bouncy(duration: 0.2)) {
-                                            fuelType = type
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                    .padding()
-                }
+            List {
+                imagePickerSection()
+                fuelTypeSelectSection()
+                carDetailSection()
+                
             }
-            .navigationTitle("자동차 등록")
+            .navigationTitle("Car Enroll")
             .navigationBarTitleDisplayMode(.inline)
+            .scrollDismissesKeyboard(.immediately)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("닫기") {
+                    Button("Cancel") {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("완료") {
+                    Button("Done") {
                         addNewCar()
-                        dismiss()
                     }
+                    .disabled(plateNumber.isEmpty)
                 }
             }
         }
-        .sheet(isPresented: $showPicker) {
+        .sheet(isPresented: $showImagePicker) {
             ImagePicker(selectedImage: $selectedImage)
                 .interactiveDismissDisabled(true)
+        }
+        .alert("This number is already registered", isPresented: $carAlreadyExists) {
+            
         }
     }
 }
 
-//final class Car: Object, ObjectKeyIdentifiable {
-//    @Persisted(primaryKey: true) var id: ObjectId
-//    @Persisted var manufacturer = ""
-//    @Persisted var name = ""
-//    @Persisted var plateNumber = ""
-//    @Persisted var fuelType = FuelType.gasoline
-//    @Persisted var color = "" // 나중에
-//    
-//    @Persisted var historyList = RealmSwift.List<CarHistory>()
-//    
-//    
-//}
-
+extension CarEnrollView {
+    
+    private func imagePickerSection() -> some View {
+        Section {
+            Button {
+                showImagePicker = true
+            } label: {
+                if let selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 150)
+                } else {
+                    VStack(spacing: 10){
+                        Image(systemName: "car.side")
+                            .font(.system(size: 60, weight: .ultraLight))
+                            .foregroundStyle(.secondary)
+                        Text("Tap to select an image")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    .foregroundStyle(.blackWhite)
+                    .frame(width: 300, height: 150)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(lineWidth: 0.3)
+                            .foregroundStyle(.blackWhite)
+                    )
+                }
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .listRowBackground(Color.clear)
+        
+    }
+    
+    private func fuelTypeSelectSection() -> some View {
+        Section {
+            Picker("", systemImage: fuelType.image, selection: $fuelType) {
+                ForEach(FuelType.allCases, id: \.self) { type in
+                    Text(type.rawValue)
+                }
+            }
+            .foregroundStyle(.blackWhite.opacity(0.7))
+            .tint(.blackWhite)
+        }
+    }
+    
+    private func carDetailSection() -> some View {
+        Section {
+            CustomTextField(image: "licenseplate", placeHolder: "Plate Number *", keyboardType: .default, text: $plateNumber)
+            CustomTextField(image: "building.2", placeHolder: "Manufacturer", text: $manufacturer)
+            CustomTextField(image: "car.fill", placeHolder: "Name", text: $manufacturer)
+            CustomTextField(image: "calendar", placeHolder: "Model Year", keyboardType: .numberPad, text: $year)
+        } footer: {
+            HStack {
+                Spacer()
+                Text("* Required")
+            }
+        }
+    }
+}
 
 extension CarEnrollView {
     private func addNewCar() {
+        let carNumbers = CarRepository.shared.cars.map { $0.plateNumber }
+        guard !carNumbers.contains(plateNumber) else { 
+            carAlreadyExists = true
+            return
+        }
+        
         let newCar = Car()
         newCar.plateNumber = plateNumber
         newCar.manufacturer = manufacturer
         newCar.fuelType = fuelType
         
-        CarRepository.shared.printDirectory()
-        
         CarRepository.shared.addNewCar(car: newCar)
+        dismiss()
     }
 }
 

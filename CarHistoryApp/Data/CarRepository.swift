@@ -12,8 +12,10 @@ final class CarRepository {
     static let shared = CarRepository()
     private init() { }
     
-    @ObservedResults(Car.self) var cars
+    let realm = try! Realm()
     
+    @ObservedResults(Car.self) var cars
+    @ObservedResults(CarHistory.self) var historyList
     
     func addNewCar(car: Car) {
         $cars.append(car)
@@ -26,4 +28,11 @@ final class CarRepository {
     func printDirectory() {
         print(Realm.Configuration.defaultConfiguration.fileURL ?? "NOT FOUND")
     }
+    
+    func addNewHistory(history: CarHistory, to car: Car) {
+//        history.car = car
+        $historyList.append(history)
+        
+    }
+    
 }

@@ -11,20 +11,29 @@ struct CustomTextField: View {
     let image: String
     let placeHolder: String
     var axis = Axis.horizontal
+    var keyboardType = UIKeyboardType.decimalPad
+    var doLineBreak = false
     
     @FocusState private var focusField
     
     @Binding var text: String
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(alignment: .top, spacing: 16) {
             Image(systemName: image)
-                .frame(width: 21)
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(.blackWhite.opacity(0.7))
+                .frame(width: 23, height: 23)
             
-            TextField(placeHolder, text: $text) 
+            TextField(placeHolder, text: $text, axis: axis)
+                .keyboardType(keyboardType)
+                .frame(minHeight: 23)
                 .focused($focusField)
                 .onSubmit {
-                    focusField = false
+                    if !doLineBreak {
+                        focusField = false
+                    }
                 }
         }
     }
@@ -64,9 +73,4 @@ struct CustomTextField2: View {
         }
     }
 }
-
-
-
-#Preview {
-    CustomTextField(image: "car", placeHolder: "테스트", text: .constant("ㅁㄴㅇ"))
-}
+ 

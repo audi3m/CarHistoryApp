@@ -8,9 +8,9 @@
 import SwiftUI
 
 enum MonthlySummary: String, CaseIterable {
-    case mileage = "주행거리"
-    case fuelCost = "주유금액"
-    case carWash = "마지막세차"
+    case mileage = "Mileage"
+    case fuelCost = "Fuel Cost"
+    case carWash = "Last wash"
     
     var value: String {
         switch self {

@@ -2,48 +2,37 @@
 //  NewHistorySheet.swift
 //  CarHistoryApp
 //
-//  Created by J Oh on 9/15/24.
+//  Created by J Oh on 9/22/24.
 //
 
 import SwiftUI
+import CoreLocation
 
 struct NewHistorySheet: View {
-    
     @Environment(\.dismiss) private var dismiss
     
-    @State private var type = HistoryType.refuel
-    @State private var date = Date.now
-    @State private var contentText = ""
-    @State private var cost = ""
+    let car: Car
+    
+    @State private var historyType = HistoryType.refuel
+    @State private var date = Date()
+    @State private var mileage = ""
+    @State private var totalCost = ""
     @State private var price = ""
-    @State private var volume = ""
+    @State private var refuelAmount = ""
+    @State private var notes = ""
+    @State private var coordinates = CLLocationCoordinate2D(latitude: 100, longitude: 40)
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                imagePicker()
-                 
-                // 내용
-                content()
-                
-                DatePicker("날짜", selection: $date, displayedComponents: .date)
-                    .padding(.horizontal)
-                
-                Button {
-                    
-                } label: {
-                    Text("위치")
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 44)
-                        .background(.gray.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                }
-                .padding(.horizontal)
-                
+            List {
+                historyTypePickerSection()
+                contentSection()
+                dateSection()
+                locationSection()
             }
             .navigationTitle("New History")
             .navigationBarTitleDisplayMode(.inline)
-            .scrollDismissesKeyboard(.interactively)
+            .scrollDismissesKeyboard(.immediately)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -52,87 +41,104 @@ struct NewHistorySheet: View {
                         Text("Cancel")
                     }
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        addNewHistory()
+                        dismiss()
+                    } label: {
+                        Text("Save")
+                    }
+                }
             }
         }
     }
 }
 
-// Image picker
+// 함수
 extension NewHistorySheet {
+    private func addNewHistory() {
+        let history = CarHistory()
+        history.historyType = historyType
+        history.date = date
+        history.mileage = mileage
+        history.totalCost = totalCost
+        history.price = price
+        history.refuelAmount = refuelAmount
+        history.notes = notes
+        history.latitude = coordinates.latitude
+        history.longitude = coordinates.longitude
+        
+        CarRepository.shared.addNewHistory(history: history, to: car)
+    }
+}
+
+
+// SubViews
+extension NewHistorySheet {
+    
+    private func historyTypePickerSection() -> some View {
+        
+        Section("Type") {
+            Picker("", systemImage: historyType.image, selection: $historyType) {
+                ForEach(HistoryType.allCases, id: \.self) { type in
+                    Text(type.rawValue)
+                }
+            }
+            .foregroundStyle(.blackWhite.opacity(0.7))
+            .tint(.blackWhite)
+        }
+    }
+     
+    private func contentSection() -> some View {
+        Section {
+            CustomTextField(image: "road.lanes", placeHolder: "Mileage", text: $mileage)
+            CustomTextField(image: "creditcard", placeHolder: "Cost", text: $totalCost)
+            if historyType == .refuel {
+                CustomTextField(image: "drop.halffull", placeHolder: "Amount", text: $refuelAmount)
+//                if !totalCost.isEmpty && !refuelAmount.isEmpty {
+//                    HStack(spacing: 16) {
+//                        Image(systemName: "tag")
+//                        Text("\(Double(totalCost)! / Double(refuelAmount)! ,specifier: "%.2f")")
+//                    }
+//                }
+            }
+            if !(historyType == .refuel) {
+                CustomTextField(image: "note.text", placeHolder: "Notes", axis: .vertical, keyboardType: .default, text: $notes)
+                    .lineLimit(5...)
+            }
+        }
+    }
+    
+    private func dateSection() -> some View {
+        Section {
+            DisclosureGroup(DateHelper.shared.shortFormat(date: date)) {
+                DatePicker("날짜", selection: $date, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+            }
+        }
+    }
+    
+    private func locationSection() -> some View {
+        Section {
+            NavigationLink {
+                LocationSelectView(coordinates: $coordinates)
+            } label: {
+                Text("Location")
+            }
+        }
+    }
+    
     private func imagePicker() -> some View {
         Image("car")
             .resizable()
             .scaledToFit()
             .clipShape(RoundedRectangle(cornerRadius: 4))
             .padding()
-    }
-}
-
-
-// 내용
-extension NewHistorySheet {
-    
-    private func content() -> some View {
-        VStack {
-            Picker("타입", selection: $type) {
-                ForEach(HistoryType.allCases, id: \.self) { type in
-                    Text(type.rawValue)
-                }
-            }
-            .pickerStyle(.segmented)
-            
-            switch type {
-            case .refuel:
-                refuelContent()
-            case .maintenance:
-                maintenanceContent()
-            case .carWash:
-                carWashContent()
-            case .etc:
-                othersContent()
-            }
-            
-        }
-        .padding(.horizontal)
-    }
-    
-    private func refuelContent() -> some View {
-        VStack(spacing: 12) {
-            CustomTextField(image: "dollarsign", placeHolder: "비용", text: $cost)
-            CustomTextField(image: "tag", placeHolder: "가격", text: $price)
-            CustomTextField(image: "drop.halffull", placeHolder: "양", text: $volume)
-        }
-        .keyboardType(.numberPad)
-        .padding(.vertical)
-    }
-    
-    private func maintenanceContent() -> some View {
-        VStack(spacing: 12) {
-            CustomTextField(image: "dollarsign", placeHolder: "비용", text: $cost)
-            CustomTextField(image: "text.quote", placeHolder: "내용", text: $contentText)
-        }
-        .padding(.vertical)
-    }
-    
-    private func carWashContent() -> some View {
-        VStack(spacing: 12) {
-            CustomTextField(image: "dollarsign", placeHolder: "비용", text: $cost)
-            CustomTextField(image: "text.quote", placeHolder: "내용", text: $contentText)
-                .lineLimit(5...)
-        }
-        .padding(.vertical)
-    }
-    
-    private func othersContent() -> some View {
-        VStack(spacing: 12) {
-            CustomTextField(image: "dollarsign", placeHolder: "비용", text: $cost)
-            CustomTextField(image: "text.quote", placeHolder: "내용", text: $contentText)
-                .lineLimit(5...)
-        }
-        .padding(.vertical)
+        
     }
 }
 
 #Preview {
-    NewHistorySheet()
+    NewHistorySheet(car: Car())
 }

@@ -8,10 +8,11 @@
 import SwiftUI
 
 enum Nearby: String, CaseIterable {
-    case parking = "주차장"
-    case gasStation = "주유소"
-    case repairShop = "정비소"
-    case carWash = "세차장"
+    case parking = "Parking"
+    case gasStation = "Gas & Ev"
+//    case evCharge = "EV 충전소"
+    case repairShop = "Repair"
+    case carWash = "Wash"
     
     var color: Color {
         switch self {
@@ -19,6 +20,8 @@ enum Nearby: String, CaseIterable {
             return Color.brown.opacity(0.25)
         case .gasStation:
             return Color.red.opacity(0.25)
+//        case .evCharge:
+//            return Color.yellow.opacity(0.25)
         case .repairShop:
             return Color.green.opacity(0.25)
         case .carWash:
@@ -32,6 +35,8 @@ enum Nearby: String, CaseIterable {
             return "parkingsign"
         case .gasStation:
             return "fuelpump.fill"
+//        case .evCharge:
+//            return "ev.charger.fill"
         case .repairShop:
             return "wrench.and.screwdriver"
         case .carWash:

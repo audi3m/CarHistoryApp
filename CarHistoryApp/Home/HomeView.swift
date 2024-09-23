@@ -12,8 +12,8 @@ struct HomeView: View {
     @State private var showAddNewHistorySheet = false
     @State private var showAddNewCarSheet = false
     
-    let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
+    let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     
     var body: some View {
         NavigationStack {
@@ -42,41 +42,55 @@ struct HomeView: View {
         }
         .onAppear {
             // 선택된 차로 설정
+            selectedCar = CarRepository.shared.cars.first
+            CarRepository.shared.printDirectory()
+            
         }
         .sheet(isPresented: $showAddNewHistorySheet) {
-            NewHistorySheet(car: selectedCar ?? Car())
-                .interactiveDismissDisabled(true)
+            if let selectedCar {
+                NewHistorySheet(car: selectedCar)
+                    .interactiveDismissDisabled(true)
+            }
         }
         .sheet(isPresented: $showAddNewCarSheet) {
             CarEnrollView()
                 .interactiveDismissDisabled(true)
-        }
-        .onAppear {
-            print("Home Appeared")
         }
     }
 }
 
 // Nav
 extension HomeView {
+    @ViewBuilder
     private func carSelector() -> some View {
-        Menu {
-            ForEach(CarRepository.shared.cars) { car in
-                Button {
-                    selectedCar = car
-                } label: {
-                    Text(car.plateNumber)
+        if CarRepository.shared.cars.isEmpty {
+            Button {
+                showAddNewCarSheet = true
+            } label: {
+                HStack {
+                    Text("Car Enroll")
+                    Image(systemName: "plus.circle")
                 }
             }
-        } label: {
-            HStack {
-                Text(selectedCar?.plateNumber ?? "없음")
-                    .font(.title2)
-                    .bold()
-                Image(systemName: "chevron.down")
-                    .font(.caption)
+        } else {
+            Menu {
+                ForEach(CarRepository.shared.cars) { car in
+                    Button {
+                        selectedCar = car
+                    } label: {
+                        Text(car.plateNumber)
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(selectedCar?.plateNumber ?? "None")
+                        .font(.title2)
+                        .bold()
+                    Image(systemName: "chevron.down")
+                        .font(.caption)
+                }
+                .foregroundStyle(.blackWhite)
             }
-            .foregroundStyle(.blackWhite)
         }
     }
     
@@ -86,6 +100,7 @@ extension HomeView {
         } label: {
             Image(systemName: "line.3.horizontal")
                 .foregroundStyle(.blackWhite)
+                .scaleEffect(y: 1.3)
         }
     }
 }
@@ -108,31 +123,18 @@ extension HomeView {
 // Main Views
 extension HomeView {
     
-    private func carProfile() -> some View {
-        VStack {
-            Image("ferrari")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 150)
-                .padding(.horizontal)
-        }
-        .padding(.top, 30)
-        .padding(.horizontal)
-    }
-    
     private func monthlySummary() -> some View {
         VStack(alignment: .leading) {
-            
             HStack {
-                Text("9 월 요약")
+                Text("Sep. Summary")
                     .font(.title3.bold())
                 
                 Spacer()
                 
-                Button {
+                NavigationLink {
                     
                 } label: {
-                    Text("전체")
+                    Text("All")
                         .font(.footnote)
                     Image(systemName: "chevron.right")
                         .font(.footnote)
@@ -162,17 +164,15 @@ extension HomeView {
                                 .fill(.gray.opacity(0.15))
                         )
                     }
-                    
                 }
             }
-            
         }
         .padding()
     }
     
     private func nearby() -> some View {
         VStack(alignment: .leading) {
-            Text("주변 검색")
+            Text("Nearby")
                 .font(.title3.bold())
                 .padding(.leading, 6)
             
@@ -184,12 +184,16 @@ extension HomeView {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
                                 .frame(height: 17)
+                            
                             Text(nearby.rawValue)
+                                .lineLimit(1)
                                 .font(.caption)
                                 .fontWeight(.semibold)
+                                .minimumScaleFactor(0.8)
                         }
                         .foregroundStyle(.blackWhite)
-                        .padding(.vertical, 12)
+                        .padding(.top, 12)
+                        .padding(.bottom, 10)
                         .frame(maxWidth: .infinity)
                         .background(
                             RoundedRectangle(cornerRadius: 10)
@@ -207,7 +211,7 @@ extension HomeView {
         VStack(alignment: .leading) {
             
             HStack {
-                Text("최근")
+                Text("Recent")
                     .font(.title3.bold())
                 
                 Spacer()
@@ -215,7 +219,7 @@ extension HomeView {
                 Button {
                     
                 } label: {
-                    Text("전체")
+                    Text("All")
                         .font(.footnote)
                     Image(systemName: "chevron.right")
                         .font(.footnote)
@@ -255,34 +259,18 @@ extension HomeView {
         .padding()
     }
     
-    private func grid() -> some View {
-        VStack(alignment: .leading) {
-            
-            Text("섹션 제목")
-                .font(.title3.bold())
-                .padding(.leading, 4)
-            
-            LazyVGrid(columns: columns4) {
-                ForEach(ShortcutLink.allCases, id: \.self) { link in
-                    NavigationLink {
-                        
-                    } label: {
-                        VStack(spacing: 4) {
-                            Image(systemName: link.image)
-                            Text(link.rawValue)
-                                .font(.caption)
-                        }
-                        .foregroundStyle(.blackWhite)
-                        .padding(.vertical, 12)
-                        .frame(maxWidth: .infinity)
-                        .background(.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                }
-            }
+    private func carProfile() -> some View {
+        VStack {
+            Image("ferrari")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 150)
+                .padding(.horizontal)
         }
-        .padding()
+        .padding(.top, 30)
+        .padding(.horizontal)
     }
+     
 }
 
 extension HomeView {

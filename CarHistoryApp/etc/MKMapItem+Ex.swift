@@ -5,4 +5,10 @@
 //  Created by J Oh on 9/21/24.
 //
 
-import Foundation
+import MapKit
+
+extension MKMapItem: Identifiable {
+    public var id: UUID {
+        return UUID()
+    }
+}
