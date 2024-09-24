@@ -13,7 +13,7 @@
 		D408C46A2C908740001464E7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4692C908740001464E7 /* HomeView.swift */; };
 		D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C46B2C9087BF001464E7 /* CarEnrollView.swift */; };
 		D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4DF2C971A1C001464E7 /* SettingsView.swift */; };
-		D408C4E42C971AAA001464E7 /* CarRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarRepository.swift */; };
+		D408C4E42C971AAA001464E7 /* CarEnrollManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */; };
 		D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */; };
 		D42345112C99A9520019F434 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345102C99A9520019F434 /* DummyData.swift */; };
 		D42345182C99AB5E0019F434 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345172C99AB5E0019F434 /* Car.swift */; };
@@ -34,6 +34,7 @@
 		D45173072CA04CB9003A1E8C /* NewHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewHistorySheet.swift */; };
 		D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* Date+Ex.swift */; };
 		D451730C2CA1B0EE003A1E8C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D451730B2CA1B0EE003A1E8C /* LocationManager.swift */; };
+		D4E1F5F92CA2E821003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5F82CA2E821003169A6 /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,7 +59,7 @@
 		D408C4692C908740001464E7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D408C46B2C9087BF001464E7 /* CarEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollView.swift; sourceTree = "<group>"; };
 		D408C4DF2C971A1C001464E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		D408C4E32C971AAA001464E7 /* CarRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRepository.swift; sourceTree = "<group>"; };
+		D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollManager.swift; sourceTree = "<group>"; };
 		D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		D42345102C99A9520019F434 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		D42345172C99AB5E0019F434 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -78,6 +79,7 @@
 		D45173082CA0519D003A1E8C /* Date+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ex.swift"; sourceTree = "<group>"; };
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D451730B2CA1B0EE003A1E8C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D4E1F5F82CA2E821003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +116,9 @@
 				D451730A2CA110F8003A1E8C /* Info.plist */,
 				D408C4592C9081CA001464E7 /* CarHistoryAppApp.swift */,
 				D45173012C9FEF2E003A1E8C /* OnboardingView.swift */,
-				D45173032CA02CAF003A1E8C /* Home */,
+				D4E1F5F82CA2E821003169A6 /* TestView.swift */,
 				D42345142C99A97D0019F434 /* Data */,
+				D45173032CA02CAF003A1E8C /* Home */,
 				D45172F22C9DAABB003A1E8C /* Summary */,
 				D45172EF2C9D999A003A1E8C /* CarEnroll */,
 				D408C4E72C97F7BC001464E7 /* NewHistory */,
@@ -157,7 +160,7 @@
 			children = (
 				D42345172C99AB5E0019F434 /* Car.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
-				D408C4E32C971AAA001464E7 /* CarRepository.swift */,
+				D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */,
 				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
 				D451730B2CA1B0EE003A1E8C /* LocationManager.swift */,
 			);
@@ -289,13 +292,14 @@
 				D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */,
 				D42345202C9AF6400019F434 /* Nearby.swift in Sources */,
 				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
-				D408C4E42C971AAA001464E7 /* CarRepository.swift in Sources */,
+				D408C4E42C971AAA001464E7 /* CarEnrollManager.swift in Sources */,
 				D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */,
 				D451730C2CA1B0EE003A1E8C /* LocationManager.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
 				D45172FC2C9DB228003A1E8C /* NearbyMapView.swift in Sources */,
 				D45172F62C9DAAEB003A1E8C /* FuelCostView.swift in Sources */,
 				D45172F42C9DAACF003A1E8C /* MileageView.swift in Sources */,
+				D4E1F5F92CA2E821003169A6 /* TestView.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
 				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
@@ -445,6 +449,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -481,6 +486,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

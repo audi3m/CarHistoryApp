@@ -31,19 +31,14 @@ struct HomeView: View {
                 addNewHistoryButton()
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    carSelector()
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    side()
-                }
+                ToolbarItem(placement: .topBarLeading) { carSelector() }
+                ToolbarItem(placement: .topBarTrailing) { side() }
             }
         }
         .onAppear {
             // 선택된 차로 설정
-            selectedCar = CarRepository.shared.cars.first
-            CarRepository.shared.printDirectory()
+            selectedCar = CarEnrollManager.shared.cars.first
+            CarEnrollManager.shared.printDirectory()
             
         }
         .sheet(isPresented: $showAddNewHistorySheet) {
@@ -63,7 +58,7 @@ struct HomeView: View {
 extension HomeView {
     @ViewBuilder
     private func carSelector() -> some View {
-        if CarRepository.shared.cars.isEmpty {
+        if CarEnrollManager.shared.cars.isEmpty {
             Button {
                 showAddNewCarSheet = true
             } label: {
@@ -74,7 +69,7 @@ extension HomeView {
             }
         } else {
             Menu {
-                ForEach(CarRepository.shared.cars) { car in
+                ForEach(CarEnrollManager.shared.cars) { car in
                     Button {
                         selectedCar = car
                     } label: {
@@ -109,7 +104,9 @@ extension HomeView {
 extension HomeView {
     private func addNewHistoryButton() -> some View {
         Button {
-            showAddNewHistorySheet.toggle()
+            if selectedCar != nil {
+                showAddNewHistorySheet = true
+            }
         } label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
@@ -127,7 +124,7 @@ extension HomeView {
         VStack(alignment: .leading) {
             HStack {
                 Text("Sep. Summary")
-                    .font(.title3.bold())
+                    .font(.system(size: 19, weight: .bold))
                 
                 Spacer()
                 
@@ -173,13 +170,13 @@ extension HomeView {
     private func nearby() -> some View {
         VStack(alignment: .leading) {
             Text("Nearby")
-                .font(.title3.bold())
-                .padding(.leading, 6)
+                .font(.system(size: 19, weight: .bold))
+                .padding(.horizontal, 6)
             
             LazyVGrid(columns: columns4) {
                 ForEach(Nearby.allCases, id: \.self) { nearby in
                     NavigationLink {
-                        NavigationLazyView(NearbyMapView(place: nearby.rawValue))
+                        NavigationLazyView(NearbyMapView(place: nearby.query))
                     } label: {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
@@ -200,7 +197,6 @@ extension HomeView {
                                 .fill(nearby.color)
                         )
                     }
-                    
                 }
             }
         }
@@ -209,10 +205,9 @@ extension HomeView {
     
     private func recent() -> some View {
         VStack(alignment: .leading) {
-            
             HStack {
                 Text("Recent")
-                    .font(.title3.bold())
+                    .font(.system(size: 19, weight: .bold))
                 
                 Spacer()
                 
@@ -261,11 +256,22 @@ extension HomeView {
     
     private func carProfile() -> some View {
         VStack {
-            Image("ferrari")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 150)
-                .padding(.horizontal)
+            if let selectedCar {
+                if let image = CarEnrollManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                        .frame(height: 150)
+                        .padding(.horizontal)
+                } else {
+                    Image(systemName: "car.side")
+                        .resizable()
+                        .fontWeight(.thin)
+                        .scaledToFit()
+                        .frame(height: 120)
+                }
+            }
         }
         .padding(.top, 30)
         .padding(.horizontal)

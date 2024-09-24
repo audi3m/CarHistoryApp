@@ -5,8 +5,6 @@
 //  Created by J Oh on 9/20/24.
 //
 
-import SwiftUI
-
 /*
  ------------------------
  |                      |
@@ -30,6 +28,9 @@ import SwiftUI
  |                      |
  ------------------------
  */
+
+import SwiftUI
+
 
 struct FuelCostView: View {
     var body: some View {

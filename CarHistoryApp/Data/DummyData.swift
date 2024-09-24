@@ -25,4 +25,23 @@ enum DummyData {
         RecentHistory(type: "주유", description: "HD현대오일뱅크 동작주유소", subDesc: "₩100,000 · 50L", color: .red, date: "9월 18일", image: "fuelpump.fill"),
         RecentHistory(type: "주유", description: "HD현대오일뱅크 동작주유소", subDesc: "110,000원 · 60L", color: .red, date: "9월 23일", image: "fuelpump.fill"),
     ]
+    
+    static let mileage = [
+        Mileage(mileage: 12300, date: 1),
+        Mileage(mileage: 12500, date: 2),
+        Mileage(mileage: 13000, date: 3),
+        Mileage(mileage: 13300, date: 4),
+        Mileage(mileage: 14300, date: 5),
+        Mileage(mileage: 14700, date: 6),
+    ]
+}
+
+struct Mileage: Identifiable {
+    let id = UUID()
+    let mileage: Double
+    let date: Int
+    
+    var month: String {
+        return "\(date)월)"
+    }
 }

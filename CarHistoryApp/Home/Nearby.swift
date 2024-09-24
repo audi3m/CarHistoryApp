@@ -43,4 +43,17 @@ enum Nearby: String, CaseIterable {
             return "bubbles.and.sparkles"
         }
     }
+    
+    var query: String {
+        switch self {
+        case .parking:
+            "주차장"
+        case .gasStation:
+            "주유소"
+        case .repairShop:
+            "정비소"
+        case .carWash:
+            "세차장"
+        }
+    }
 }

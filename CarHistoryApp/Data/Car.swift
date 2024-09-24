@@ -15,7 +15,7 @@ final class Car: Object, ObjectKeyIdentifiable {
     @Persisted var name = ""
     @Persisted var plateNumber = ""
     @Persisted var fuelType = FuelType.gasoline
-    @Persisted var color = "" // 나중에
+    @Persisted var color = ""
     
     @Persisted var historyList = RealmSwift.List<CarHistory>()
 }
@@ -31,8 +31,9 @@ final class CarHistory: Object, ObjectKeyIdentifiable {
     @Persisted var notes = ""
     @Persisted var latitude = 0.0
     @Persisted var longitude = 0.0
+    @Persisted var car: Car?
     
-    @Persisted(originProperty: "historyList") var car: LinkingObjects<Car>
+    @Persisted(originProperty: "historyList") var owner: LinkingObjects<Car>
     
     var toCLLocation: CLLocation {
         return CLLocation(latitude: latitude, longitude: longitude)

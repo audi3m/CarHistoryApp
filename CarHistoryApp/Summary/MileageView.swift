@@ -5,9 +5,6 @@
 //  Created by J Oh on 9/20/24.
 //
 
-import SwiftUI
-import Charts
-
 /*
  ------------------------
  |                      |
@@ -31,13 +28,24 @@ import Charts
  */
 
 
+import SwiftUI
+import Charts
+
 struct MileageView: View {
     var body: some View {
-        Text("차트")
+        ScrollView {
+            Chart {
+                ForEach(DummyData.mileage) { data in
+                    LineMark(
+                        x: .value("Date", data.date),
+                        y: .value("Mileage", data.mileage)
+                    )
+                }
+            }
+            .frame(height: 250)
+            
+        }
         
-        // 최근 3개월 차트, 현재 마일리지
-        
-        //
     }
 }
 

@@ -21,6 +21,7 @@ struct SettingsView: View {
                     Text(type.rawValue)
                 }
             }
+            .tint(.blackWhite)
             .pickerStyle(.menu)
             
             Picker("거리", selection: $distance) {
@@ -28,14 +29,14 @@ struct SettingsView: View {
                     Text(type.rawValue)
                 }
             }
-            .pickerStyle(.menu)
+            .pickerStyle(.segmented)
             
             Picker("양", selection: $volume) {
                 ForEach(VolumeUnit.allCases, id: \.self) { type in
                     Text(type.rawValue)
                 }
             }
-            .pickerStyle(.menu)
+            .pickerStyle(.segmented)
             
             
         }

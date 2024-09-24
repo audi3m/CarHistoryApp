@@ -59,6 +59,7 @@ struct NewHistorySheet: View {
 extension NewHistorySheet {
     private func addNewHistory() {
         let history = CarHistory()
+        history.car = car
         history.historyType = historyType
         history.date = date
         history.mileage = mileage
@@ -69,7 +70,7 @@ extension NewHistorySheet {
         history.latitude = coordinates.latitude
         history.longitude = coordinates.longitude
         
-        CarRepository.shared.addNewHistory(history: history, to: car)
+        CarEnrollManager.shared.addNewHistory(history: history)
     }
 }
 

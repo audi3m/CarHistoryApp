@@ -52,9 +52,7 @@ struct CarEnrollView: View {
             ImagePicker(selectedImage: $selectedImage)
                 .interactiveDismissDisabled(true)
         }
-        .alert("This number is already registered", isPresented: $carAlreadyExists) {
-            
-        }
+        .alert("This number is already registered", isPresented: $carAlreadyExists) { }
     }
 }
 
@@ -123,7 +121,7 @@ extension CarEnrollView {
 
 extension CarEnrollView {
     private func addNewCar() {
-        let carNumbers = CarRepository.shared.cars.map { $0.plateNumber }
+        let carNumbers = CarEnrollManager.shared.cars.map { $0.plateNumber }
         guard !carNumbers.contains(plateNumber) else { 
             carAlreadyExists = true
             return
@@ -134,7 +132,11 @@ extension CarEnrollView {
         newCar.manufacturer = manufacturer
         newCar.fuelType = fuelType
         
-        CarRepository.shared.addNewCar(car: newCar)
+        if let selectedImage {
+            CarEnrollManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
+        }
+        
+        CarEnrollManager.shared.addNewCar(car: newCar)
         dismiss()
     }
 }
