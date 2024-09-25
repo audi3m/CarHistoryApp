@@ -43,6 +43,23 @@ struct NearbyMapView: View {
         }
     }
     
+    private func searchNearby() {
+        let request = MKLocalSearch.Request()
+        request.pointOfInterestFilter = MKPointOfInterestFilter(including: [.parking])
+        request.region = region
+        
+        let search = MKLocalSearch(request: request)
+        search.start { response, error in
+            guard let response = response else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            // Update parkings with search results
+            parkingLocations = response.mapItems
+        }
+    }
+    
     private func searchNearbyParking() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = place

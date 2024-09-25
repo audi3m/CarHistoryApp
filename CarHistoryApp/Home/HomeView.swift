@@ -157,8 +157,9 @@ extension HomeView {
                         .padding(.vertical, 12)
                         .frame(maxWidth: .infinity)
                         .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.gray.opacity(0.15))
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(.whiteBlack)
+                                .shadow(color: .black.opacity(0.1), radius: 1, x: 2, y: 2)
                         )
                     }
                 }
@@ -181,20 +182,22 @@ extension HomeView {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
                                 .frame(height: 17)
+                                .foregroundStyle(nearby.color)
                             
                             Text(nearby.rawValue)
-                                .lineLimit(1)
+                                .foregroundStyle(.blackWhite)
                                 .font(.caption)
                                 .fontWeight(.semibold)
+                                .lineLimit(1)
                                 .minimumScaleFactor(0.8)
                         }
-                        .foregroundStyle(.blackWhite)
                         .padding(.top, 12)
                         .padding(.bottom, 10)
                         .frame(maxWidth: .infinity)
                         .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(nearby.color)
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .fill(.whiteBlack)
+                                .shadow(color: .black.opacity(0.1), radius: 1, x: 2, y: 2)
                         )
                     }
                 }

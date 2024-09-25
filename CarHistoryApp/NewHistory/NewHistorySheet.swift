@@ -80,7 +80,8 @@ extension NewHistorySheet {
     
     private func historyTypePickerSection() -> some View {
         
-        Section("Type") {
+        Section {
+            CustomTextField(image: "road.lanes", placeHolder: "Mileage", text: $totalCost)
             Picker("", systemImage: historyType.image, selection: $historyType) {
                 ForEach(HistoryType.allCases, id: \.self) { type in
                     Text(type.rawValue)
@@ -93,16 +94,9 @@ extension NewHistorySheet {
      
     private func contentSection() -> some View {
         Section {
-            CustomTextField(image: "road.lanes", placeHolder: "Mileage", text: $mileage)
             CustomTextField(image: "creditcard", placeHolder: "Cost", text: $totalCost)
             if historyType == .refuel {
                 CustomTextField(image: "drop.halffull", placeHolder: "Amount", text: $refuelAmount)
-//                if !totalCost.isEmpty && !refuelAmount.isEmpty {
-//                    HStack(spacing: 16) {
-//                        Image(systemName: "tag")
-//                        Text("\(Double(totalCost)! / Double(refuelAmount)! ,specifier: "%.2f")")
-//                    }
-//                }
             }
             if !(historyType == .refuel) {
                 CustomTextField(image: "note.text", placeHolder: "Notes", axis: .vertical, keyboardType: .default, text: $notes)

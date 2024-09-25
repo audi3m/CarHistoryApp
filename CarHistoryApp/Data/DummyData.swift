@@ -27,21 +27,24 @@ enum DummyData {
     ]
     
     static let mileage = [
-        Mileage(mileage: 12300, date: 1),
-        Mileage(mileage: 12500, date: 2),
-        Mileage(mileage: 13000, date: 3),
-        Mileage(mileage: 13300, date: 4),
-        Mileage(mileage: 14300, date: 5),
-        Mileage(mileage: 14700, date: 6),
+        Mileage(mileage: 12300, date: Calendar.current.date(byAdding: .month, value: -12, to: Date())!),
+        Mileage(mileage: 12500, date: Calendar.current.date(byAdding: .month, value: -11, to: Date())!),
+        Mileage(mileage: 13000, date: Calendar.current.date(byAdding: .month, value: -10, to: Date())!),
+        Mileage(mileage: 13300, date: Calendar.current.date(byAdding: .month, value: -9, to: Date())!),
+        Mileage(mileage: 14300, date: Calendar.current.date(byAdding: .month, value: -8, to: Date())!),
+        Mileage(mileage: 14700, date: Calendar.current.date(byAdding: .month, value: -7, to: Date())!),
+        Mileage(mileage: 15000, date: Calendar.current.date(byAdding: .month, value: -6, to: Date())!),
+        Mileage(mileage: 15300, date: Calendar.current.date(byAdding: .month, value: -5, to: Date())!),
+        Mileage(mileage: 15700, date: Calendar.current.date(byAdding: .month, value: -4, to: Date())!),
+        Mileage(mileage: 16000, date: Calendar.current.date(byAdding: .month, value: -3, to: Date())!),
+        Mileage(mileage: 16300, date: Calendar.current.date(byAdding: .month, value: -2, to: Date())!),
+        Mileage(mileage: 16700, date: Calendar.current.date(byAdding: .month, value: -1, to: Date())!),
+        Mileage(mileage: 17000, date: Date()),
     ]
 }
 
 struct Mileage: Identifiable {
     let id = UUID()
     let mileage: Double
-    let date: Int
-    
-    var month: String {
-        return "\(date)월)"
-    }
+    let date: Date
 }

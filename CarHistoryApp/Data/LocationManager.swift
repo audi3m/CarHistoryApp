@@ -15,7 +15,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
-            // 현재 위치
+            print(coordinate)
         } else {
                 
         }

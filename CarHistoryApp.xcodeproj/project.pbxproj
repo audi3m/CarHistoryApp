@@ -34,7 +34,11 @@
 		D45173072CA04CB9003A1E8C /* NewHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewHistorySheet.swift */; };
 		D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* Date+Ex.swift */; };
 		D451730C2CA1B0EE003A1E8C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D451730B2CA1B0EE003A1E8C /* LocationManager.swift */; };
-		D4E1F5F92CA2E821003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5F82CA2E821003169A6 /* TestView.swift */; };
+		D4E1F5F92CA2E821003169A6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5F82CA2E821003169A6 /* SearchView.swift */; };
+		D4E1F5FE2CA3FC4C003169A6 /* LocationManagerKavsoft.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5FD2CA3FC4C003169A6 /* LocationManagerKavsoft.swift */; };
+		D4E1F6002CA3FC66003169A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5FF2CA3FC66003169A6 /* ContentView.swift */; };
+		D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6012CA431F9003169A6 /* TestView.swift */; };
+		D4E1F6052CA4650D003169A6 /* MapTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6042CA4650D003169A6 /* MapTestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -79,7 +83,11 @@
 		D45173082CA0519D003A1E8C /* Date+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ex.swift"; sourceTree = "<group>"; };
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D451730B2CA1B0EE003A1E8C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		D4E1F5F82CA2E821003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		D4E1F5F82CA2E821003169A6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		D4E1F5FD2CA3FC4C003169A6 /* LocationManagerKavsoft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerKavsoft.swift; sourceTree = "<group>"; };
+		D4E1F5FF2CA3FC66003169A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D4E1F6012CA431F9003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		D4E1F6042CA4650D003169A6 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +124,7 @@
 				D451730A2CA110F8003A1E8C /* Info.plist */,
 				D408C4592C9081CA001464E7 /* CarHistoryAppApp.swift */,
 				D45173012C9FEF2E003A1E8C /* OnboardingView.swift */,
-				D4E1F5F82CA2E821003169A6 /* TestView.swift */,
+				D4E1F5FC2CA3FC41003169A6 /* Test */,
 				D42345142C99A97D0019F434 /* Data */,
 				D45173032CA02CAF003A1E8C /* Home */,
 				D45172F22C9DAABB003A1E8C /* Summary */,
@@ -124,6 +132,7 @@
 				D408C4E72C97F7BC001464E7 /* NewHistory */,
 				D408C4E52C97E7CE001464E7 /* Settings */,
 				D45172EA2C9C415F003A1E8C /* etc */,
+				D4E1F6032CA46500003169A6 /* New Group */,
 				D408C45D2C9081CC001464E7 /* Assets.xcassets */,
 				D408C45F2C9081CC001464E7 /* Preview Content */,
 			);
@@ -206,6 +215,25 @@
 				D423451F2C9AF6400019F434 /* Nearby.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		D4E1F5FC2CA3FC41003169A6 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				D4E1F5FF2CA3FC66003169A6 /* ContentView.swift */,
+				D4E1F5F82CA2E821003169A6 /* SearchView.swift */,
+				D4E1F5FD2CA3FC4C003169A6 /* LocationManagerKavsoft.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		D4E1F6032CA46500003169A6 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				D4E1F6012CA431F9003169A6 /* TestView.swift */,
+				D4E1F6042CA4650D003169A6 /* MapTestView.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,14 +320,16 @@
 				D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */,
 				D42345202C9AF6400019F434 /* Nearby.swift in Sources */,
 				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
+				D4E1F5FE2CA3FC4C003169A6 /* LocationManagerKavsoft.swift in Sources */,
 				D408C4E42C971AAA001464E7 /* CarEnrollManager.swift in Sources */,
 				D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */,
 				D451730C2CA1B0EE003A1E8C /* LocationManager.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
+				D4E1F6002CA3FC66003169A6 /* ContentView.swift in Sources */,
 				D45172FC2C9DB228003A1E8C /* NearbyMapView.swift in Sources */,
 				D45172F62C9DAAEB003A1E8C /* FuelCostView.swift in Sources */,
 				D45172F42C9DAACF003A1E8C /* MileageView.swift in Sources */,
-				D4E1F5F92CA2E821003169A6 /* TestView.swift in Sources */,
+				D4E1F5F92CA2E821003169A6 /* SearchView.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
 				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
@@ -309,6 +339,8 @@
 				D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */,
 				D42345112C99A9520019F434 /* DummyData.swift in Sources */,
 				D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */,
+				D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */,
+				D4E1F6052CA4650D003169A6 /* MapTestView.swift in Sources */,
 				D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */,
 				D45172F82C9DAEC0003A1E8C /* MaintanenceView.swift in Sources */,
 			);
@@ -455,7 +487,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -492,7 +524,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
