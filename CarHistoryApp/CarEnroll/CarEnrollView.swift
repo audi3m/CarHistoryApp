@@ -52,7 +52,7 @@ struct CarEnrollView: View {
             ImagePicker(selectedImage: $selectedImage)
                 .interactiveDismissDisabled(true)
         }
-        .alert("This number is already registered", isPresented: $carAlreadyExists) { }
+        .alert("This Vehicle is already registered", isPresented: $carAlreadyExists) { }
     }
 }
 
@@ -73,7 +73,7 @@ extension CarEnrollView {
                         Image(systemName: "car.side")
                             .font(.system(size: 60, weight: .ultraLight))
                             .foregroundStyle(.secondary)
-                        Text("Tap to select an image")
+                        Text("Tap to Select an Image")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -108,7 +108,7 @@ extension CarEnrollView {
         Section {
             CustomTextField(image: "licenseplate", placeHolder: "Plate Number *", keyboardType: .default, text: $plateNumber)
             CustomTextField(image: "building.2", placeHolder: "Manufacturer", text: $manufacturer)
-            CustomTextField(image: "car.fill", placeHolder: "Name", text: $manufacturer)
+            CustomTextField(image: "car.fill", placeHolder: "Name", keyboardType: .default, text: $manufacturer)
             CustomTextField(image: "calendar", placeHolder: "Model Year", keyboardType: .numberPad, text: $year)
         } footer: {
             HStack {
@@ -121,7 +121,7 @@ extension CarEnrollView {
 
 extension CarEnrollView {
     private func addNewCar() {
-        let carNumbers = CarEnrollManager.shared.cars.map { $0.plateNumber }
+        let carNumbers = CarDataManager.shared.cars.map { $0.plateNumber }
         guard !carNumbers.contains(plateNumber) else { 
             carAlreadyExists = true
             return
@@ -133,10 +133,10 @@ extension CarEnrollView {
         newCar.fuelType = fuelType
         
         if let selectedImage {
-            CarEnrollManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
+            CarDataManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
         }
         
-        CarEnrollManager.shared.addNewCar(car: newCar)
+        CarDataManager.shared.addNewCar(car: newCar)
         dismiss()
     }
 }

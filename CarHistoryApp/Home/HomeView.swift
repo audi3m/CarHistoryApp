@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var isFirstAppear = true
+    
     @State private var selectedCar: Car?
     @State private var showAddNewHistorySheet = false
     @State private var showAddNewCarSheet = false
@@ -31,14 +33,24 @@ struct HomeView: View {
                 addNewHistoryButton()
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) { carSelector() }
-                ToolbarItem(placement: .topBarTrailing) { side() }
+                ToolbarItem(placement: .topBarLeading) {
+                    carSelector()
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    side()
+                }
             }
         }
         .onAppear {
-            // 선택된 차로 설정
-            selectedCar = CarEnrollManager.shared.cars.first
-            CarEnrollManager.shared.printDirectory()
+            // 처음 켰을 때
+            if isFirstAppear {
+                let number = BasicSettingsHelper.shared.selectedCar
+                selectedCar = CarDataManager.shared.cars.first { $0.plateNumber == number }
+                
+                CarDataManager.shared.printDirectory()
+            }
+            
             
         }
         .sheet(isPresented: $showAddNewHistorySheet) {
@@ -58,7 +70,7 @@ struct HomeView: View {
 extension HomeView {
     @ViewBuilder
     private func carSelector() -> some View {
-        if CarEnrollManager.shared.cars.isEmpty {
+        if CarDataManager.shared.cars.isEmpty {
             Button {
                 showAddNewCarSheet = true
             } label: {
@@ -69,9 +81,10 @@ extension HomeView {
             }
         } else {
             Menu {
-                ForEach(CarEnrollManager.shared.cars) { car in
+                ForEach(CarDataManager.shared.cars) { car in
                     Button {
                         selectedCar = car
+                        BasicSettingsHelper.shared.selectedCar = car.plateNumber
                     } label: {
                         Text(car.plateNumber)
                     }
@@ -112,8 +125,8 @@ extension HomeView {
                 .font(.system(size: 50))
                 .foregroundStyle(.white, .blue)
         }
-        .padding()
         .contentShape(Circle())
+        .padding()
     }
 }
 
@@ -159,7 +172,7 @@ extension HomeView {
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .fill(.whiteBlack)
-                                .shadow(color: .black.opacity(0.1), radius: 1, x: 2, y: 2)
+                                .shadow(color: .black.opacity(0.07), radius: 1, x: 2, y: 2)
                         )
                     }
                 }
@@ -197,7 +210,7 @@ extension HomeView {
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .fill(.whiteBlack)
-                                .shadow(color: .black.opacity(0.1), radius: 1, x: 2, y: 2)
+                                .shadow(color: .black.opacity(0.07), radius: 1, x: 2, y: 2)
                         )
                     }
                 }
@@ -226,32 +239,34 @@ extension HomeView {
             }
             .padding(.horizontal, 6)
             
-            ForEach(DummyData.recent.prefix(5)) { recent in
-                HStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .frame(width: 3, height: 35)
-                        .foregroundStyle(recent.color)
-
-                    Image(systemName: recent.image)
-                        .padding(.horizontal, 2)
-                    
-                    VStack(alignment: .leading) {
-                        Text(recent.description)
-                            .font(.footnote)
-                        Text(recent.subDesc)
+            VStack {
+                ForEach(DummyData.recent.prefix(5)) { recent in
+                    HStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .frame(width: 2.5, height: 35)
+                            .foregroundStyle(recent.color)
+                        
+                        Image(systemName: recent.image)
+                            .padding(.horizontal, 2)
+                        
+                        VStack(alignment: .leading) {
+                            Text(recent.description)
+                                .font(.footnote)
+                            Text(recent.subDesc)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        
+                        Spacer()
+                        Text(recent.date)
                             .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
-                    
-                    Spacer()
-                    Text(recent.date)
-                        .font(.caption)
+                    .padding(10)
+                    .padding(.vertical, 5)
+                    .frame(height: 60)
+                    .background(Color.whiteBlack)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .padding(10)
-                .padding(.vertical, 5)
-                .frame(height: 60)
-                .background(.gray.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
         .padding()
@@ -260,26 +275,35 @@ extension HomeView {
     private func carProfile() -> some View {
         VStack {
             if let selectedCar {
-                if let image = CarEnrollManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .frame(height: 150)
-                        .padding(.horizontal)
+                if let image = CarDataManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
+                    ZStack(alignment: .bottom) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .frame(height: 150)
+                        
+                        Ellipse()
+                            .fill(EllipticalGradient(colors: [.black.opacity(0.5), .clear]))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .padding(.bottom, 10)
+                            .zIndex(0)
+                    }
+                    
                 } else {
                     Image(systemName: "car.side")
                         .resizable()
-                        .fontWeight(.thin)
+                        .fontWeight(.ultraLight)
                         .scaledToFit()
                         .frame(height: 120)
+                        .padding(15)
                 }
             }
         }
         .padding(.top, 30)
         .padding(.horizontal)
     }
-     
 }
 
 extension HomeView {

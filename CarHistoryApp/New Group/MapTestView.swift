@@ -10,11 +10,8 @@ import MapKit
 
 struct MapTestView: View {
     var body: some View {
-        Map() {
-            
-        }
-        .mapControls {
-            MapUserLocationButton()
+        VStack {
+            Text("asd")
         }
     }
 }

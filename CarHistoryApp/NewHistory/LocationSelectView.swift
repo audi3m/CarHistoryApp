@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 
 struct LocationSelectView: View {
-    @Binding var coordinates: CLLocationCoordinate2D
+    @Binding var coordinates: CLLocationCoordinate2D?
     
     var body: some View {
         Text("Hello, World!")

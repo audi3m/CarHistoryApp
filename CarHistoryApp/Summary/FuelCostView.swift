@@ -23,18 +23,49 @@
  | - 주유 2              |
  | - 주유 3              |
  |                      |
- |                      |
- |                      |
- |                      |
  ------------------------
  */
 
 import SwiftUI
-
+import Charts
 
 struct FuelCostView: View {
+    let calendar = Calendar.current
+    let currentDate = Date()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        let calendar = Calendar.current
+        let currentDate = Date()
+
+        let filteredFuel = DummyData.fuelAmount.filter { data in
+            guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -5, to: currentDate) else { return false }
+            return data.date >= threeMonthsAgo
+        }
+
+        let groupedByMonth = Dictionary(grouping: filteredFuel) { data in
+            calendar.dateComponents([.year, .month], from: data.date)
+        }.map { (key, values) -> (String, Double) in
+            let totalAmount = values.reduce(0) { $0 + $1.amount }
+            let monthName = calendar.monthSymbols[key.month! - 1]
+            return (monthName, totalAmount)
+        }.sorted { $0.0 < $1.0 }
+
+        ScrollView {
+            Chart {
+                ForEach(groupedByMonth, id: \.0) { (monthName, totalAmount) in
+                    BarMark(
+                        x: .value("Month", monthName),
+                        y: .value("Total Amount", totalAmount)
+                    )
+                }
+            }
+            .frame(height: 250)
+            .padding()
+        }
+        .navigationTitle("Monthly Fuel Charges")
+        .onAppear {
+            dump(DummyData.fuelAmount)
+        }
     }
 }
 

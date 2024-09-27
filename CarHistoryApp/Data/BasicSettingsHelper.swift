@@ -25,9 +25,9 @@ final class BasicSettingsHelper {
     }
     
     // 자동차
-    var selectedCar: Bool {
+    var selectedCar: String {
         get {
-            return UserDefaults.standard.bool(forKey: "selectedCar")
+            return UserDefaults.standard.string(forKey: "selectedCar") ?? "UNKNOWN"
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "selectedCar")
@@ -44,12 +44,24 @@ final class BasicSettingsHelper {
         }
     }
     
-    // 화폐, mile/km, l/g
+    // 0: km, 1: mile
+    var distanceUnit: String {
+        get {
+            return UserDefaults.standard.string(forKey: "distanceUnit") ?? "km"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "distanceUnit")
+        }
+    }
     
-    
-    
-    
-    
-    
+    // 0: liter, 1: gallon
+    var volumeUnit: String {
+        get {
+            return UserDefaults.standard.string(forKey: "volumeUnit") ?? "liter"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "volumeUnit")
+        }
+    }
     
 }

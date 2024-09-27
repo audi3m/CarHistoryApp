@@ -58,6 +58,7 @@ struct SearchView: View {
                                                                                 longitude: coordinate.longitude))
                             }
                             navigationTag = "MAPVIEW"
+                            
                         } label: {
                             HStack(spacing: 15) {
                                 Image(systemName: "mappin.circle.fill")
@@ -78,6 +79,7 @@ struct SearchView: View {
                     }
                 }
                 .listStyle(.plain)
+                
             } else {
                 Button {
                     if let coordinate = locationManager.userLocation?.coordinate {
@@ -89,12 +91,12 @@ struct SearchView: View {
                                                                         longitude: coordinate.longitude))
                     }
                     navigationTag = "MAPVIEW"
+                    
                 } label: {
                     Text("Use Current Location")
                 }
                 .frame(maxWidth: .infinity, alignment: .top)
             }
-            
         }
         .padding()
         .frame(maxHeight: .infinity, alignment: .top)
@@ -105,6 +107,11 @@ struct SearchView: View {
                     .navigationBarBackButtonHidden()
             } label: { }
                 .labelsHidden()
+        }
+        .navigationDestination(for: String.self) { _ in
+            MapViewSelection()
+                .environmentObject(locationManager)
+                .navigationBarBackButtonHidden()
         }
     }
 }

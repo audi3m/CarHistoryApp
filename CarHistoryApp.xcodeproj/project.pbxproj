@@ -13,7 +13,7 @@
 		D408C46A2C908740001464E7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4692C908740001464E7 /* HomeView.swift */; };
 		D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C46B2C9087BF001464E7 /* CarEnrollView.swift */; };
 		D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4DF2C971A1C001464E7 /* SettingsView.swift */; };
-		D408C4E42C971AAA001464E7 /* CarEnrollManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */; };
+		D408C4E42C971AAA001464E7 /* CarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarDataManager.swift */; };
 		D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */; };
 		D42345112C99A9520019F434 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345102C99A9520019F434 /* DummyData.swift */; };
 		D42345182C99AB5E0019F434 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345172C99AB5E0019F434 /* Car.swift */; };
@@ -39,6 +39,9 @@
 		D4E1F6002CA3FC66003169A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F5FF2CA3FC66003169A6 /* ContentView.swift */; };
 		D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6012CA431F9003169A6 /* TestView.swift */; };
 		D4E1F6052CA4650D003169A6 /* MapTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6042CA4650D003169A6 /* MapTestView.swift */; };
+		D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6072CA58020003169A6 /* CalendarView.swift */; };
+		D4E1F6362CA69984003169A6 /* CarHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6352CA69984003169A6 /* CarHistory.swift */; };
+		D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6372CA69A11003169A6 /* Color+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,7 +66,7 @@
 		D408C4692C908740001464E7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D408C46B2C9087BF001464E7 /* CarEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollView.swift; sourceTree = "<group>"; };
 		D408C4DF2C971A1C001464E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollManager.swift; sourceTree = "<group>"; };
+		D408C4E32C971AAA001464E7 /* CarDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDataManager.swift; sourceTree = "<group>"; };
 		D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		D42345102C99A9520019F434 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		D42345172C99AB5E0019F434 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -88,6 +91,9 @@
 		D4E1F5FF2CA3FC66003169A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D4E1F6012CA431F9003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D4E1F6042CA4650D003169A6 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
+		D4E1F6072CA58020003169A6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		D4E1F6352CA69984003169A6 /* CarHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarHistory.swift; sourceTree = "<group>"; };
+		D4E1F6372CA69A11003169A6 /* Color+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +139,7 @@
 				D408C4E52C97E7CE001464E7 /* Settings */,
 				D45172EA2C9C415F003A1E8C /* etc */,
 				D4E1F6032CA46500003169A6 /* New Group */,
+				D4E1F6062CA4E8D6003169A6 /* Modifier */,
 				D408C45D2C9081CC001464E7 /* Assets.xcassets */,
 				D408C45F2C9081CC001464E7 /* Preview Content */,
 			);
@@ -168,8 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				D42345172C99AB5E0019F434 /* Car.swift */,
+				D4E1F6352CA69984003169A6 /* CarHistory.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
-				D408C4E32C971AAA001464E7 /* CarEnrollManager.swift */,
+				D408C4E32C971AAA001464E7 /* CarDataManager.swift */,
 				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
 				D451730B2CA1B0EE003A1E8C /* LocationManager.swift */,
 			);
@@ -183,6 +191,7 @@
 				D45172F92C9DB1D9003A1E8C /* NavigationLazyView.swift */,
 				D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */,
 				D45173082CA0519D003A1E8C /* Date+Ex.swift */,
+				D4E1F6372CA69A11003169A6 /* Color+Ex.swift */,
 			);
 			path = etc;
 			sourceTree = "<group>";
@@ -232,8 +241,17 @@
 			children = (
 				D4E1F6012CA431F9003169A6 /* TestView.swift */,
 				D4E1F6042CA4650D003169A6 /* MapTestView.swift */,
+				D4E1F6072CA58020003169A6 /* CalendarView.swift */,
 			);
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		D4E1F6062CA4E8D6003169A6 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Modifier;
+			path = etc/Modifier;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,7 +339,10 @@
 				D42345202C9AF6400019F434 /* Nearby.swift in Sources */,
 				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
 				D4E1F5FE2CA3FC4C003169A6 /* LocationManagerKavsoft.swift in Sources */,
-				D408C4E42C971AAA001464E7 /* CarEnrollManager.swift in Sources */,
+				D408C4E42C971AAA001464E7 /* CarDataManager.swift in Sources */,
+				D4E1F6362CA69984003169A6 /* CarHistory.swift in Sources */,
+				D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */,
+				D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */,
 				D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */,
 				D451730C2CA1B0EE003A1E8C /* LocationManager.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
@@ -481,18 +502,18 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 장소를 검색하려면 ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarHistoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -518,18 +539,18 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 장소를 검색하려면 ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarHistoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

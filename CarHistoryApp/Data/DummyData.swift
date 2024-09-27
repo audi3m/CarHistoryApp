@@ -41,10 +41,34 @@ enum DummyData {
         Mileage(mileage: 16700, date: Calendar.current.date(byAdding: .month, value: -1, to: Date())!),
         Mileage(mileage: 17000, date: Date()),
     ]
+    
+    static let fuelAmount = [
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -12, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -11, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -10, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -9, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -8, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -7, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -6, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -5, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -4, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -3, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -2, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -2, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -2, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -2, to: Date())!),
+        FuelCharge(amount: Double.random(in: 50000...120000), date: Calendar.current.date(byAdding: .month, value: -1, to: Date())!)
+    ]
 }
 
 struct Mileage: Identifiable {
     let id = UUID()
     let mileage: Double
+    let date: Date
+}
+
+struct FuelCharge: Identifiable {
+    let id = UUID()
+    let amount: Double
     let date: Date
 }

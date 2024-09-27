@@ -6,25 +6,22 @@
 //
 
 /*
- ------------------------
- |                      |
+ ----------------------ㄱ
  |  |                   |
  |  |         .. ..     |
  |  |..    ..           |
  |  |   ..              |
  |  |                   |
- |  ------------------  |
+ |  ㄴ----------------  |
+ |                      |
  |  평균연비              |
  |  월평균 주행거리         |
- |                      |
  |                      |
  | <        9월        > |
  |                      |
  |                      |
  |                      |
- |                      |
- |                      |
- ------------------------
+ ㄴ----------------------
  */
 
 
@@ -45,24 +42,17 @@ struct MileageView: View {
             Chart {
                 ForEach(filteredMileage) { data in
                     LineMark(
-                        x: .value("Date", data.date),   // x축에 날짜 값 사용
+                        x: .value("Date", data.date),
                         y: .value("Mileage", data.mileage)
                     )
-                }
-                
-                ForEach(filteredMileage) { data in
-                    PointMark(
-                        x: .value("Date", data.date),   // x축에 날짜 값 사용
-                        y: .value("Mileage", data.mileage)
-                    )   
                 }
             }
             .frame(height: 250)
             .chartYScale(domain: 15000...18000)
             .chartXAxis {
-                AxisMarks(values: .stride(by: .month)) { value in  // 날짜에 따른 x축 설정
+                AxisMarks(values: .stride(by: .month)) { value in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.week())  // 일/월 형식으로 레이블 표시
+                    AxisValueLabel(format: .dateTime.month())
                 }
             }
             .padding()

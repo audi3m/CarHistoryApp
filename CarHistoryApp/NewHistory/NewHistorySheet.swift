@@ -15,12 +15,12 @@ struct NewHistorySheet: View {
     
     @State private var historyType = HistoryType.refuel
     @State private var date = Date()
-    @State private var mileage = ""
+    @State private var mileageKm = ""
     @State private var totalCost = ""
     @State private var price = ""
     @State private var refuelAmount = ""
     @State private var notes = ""
-    @State private var coordinates = CLLocationCoordinate2D(latitude: 100, longitude: 40)
+    @State private var coordinates: CLLocationCoordinate2D?
     
     var body: some View {
         NavigationStack {
@@ -62,15 +62,18 @@ extension NewHistorySheet {
         history.car = car
         history.historyType = historyType
         history.date = date
-        history.mileage = mileage
+        history.mileage = mileageKm
         history.totalCost = totalCost
         history.price = price
         history.refuelAmount = refuelAmount
         history.notes = notes
-        history.latitude = coordinates.latitude
-        history.longitude = coordinates.longitude
         
-        CarEnrollManager.shared.addNewHistory(history: history)
+        if let coordinates {
+            history.latitude = coordinates.latitude
+            history.longitude = coordinates.longitude
+        }
+        
+        CarDataManager.shared.addNewHistory(history: history)
     }
 }
 
@@ -81,7 +84,6 @@ extension NewHistorySheet {
     private func historyTypePickerSection() -> some View {
         
         Section {
-            CustomTextField(image: "road.lanes", placeHolder: "Mileage", text: $totalCost)
             Picker("", systemImage: historyType.image, selection: $historyType) {
                 ForEach(HistoryType.allCases, id: \.self) { type in
                     Text(type.rawValue)
@@ -89,17 +91,38 @@ extension NewHistorySheet {
             }
             .foregroundStyle(.blackWhite.opacity(0.7))
             .tint(.blackWhite)
+            
+            HStack(spacing: 16) {
+                Image(systemName: "road.lanes")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.blackWhite.opacity(0.7))
+                    .frame(width: 23, height: 23)
+                
+//                HStack {
+//                    Text("12,120 km")
+//                        .foregroundStyle(.secondary)
+//                    Image(systemName: "chevron.right")
+//                        .foregroundStyle(.secondary)
+//                    TextField("Mileage", text: $mileage)
+//                }
+            }
+            
+            CustomTextField(image: "", placeHolder: "Current", text: $mileageKm)
+            
+//            CustomTextField(image: "road.lanes", placeHolder: "Mileage", text: $mileage)
+            
         }
     }
      
     private func contentSection() -> some View {
         Section {
-            CustomTextField(image: "creditcard", placeHolder: "Cost", text: $totalCost)
+            CustomTextField(image: "creditcard.fill", placeHolder: "Cost", text: $totalCost)
             if historyType == .refuel {
                 CustomTextField(image: "drop.halffull", placeHolder: "Amount", text: $refuelAmount)
             }
             if !(historyType == .refuel) {
-                CustomTextField(image: "note.text", placeHolder: "Notes", axis: .vertical, keyboardType: .default, text: $notes)
+                CustomTextField(image: "text.bubble", placeHolder: "Notes", axis: .vertical, keyboardType: .default, text: $notes)
                     .lineLimit(5...)
             }
         }
@@ -107,10 +130,21 @@ extension NewHistorySheet {
     
     private func dateSection() -> some View {
         Section {
-            DisclosureGroup(DateHelper.shared.shortFormat(date: date)) {
-                DatePicker("날짜", selection: $date, displayedComponents: .date)
-                    .datePickerStyle(.graphical)
-            }
+            DisclosureGroup(
+                content: {
+                    DatePicker("날짜", selection: $date, displayedComponents: .date)
+                        .datePickerStyle(.graphical)
+                }, label: {
+                    HStack(spacing: 16) {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(.blackWhite.opacity(0.7))
+                            .frame(width: 23, height: 23)
+                        Text(DateHelper.shared.shortFormat(date: date))
+                    }
+                }
+            )
         }
     }
     
@@ -119,8 +153,21 @@ extension NewHistorySheet {
             NavigationLink {
                 LocationSelectView(coordinates: $coordinates)
             } label: {
-                Text("Location")
+                HStack(spacing: 16) {
+                    Image(systemName: "map")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.blackWhite.opacity(0.7))
+                        .frame(width: 23, height: 23)
+                    
+                    Text("Location")
+                }
             }
+            
+            if let _ = coordinates {
+                Text("Location Selected")
+            }
+            
         }
     }
     

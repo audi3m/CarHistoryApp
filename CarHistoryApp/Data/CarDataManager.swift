@@ -1,5 +1,5 @@
 //
-//  CarEnrollManager.swift
+//  CarDataManager.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 9/15/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import RealmSwift
 
-final class CarEnrollManager {
-    static let shared = CarEnrollManager()
+final class CarDataManager {
+    static let shared = CarDataManager()
     private init() { }
     
     let realm = try! Realm()
@@ -37,14 +37,10 @@ final class CarEnrollManager {
         $historyList.remove(history)
     }
     
-//    func getHistory(of car: Car) -> Results<CarHistory> {
-//
-//    }
-    
 }
 
 // 자동차 이미지 저장
-extension CarEnrollManager {
+extension CarDataManager {
     
     func saveImageToDocument(image: UIImage, filename: String) {
         
