@@ -6,13 +6,20 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct HomeView: View {
+    @StateObject private var carManager = CarDataManager.shared
+    
     @State private var isFirstAppear = true
     
     @State private var selectedCar: Car?
     @State private var showAddNewHistorySheet = false
     @State private var showAddNewCarSheet = false
+    
+    init() {
+        CarDataManager.shared.fetchCars()
+    }
     
     let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
@@ -43,14 +50,9 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            // 처음 켰을 때
             if isFirstAppear {
-                let number = BasicSettingsHelper.shared.selectedCar
-                selectedCar = CarDataManager.shared.cars.first { $0.plateNumber == number }
-                
-                CarDataManager.shared.printDirectory()
+                onAppearTask()
             }
-            
             
         }
         .sheet(isPresented: $showAddNewHistorySheet) {
@@ -66,11 +68,26 @@ struct HomeView: View {
     }
 }
 
+extension HomeView {
+    private func onAppearTask() {
+        let number = BasicSettingsHelper.shared.selectedCar
+        if number.isEmpty {
+            selectedCar = CarDataManager.shared.cars.first
+        } else {
+            selectedCar = carManager.cars.first { $0.plateNumber == number }
+        }
+        carManager.fetchHistories(for: selectedCar)
+        CarDataManager.shared.printDirectory()
+        
+        isFirstAppear = false
+    }
+}
+
 // Nav
 extension HomeView {
     @ViewBuilder
     private func carSelector() -> some View {
-        if CarDataManager.shared.cars.isEmpty {
+        if carManager.cars.isEmpty {
             Button {
                 showAddNewCarSheet = true
             } label: {
@@ -81,12 +98,15 @@ extension HomeView {
             }
         } else {
             Menu {
-                ForEach(CarDataManager.shared.cars) { car in
+                ForEach(carManager.cars) { car in
                     Button {
                         selectedCar = car
                         BasicSettingsHelper.shared.selectedCar = car.plateNumber
                     } label: {
                         Text(car.plateNumber)
+                        if BasicSettingsHelper.shared.selectedCar == car.plateNumber {
+                            Image(systemName: "checkmark")
+                        }
                     }
                 }
             } label: {
@@ -132,20 +152,18 @@ extension HomeView {
 
 // Main Views
 extension HomeView {
-    
     private func monthlySummary() -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Sep. Summary")
+                Text(DateHelper.shared.currentMonth())
                     .font(.system(size: 19, weight: .bold))
                 
                 Spacer()
                 
                 NavigationLink {
-                    
+                    SummaryView()
                 } label: {
-                    Text("All")
-                        .font(.footnote)
+                    Image(systemName: "chart.bar.xaxis")
                     Image(systemName: "chevron.right")
                         .font(.footnote)
                 }
@@ -155,32 +173,27 @@ extension HomeView {
             
             LazyVGrid(columns: columns3) {
                 ForEach(MonthlySummary.allCases, id: \.self) { summary in
-                    NavigationLink {
-                        NavigationLazyView(summary.navigationLink)
-                    } label: {
-                        VStack(spacing: 8) {
-                            Image(systemName: summary.image)
-                                .frame(height: 15)
-                            Text(summary.value)
-                                .font(.footnote)
-                                .fontWeight(.semibold)
-                                .minimumScaleFactor(0.8)
-                        }
-                        .foregroundStyle(.blackWhite)
-                        .padding(.vertical, 12)
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(.whiteBlack)
-                                .shadow(color: .black.opacity(0.07), radius: 1, x: 2, y: 2)
-                        )
+                    VStack(spacing: 8) {
+                        Image(systemName: summary.image)
+                            .frame(height: 15)
+                        Text(summary.value)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .minimumScaleFactor(0.8)
                     }
+                    .foregroundStyle(.blackWhite)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.whiteBlack)
+                            .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
+                    )
                 }
             }
         }
         .padding()
     }
-    
     private func nearby() -> some View {
         VStack(alignment: .leading) {
             Text("Nearby")
@@ -190,7 +203,7 @@ extension HomeView {
             LazyVGrid(columns: columns4) {
                 ForEach(Nearby.allCases, id: \.self) { nearby in
                     NavigationLink {
-                        NavigationLazyView(NearbyMapView(place: nearby.query))
+                        NearbyMapView(nearby: nearby)
                     } label: {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
@@ -210,7 +223,7 @@ extension HomeView {
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .fill(.whiteBlack)
-                                .shadow(color: .black.opacity(0.07), radius: 1, x: 2, y: 2)
+                                .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
                         )
                     }
                 }
@@ -218,7 +231,6 @@ extension HomeView {
         }
         .padding()
     }
-    
     private func recent() -> some View {
         VStack(alignment: .leading) {
             HStack {
@@ -271,7 +283,6 @@ extension HomeView {
         }
         .padding()
     }
-    
     private func carProfile() -> some View {
         VStack {
             if let selectedCar {
@@ -284,11 +295,11 @@ extension HomeView {
                             .frame(height: 150)
                         
                         Ellipse()
-                            .fill(EllipticalGradient(colors: [.black.opacity(0.5), .clear]))
+                            .fill(EllipticalGradient(colors: [.blackWhite.opacity(0.5), .clear]))
                             .frame(maxWidth: .infinity)
                             .frame(height: 50)
                             .padding(.bottom, 10)
-                            .zIndex(0)
+                            .zIndex(-1000)
                     }
                     
                 } else {
@@ -299,18 +310,17 @@ extension HomeView {
                         .frame(height: 120)
                         .padding(15)
                 }
+            } else {
+                Image(systemName: "car.side")
+                    .resizable()
+                    .fontWeight(.ultraLight)
+                    .scaledToFit()
+                    .frame(height: 120)
+                    .padding(15)
             }
         }
         .padding(.top, 30)
         .padding(.horizontal)
-    }
-}
-
-extension HomeView {
-    enum CarSelection: String, CaseIterable {
-        case first = "123주1234"
-        case second = "26나5566"
-        case third = "111가1234"
     }
 }
 

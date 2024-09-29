@@ -27,7 +27,7 @@ final class BasicSettingsHelper {
     // 자동차
     var selectedCar: String {
         get {
-            return UserDefaults.standard.string(forKey: "selectedCar") ?? "UNKNOWN"
+            return UserDefaults.standard.string(forKey: "selectedCar") ?? ""
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "selectedCar")

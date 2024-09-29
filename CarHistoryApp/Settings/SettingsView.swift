@@ -38,9 +38,6 @@ struct SettingsView: View {
             }
             .pickerStyle(.segmented)
         }
-        .onAppear {
-            BasicSettingsHelper.shared
-        }
     }
 }
 

@@ -1,34 +1,14 @@
 //
-//  MileageView.swift
+//  SummaryView.swift
 //  CarHistoryApp
 //
-//  Created by J Oh on 9/20/24.
+//  Created by J Oh on 9/28/24.
 //
-
-/*
- ----------------------ㄱ
- |  |                   |
- |  |         .. ..     |
- |  |..    ..           |
- |  |   ..              |
- |  |                   |
- |  ㄴ----------------  |
- |                      |
- |  평균연비              |
- |  월평균 주행거리         |
- |                      |
- | <        9월        > |
- |                      |
- |                      |
- |                      |
- ㄴ----------------------
- */
-
 
 import SwiftUI
 import Charts
 
-struct MileageView: View {
+struct SummaryView: View {
     let calendar = Calendar.current
     let currentDate = Date()
     
@@ -62,5 +42,5 @@ struct MileageView: View {
 }
 
 #Preview {
-    MileageView()
+    SummaryView()
 }

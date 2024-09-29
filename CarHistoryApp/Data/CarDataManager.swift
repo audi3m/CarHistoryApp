@@ -8,35 +8,151 @@
 import SwiftUI
 import RealmSwift
 
-final class CarDataManager {
+// 기본 프로퍼티 & 메서드
+final class CarDataManager: ObservableObject {
+    
     static let shared = CarDataManager()
     private init() { }
     
     let realm = try! Realm()
     
-    @ObservedResults(Car.self) var cars
-    @ObservedResults(CarHistory.self) var historyList
-    
-    func addNewCar(car: Car) {
-        $cars.append(car)
-    }
-    
-    func deleteCar(car: Car) {
-        $cars.remove(car)
-    }
+    @Published var cars: [Car] = []
+    @Published var historyList: [CarHistory] = []
     
     func printDirectory() {
         print(Realm.Configuration.defaultConfiguration.fileURL ?? "NOT FOUND")
     }
+}
+
+extension CarDataManager {
+    func calculateMonthlyMileage(month: Int, year: Int) -> Double {
+        // 해당 차량의 모든 주행 기록을 날짜순으로 정렬
+        let sortedHistory = historyList.sorted { $0.date < $1.date }
+        
+        // 이전 달의 마지막 주행 기록을 찾음 (기록이 없으면 nil)
+        let previousMonthLastEntry = sortedHistory.last { history in
+            let historyMonth = Calendar.current.component(.month, from: history.date)
+            let historyYear = Calendar.current.component(.year, from: history.date)
+            return historyYear == year && historyMonth == month - 1
+        }
+        
+        // 이전 달 마지막 주행거리 (기록이 없으면 0으로 처리)
+        let previousMonthMileage = Double(previousMonthLastEntry?.mileage ?? "0") ?? 0
+        
+        // 이번 달의 주행 기록들을 필터링
+        let currentMonthEntries = sortedHistory.filter { history in
+            let historyMonth = Calendar.current.component(.month, from: history.date)
+            let historyYear = Calendar.current.component(.year, from: history.date)
+            return historyYear == year && historyMonth == month
+        }
+        
+        // 만약 이번 달 첫 번째 기록이 이전 달 기록보다 적다면 첫 기록을 기준으로 시작
+        var lastMileage = currentMonthEntries.first.flatMap { Double($0.mileage) } ?? previousMonthMileage
+        
+        // 이번 달 총 주행거리 계산
+        var totalMileage: Double = 0
+        
+        for entry in currentMonthEntries {
+            if let currentMileage = Double(entry.mileage) {
+                totalMileage += currentMileage - lastMileage
+                lastMileage = currentMileage
+            }
+        }
+        
+        return totalMileage
+    }
+}
+
+// 자동차 CRUD
+extension CarDataManager {
+    
+    func fetchCars() {
+        let results = realm.objects(Car.self)
+        cars = Array(results)
+    }
+    
+    func addNewCar(car: Car, image: UIImage?) {
+        do {
+            try realm.write {
+                realm.add(car)
+            }
+            if let image {
+                saveImageToDocument(image: image, filename: "\(car.id)")
+            }
+            fetchCars()
+        } catch {
+            print("Error adding car: \(error)")
+        }
+    }
+    
+    func deleteCar(car: Car) {
+        do {
+            try realm.write {
+                realm.delete(car)
+            }
+            removeImageFromDocument(filename: "\(car.id)")
+            fetchCars()
+        } catch {
+            print("Error deleting car: \(error)")
+        }
+    }
+    
+    func editCar(car: Car, newName: String) {
+        do {
+            try realm.write {
+                car.name = newName
+            }
+            fetchCars()
+        } catch {
+            print("Error editing car: \(error)")
+        }
+    }
+}
+
+// 히스토리 CRUD
+extension CarDataManager {
+    
+    func fetchHistories(for car: Car?) {
+        guard let car else {
+            historyList = []
+            return
+        }
+        let results = realm.objects(CarHistory.self).filter { $0.car == car }
+        historyList = Array(results)
+    }
     
     func addNewHistory(history: CarHistory) {
-        $historyList.append(history)
+        do {
+            try realm.write {
+                realm.add(history)
+            }
+            fetchCars()
+        } catch {
+            print("Error: \(error)")
+        }
     }
     
     func deleteHistory(history: CarHistory) {
-        $historyList.remove(history)
+        do {
+            try realm.write {
+                realm.delete(history)
+            }
+            fetchHistories(for: history.car)
+        } catch {
+            print("Error deleting history: \(error)")
+        }
     }
     
+    func editHistory(history: CarHistory) {
+        do {
+            try realm.write {
+                
+            }
+            fetchHistories(for: history.car)
+        } catch {
+            print("Error editing history: \(error)")
+        }
+    }
 }
 
 // 자동차 이미지 저장
@@ -48,13 +164,10 @@ extension CarDataManager {
             for: .documentDirectory,
             in: .userDomainMask).first else { return }
         
-        //이미지를 저장할 경로(파일명) 지정
         let fileURL = documentDirectory.appendingPathComponent("\(filename).png")
         
-        //이미지 압축
         guard let data = image.pngData() else { return }
         
-        //이미지 파일 저장
         do {
             try data.write(to: fileURL)
         } catch {
@@ -70,7 +183,6 @@ extension CarDataManager {
         
         let fileURL = documentDirectory.appendingPathComponent("\(filename).png")
         
-        //이 경로에 실제로 파일이 존재하는 지 확인
         if FileManager.default.fileExists(atPath: fileURL.path()) {
             return UIImage(contentsOfFile: fileURL.path())
         } else {
@@ -99,70 +211,4 @@ extension CarDataManager {
     }
     
 }
-
-
-//actor RealmActor {
-//    
-//    var realm: Realm!
-//    init() async throws {
-//        realm = try await Realm(actor: self)
-//    }
-//
-//    var count: Int {
-//        realm.objects(Todo.self).count
-//    }
-//    
-//    func createTodo(name: String, owner: String, status: String) async throws {
-//        try await realm.asyncWrite {
-//            realm.create(Todo.self, value: [
-//                "_id": ObjectId.generate(),
-//                "name": name,
-//                "owner": owner,
-//                "status": status
-//            ])
-//        }
-//    }
-//    
-//    func getTodoOwner(forTodoNamed name: String) -> String {
-//        let todo = realm.objects(Todo.self).where {
-//            $0.name == name
-//        }.first!
-//        return todo.owner
-//    }
-//    
-//    struct TodoStruct {
-//        var id: ObjectId
-//        var name, owner, status: String
-//    }
-//    
-//    func getTodoAsStruct(forTodoNamed name: String) -> TodoStruct {
-//        let todo = realm.objects(Todo.self).where {
-//            $0.name == name
-//        }.first!
-//        return TodoStruct(id: todo._id, name: todo.name, owner: todo.owner, status: todo.status)
-//    }
-//    
-//    func updateTodo(_id: ObjectId, name: String, owner: String, status: String) async throws {
-//        try await realm.asyncWrite {
-//            realm.create(Todo.self, value: [
-//                "_id": _id,
-//                "name": name,
-//                "owner": owner,
-//                "status": status
-//            ], update: .modified)
-//        }
-//    }
-//    
-//    func deleteTodo(id: ObjectId) async throws {
-//        try await realm.asyncWrite {
-//            let todoToDelete = realm.object(ofType: Todo.self, forPrimaryKey: id)
-//            realm.delete(todoToDelete!)
-//        }
-//    }
-//    
-//    func close() {
-//        realm = nil
-//    }
-//    
-//}
 

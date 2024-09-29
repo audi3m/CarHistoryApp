@@ -34,15 +34,15 @@ enum MonthlySummary: String, CaseIterable {
         }
     }
     
-    @ViewBuilder
-    var navigationLink: some View {
-        switch self {
-        case .mileage:
-            MileageView()
-        case .fuelCost:
-            FuelCostView()
-        case .carWash:
-            MaintanenceView()
-        }
-    }
+//    @ViewBuilder
+//    var navigationLink: some View {
+//        switch self {
+//        case .mileage:
+//            MileageView()
+//        case .fuelCost:
+//            FuelCostView()
+//        case .carWash:
+//            MaintanenceView()
+//        }
+//    }
 }

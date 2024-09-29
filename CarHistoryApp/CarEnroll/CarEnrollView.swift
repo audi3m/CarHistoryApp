@@ -9,7 +9,9 @@ import SwiftUI
 import PhotosUI
 
 struct CarEnrollView: View {
+    @StateObject private var carManager = CarDataManager.shared
     @Environment(\.dismiss) private var dismiss
+    
     
     @State private var manufacturer = ""
     @State private var plateNumber = ""
@@ -132,11 +134,7 @@ extension CarEnrollView {
         newCar.manufacturer = manufacturer
         newCar.fuelType = fuelType
         
-        if let selectedImage {
-            CarDataManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
-        }
-        
-        CarDataManager.shared.addNewCar(car: newCar)
+        carManager.addNewCar(car: newCar, image: selectedImage)
         dismiss()
     }
 }

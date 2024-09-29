@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-final class LocationManager: NSObject, CLLocationManagerDelegate {
+final class LocationManager2: NSObject, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     

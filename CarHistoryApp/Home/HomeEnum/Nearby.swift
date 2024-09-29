@@ -17,9 +17,9 @@ enum Nearby: String, CaseIterable {
     var color: Color {
         switch self {
         case .parking:
-            return .brownText
+            return .brown
         case .gasStation:
-            return .redText
+            return .red
 //        case .evCharge:
 //            return Color.yellow.opacity(0.25)
         case .repairShop:
