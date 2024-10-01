@@ -29,17 +29,19 @@
 		D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */; };
 		D45173002C9FEB23003A1E8C /* BasicSettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */; };
 		D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173012C9FEF2E003A1E8C /* OnboardingView.swift */; };
-		D45173072CA04CB9003A1E8C /* NewHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewHistorySheet.swift */; };
-		D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* Date+Ex.swift */; };
-		D451730C2CA1B0EE003A1E8C /* LocationManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D451730B2CA1B0EE003A1E8C /* LocationManager2.swift */; };
+		D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewLogSheet.swift */; };
+		D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* DateHelper.swift */; };
 		D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6012CA431F9003169A6 /* TestView.swift */; };
 		D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6072CA58020003169A6 /* CalendarView.swift */; };
-		D4E1F6362CA69984003169A6 /* CarHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6352CA69984003169A6 /* CarHistory.swift */; };
+		D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6352CA69984003169A6 /* CarLog.swift */; };
 		D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6372CA69A11003169A6 /* Color+Ex.swift */; };
 		D4E1F6402CA7ADD6003169A6 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F63F2CA7ADD6003169A6 /* SummaryView.swift */; };
 		D4E1F6532CA87256003169A6 /* NearbyMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6522CA87256003169A6 /* NearbyMapView.swift */; };
 		D4E1F6552CA87260003169A6 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6542CA87260003169A6 /* LocationManager.swift */; };
 		D4E1F6572CA87266003169A6 /* CustomMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6562CA87266003169A6 /* CustomMarker.swift */; };
+		D4E1F65E2CA968BD003169A6 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F65D2CA968BD003169A6 /* LocaleManager.swift */; };
+		D4E1F6602CA96C2C003169A6 /* LogValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F65F2CA96C2C003169A6 /* LogValidator.swift */; };
+		D4E1F6632CA9AAE8003169A6 /* YearlyLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6622CA9AAE8003169A6 /* YearlyLogView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,18 +80,20 @@
 		D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Ex.swift"; sourceTree = "<group>"; };
 		D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSettingsHelper.swift; sourceTree = "<group>"; };
 		D45173012C9FEF2E003A1E8C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		D45173062CA04CB9003A1E8C /* NewHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHistorySheet.swift; sourceTree = "<group>"; };
-		D45173082CA0519D003A1E8C /* Date+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ex.swift"; sourceTree = "<group>"; };
+		D45173062CA04CB9003A1E8C /* NewLogSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogSheet.swift; sourceTree = "<group>"; };
+		D45173082CA0519D003A1E8C /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		D451730B2CA1B0EE003A1E8C /* LocationManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager2.swift; sourceTree = "<group>"; };
 		D4E1F6012CA431F9003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D4E1F6072CA58020003169A6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		D4E1F6352CA69984003169A6 /* CarHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarHistory.swift; sourceTree = "<group>"; };
+		D4E1F6352CA69984003169A6 /* CarLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLog.swift; sourceTree = "<group>"; };
 		D4E1F6372CA69A11003169A6 /* Color+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ex.swift"; sourceTree = "<group>"; };
 		D4E1F63F2CA7ADD6003169A6 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		D4E1F6522CA87256003169A6 /* NearbyMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMapView.swift; sourceTree = "<group>"; };
 		D4E1F6542CA87260003169A6 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D4E1F6562CA87266003169A6 /* CustomMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMarker.swift; sourceTree = "<group>"; };
+		D4E1F65D2CA968BD003169A6 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
+		D4E1F65F2CA96C2C003169A6 /* LogValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogValidator.swift; sourceTree = "<group>"; };
+		D4E1F6622CA9AAE8003169A6 /* YearlyLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearlyLogView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,11 +135,12 @@
 				D45173032CA02CAF003A1E8C /* Home */,
 				D45172F22C9DAABB003A1E8C /* Summary */,
 				D4E1F6462CA7C217003169A6 /* Nearby */,
+				D4E1F6612CA9AACE003169A6 /* MonthlyLog */,
 				D45172EF2C9D999A003A1E8C /* CarEnroll */,
 				D408C4E72C97F7BC001464E7 /* NewHistory */,
 				D408C4E52C97E7CE001464E7 /* Settings */,
+				D4E1F6032CA46500003169A6 /* Managers */,
 				D45172EA2C9C415F003A1E8C /* etc */,
-				D4E1F6032CA46500003169A6 /* New Group */,
 				D4E1F6062CA4E8D6003169A6 /* Modifier */,
 				D408C45D2C9081CC001464E7 /* Assets.xcassets */,
 				D408C45F2C9081CC001464E7 /* Preview Content */,
@@ -162,8 +167,9 @@
 		D408C4E72C97F7BC001464E7 /* NewHistory */ = {
 			isa = PBXGroup;
 			children = (
-				D45173062CA04CB9003A1E8C /* NewHistorySheet.swift */,
+				D45173062CA04CB9003A1E8C /* NewLogSheet.swift */,
 				D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */,
+				D4E1F65F2CA96C2C003169A6 /* LogValidator.swift */,
 			);
 			path = NewHistory;
 			sourceTree = "<group>";
@@ -172,11 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				D42345172C99AB5E0019F434 /* Car.swift */,
-				D4E1F6352CA69984003169A6 /* CarHistory.swift */,
+				D4E1F6352CA69984003169A6 /* CarLog.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
-				D408C4E32C971AAA001464E7 /* CarDataManager.swift */,
-				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
-				D451730B2CA1B0EE003A1E8C /* LocationManager2.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -187,8 +190,9 @@
 				D45172EB2C9C4175003A1E8C /* CustomTextField.swift */,
 				D45172F92C9DB1D9003A1E8C /* NavigationLazyView.swift */,
 				D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */,
-				D45173082CA0519D003A1E8C /* Date+Ex.swift */,
 				D4E1F6372CA69A11003169A6 /* Color+Ex.swift */,
+				D4E1F6012CA431F9003169A6 /* TestView.swift */,
+				D4E1F6072CA58020003169A6 /* CalendarView.swift */,
 			);
 			path = etc;
 			sourceTree = "<group>";
@@ -228,13 +232,16 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
-		D4E1F6032CA46500003169A6 /* New Group */ = {
+		D4E1F6032CA46500003169A6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D4E1F6012CA431F9003169A6 /* TestView.swift */,
-				D4E1F6072CA58020003169A6 /* CalendarView.swift */,
+				D4E1F6542CA87260003169A6 /* LocationManager.swift */,
+				D408C4E32C971AAA001464E7 /* CarDataManager.swift */,
+				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
+				D4E1F65D2CA968BD003169A6 /* LocaleManager.swift */,
+				D45173082CA0519D003A1E8C /* DateHelper.swift */,
 			);
-			path = "New Group";
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		D4E1F6062CA4E8D6003169A6 /* Modifier */ = {
@@ -258,10 +265,17 @@
 			isa = PBXGroup;
 			children = (
 				D4E1F6522CA87256003169A6 /* NearbyMapView.swift */,
-				D4E1F6542CA87260003169A6 /* LocationManager.swift */,
 				D4E1F6562CA87266003169A6 /* CustomMarker.swift */,
 			);
 			path = Nearby;
+			sourceTree = "<group>";
+		};
+		D4E1F6612CA9AACE003169A6 /* MonthlyLog */ = {
+			isa = PBXGroup;
+			children = (
+				D4E1F6622CA9AAE8003169A6 /* YearlyLogView.swift */,
+			);
+			path = MonthlyLog;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,11 +364,10 @@
 				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
 				D408C4E42C971AAA001464E7 /* CarDataManager.swift in Sources */,
 				D4E1F6552CA87260003169A6 /* LocationManager.swift in Sources */,
-				D4E1F6362CA69984003169A6 /* CarHistory.swift in Sources */,
+				D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */,
 				D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */,
 				D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */,
-				D45173092CA0519D003A1E8C /* Date+Ex.swift in Sources */,
-				D451730C2CA1B0EE003A1E8C /* LocationManager2.swift in Sources */,
+				D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
 				D45172F62C9DAAEB003A1E8C /* FuelCostView.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
@@ -363,12 +376,15 @@
 				D4E1F6402CA7ADD6003169A6 /* SummaryView.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
 				D45173002C9FEB23003A1E8C /* BasicSettingsHelper.swift in Sources */,
-				D45173072CA04CB9003A1E8C /* NewHistorySheet.swift in Sources */,
+				D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */,
+				D4E1F65E2CA968BD003169A6 /* LocaleManager.swift in Sources */,
 				D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */,
 				D4E1F6572CA87266003169A6 /* CustomMarker.swift in Sources */,
 				D42345112C99A9520019F434 /* DummyData.swift in Sources */,
+				D4E1F6632CA9AAE8003169A6 /* YearlyLogView.swift in Sources */,
 				D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */,
 				D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */,
+				D4E1F6602CA96C2C003169A6 /* LogValidator.swift in Sources */,
 				D4E1F6532CA87256003169A6 /* NearbyMapView.swift in Sources */,
 				D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */,
 				D45172F82C9DAEC0003A1E8C /* MaintanenceView.swift in Sources */,

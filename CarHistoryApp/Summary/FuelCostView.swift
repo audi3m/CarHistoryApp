@@ -49,7 +49,7 @@ struct FuelCostView: View {
             let monthName = calendar.monthSymbols[key.month! - 1]
             return (monthName, totalAmount)
         }.sorted { $0.0 < $1.0 }
-
+        
         ScrollView {
             Chart {
                 ForEach(groupedByMonth, id: \.0) { (monthName, totalAmount) in

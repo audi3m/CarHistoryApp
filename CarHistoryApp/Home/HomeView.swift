@@ -11,15 +11,20 @@ import RealmSwift
 struct HomeView: View {
     @StateObject private var carManager = CarDataManager.shared
     
+    @ObservedResults(Car.self) var cars
+    @ObservedResults(CarLog.self) var allLogs
+    
+    var filteredLogs: Results<CarLog> {
+        allLogs.where { $0.car == selectedCar }
+    }
+    
     @State private var isFirstAppear = true
     
     @State private var selectedCar: Car?
-    @State private var showAddNewHistorySheet = false
+    @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
     
-    init() {
-        CarDataManager.shared.fetchCars()
-    }
+    @State private var noEnrolledCar = false
     
     let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
@@ -37,116 +42,44 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .scrollIndicators(.hidden)
             .overlay(alignment: .bottomTrailing) {
-                addNewHistoryButton()
+                addNewLogButton()
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    carSelector()
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    side()
-                }
+                ToolbarItem(placement: .topBarLeading) { carSelector() }
+                ToolbarItem(placement: .topBarTrailing) { side() }
             }
         }
         .onAppear {
-            if isFirstAppear {
-                onAppearTask()
-            }
-            
+            if isFirstAppear { onAppearTask() }
         }
-        .sheet(isPresented: $showAddNewHistorySheet) {
+        .sheet(isPresented: $showAddNewLogSheet) {
             if let selectedCar {
-                NewHistorySheet(car: selectedCar)
-                    .interactiveDismissDisabled(true)
+                NewLogSheet(car: selectedCar)
             }
         }
         .sheet(isPresented: $showAddNewCarSheet) {
             CarEnrollView()
-                .interactiveDismissDisabled(true)
         }
+        .alert("등록된 차량이 없습니다", isPresented: $noEnrolledCar) {
+            Button("차량 등록하기") { showAddNewCarSheet = true }
+        } message: {
+            Text("차량을 등록한 후에 기록을 추가할 수 있습니다")
+        }
+
     }
 }
 
 extension HomeView {
     private func onAppearTask() {
-        let number = BasicSettingsHelper.shared.selectedCar
+        let number = BasicSettingsHelper.shared.selectedCarNumber
         if number.isEmpty {
-            selectedCar = CarDataManager.shared.cars.first
+            selectedCar = cars.first
         } else {
-            selectedCar = carManager.cars.first { $0.plateNumber == number }
+            selectedCar = cars.first { $0.plateNumber == number }
         }
-        carManager.fetchHistories(for: selectedCar)
         CarDataManager.shared.printDirectory()
         
         isFirstAppear = false
-    }
-}
-
-// Nav
-extension HomeView {
-    @ViewBuilder
-    private func carSelector() -> some View {
-        if carManager.cars.isEmpty {
-            Button {
-                showAddNewCarSheet = true
-            } label: {
-                HStack {
-                    Text("Car Enroll")
-                    Image(systemName: "plus.circle")
-                }
-            }
-        } else {
-            Menu {
-                ForEach(carManager.cars) { car in
-                    Button {
-                        selectedCar = car
-                        BasicSettingsHelper.shared.selectedCar = car.plateNumber
-                    } label: {
-                        Text(car.plateNumber)
-                        if BasicSettingsHelper.shared.selectedCar == car.plateNumber {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                }
-            } label: {
-                HStack {
-                    Text(selectedCar?.plateNumber ?? "None")
-                        .font(.title2)
-                        .bold()
-                    Image(systemName: "chevron.down")
-                        .font(.caption)
-                }
-                .foregroundStyle(.blackWhite)
-            }
-        }
-    }
-    
-    private func side() -> some View {
-        Button {
-            showAddNewCarSheet = true
-        } label: {
-            Image(systemName: "line.3.horizontal")
-                .foregroundStyle(.blackWhite)
-                .scaleEffect(y: 1.3)
-        }
-    }
-}
-
-// Other Views
-extension HomeView {
-    private func addNewHistoryButton() -> some View {
-        Button {
-            if selectedCar != nil {
-                showAddNewHistorySheet = true
-            }
-        } label: {
-            Image(systemName: "plus.circle.fill")
-                .font(.system(size: 50))
-                .foregroundStyle(.white, .blue)
-        }
-        .contentShape(Circle())
-        .padding()
     }
 }
 
@@ -155,7 +88,7 @@ extension HomeView {
     private func monthlySummary() -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(DateHelper.shared.currentMonth())
+                Text(DateHelper.shared.currentMonthLong())
                     .font(.system(size: 19, weight: .bold))
                 
                 Spacer()
@@ -239,8 +172,10 @@ extension HomeView {
                 
                 Spacer()
                 
-                Button {
-                    
+                NavigationLink {
+                    if let selectedCar {
+                        YearlyLogView(car: selectedCar)
+                    }
                 } label: {
                     Text("All")
                         .font(.footnote)
@@ -252,25 +187,29 @@ extension HomeView {
             .padding(.horizontal, 6)
             
             VStack {
-                ForEach(DummyData.recent.prefix(5)) { recent in
+                ForEach(filteredLogs.prefix(5)) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
-                            .foregroundStyle(recent.color)
+                            .foregroundStyle(log.typeColor)
                         
-                        Image(systemName: recent.image)
-                            .padding(.horizontal, 2)
+                        Image(systemName: log.logType.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .padding(5)
                         
                         VStack(alignment: .leading) {
-                            Text(recent.description)
+                            Text(log.companyName)
                                 .font(.footnote)
-                            Text(recent.subDesc)
+                            
+                            Text(log.subDescription)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                         
                         Spacer()
-                        Text(recent.date)
+                        Text(DateHelper.shared.shortFormat(date: log.date))
                             .font(.caption)
                     }
                     .padding(10)
@@ -286,7 +225,7 @@ extension HomeView {
     private func carProfile() -> some View {
         VStack {
             if let selectedCar {
-                if let image = CarDataManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
+                if let image = CarImageManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
                     ZStack(alignment: .bottom) {
                         Image(uiImage: image)
                             .resizable()
@@ -321,6 +260,75 @@ extension HomeView {
         }
         .padding(.top, 30)
         .padding(.horizontal)
+    }
+}
+
+// Navigation Bar
+extension HomeView {
+    @ViewBuilder
+    private func carSelector() -> some View {
+        if cars.isEmpty {
+            Button {
+                showAddNewCarSheet = true
+            } label: {
+                HStack {
+                    Text("Car Enroll")
+                    Image(systemName: "plus.circle")
+                }
+            }
+        } else {
+            Menu {
+                ForEach(cars) { car in
+                    Button {
+                        selectedCar = car
+                        BasicSettingsHelper.shared.selectedCarNumber = car.plateNumber
+                    } label: {
+                        Text(car.plateNumber)
+                        if BasicSettingsHelper.shared.selectedCarNumber == car.plateNumber {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(selectedCar?.plateNumber ?? "None")
+                        .font(.title2)
+                        .bold()
+                    Image(systemName: "chevron.down")
+                        .font(.caption)
+                }
+                .foregroundStyle(.blackWhite)
+            }
+        }
+    }
+    
+    private func side() -> some View {
+        Button {
+            showAddNewCarSheet = true
+        } label: {
+            Image(systemName: "line.3.horizontal")
+                .foregroundStyle(.blackWhite)
+                .scaleEffect(y: 1.3)
+        }
+    }
+}
+
+// Plus Button
+extension HomeView {
+    private func addNewLogButton() -> some View {
+        Button {
+            if selectedCar != nil {
+                showAddNewLogSheet = true
+            } else {
+                noEnrolledCar = true
+            }
+        } label: {
+            Image(systemName: "plus.circle.fill")
+                .font(.system(size: 50))
+                .foregroundStyle(.white, .blue)
+        }
+        .contentShape(Circle())
+        .padding()
     }
 }
 

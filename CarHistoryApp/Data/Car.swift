@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-final class Car: Object, ObjectKeyIdentifiable {
+final class Car: Object, ObjectKeyIdentifiable, Identifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var manufacturer = ""
     @Persisted var name = ""
@@ -16,7 +16,7 @@ final class Car: Object, ObjectKeyIdentifiable {
     @Persisted var fuelType = FuelType.gasoline
     @Persisted var color = ""
     
-    @Persisted var historyList = RealmSwift.List<CarHistory>()
+    @Persisted var logList = RealmSwift.List<CarLog>()
 }
 
 enum FuelType: String, PersistableEnum, CaseIterable {

@@ -7,10 +7,12 @@
 
 import SwiftUI
 import PhotosUI
+import RealmSwift
 
 struct CarEnrollView: View {
-    @StateObject private var carManager = CarDataManager.shared
+    
     @Environment(\.dismiss) private var dismiss
+    @ObservedResults(Car.self) var cars
     
     
     @State private var manufacturer = ""
@@ -50,6 +52,7 @@ struct CarEnrollView: View {
                 }
             }
         }
+        .interactiveDismissDisabled(true)
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(selectedImage: $selectedImage)
                 .interactiveDismissDisabled(true)
@@ -123,7 +126,7 @@ extension CarEnrollView {
 
 extension CarEnrollView {
     private func addNewCar() {
-        let carNumbers = CarDataManager.shared.cars.map { $0.plateNumber }
+        let carNumbers = cars.map { $0.plateNumber }
         guard !carNumbers.contains(plateNumber) else { 
             carAlreadyExists = true
             return
@@ -134,7 +137,10 @@ extension CarEnrollView {
         newCar.manufacturer = manufacturer
         newCar.fuelType = fuelType
         
-        carManager.addNewCar(car: newCar, image: selectedImage)
+        $cars.append(newCar)
+        if let selectedImage {
+            CarImageManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
+        }
         dismiss()
     }
 }

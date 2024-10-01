@@ -39,7 +39,7 @@ struct NearbyMapView: View {
                             .scaleEffect(self.place == place ? 1.2 : 1)
                             .animation(
                                 self.place == place ?
-                                Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true) :
+                                Animation.easeInOut(duration: 0.4).repeatForever(autoreverses: true) :
                                 .default,
                                 value: self.place == place
                             )
@@ -50,10 +50,10 @@ struct NearbyMapView: View {
                     }
                 }
             }
-            .mapControls {
-                
-            }
             .mapScope(mapScope)
+            .mapControls {
+                MapUserLocationButton(scope: mapScope)
+            }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     isFirstAppear = false

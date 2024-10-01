@@ -12,74 +12,50 @@ import RealmSwift
 final class CarDataManager: ObservableObject {
     
     static let shared = CarDataManager()
-    private init() { }
+    private init() {
+        initializeRealm()
+    }
     
-    let realm = try! Realm()
+    var realm: Realm!
     
-    @Published var cars: [Car] = []
-    @Published var historyList: [CarHistory] = []
+    @Published var yearlyLogList = [CarLog]()
+    
+    func initializeRealm() {
+        do {
+            self.realm = try Realm()
+        } catch {
+            print("Error initializing Realm: \(error)")
+        }
+    }
     
     func printDirectory() {
         print(Realm.Configuration.defaultConfiguration.fileURL ?? "NOT FOUND")
     }
+    
 }
 
 extension CarDataManager {
-    func calculateMonthlyMileage(month: Int, year: Int) -> Double {
-        // 해당 차량의 모든 주행 기록을 날짜순으로 정렬
-        let sortedHistory = historyList.sorted { $0.date < $1.date }
+    func fetchYearlyLogs(car: Car, of year: Int) {
         
-        // 이전 달의 마지막 주행 기록을 찾음 (기록이 없으면 nil)
-        let previousMonthLastEntry = sortedHistory.last { history in
-            let historyMonth = Calendar.current.component(.month, from: history.date)
-            let historyYear = Calendar.current.component(.year, from: history.date)
-            return historyYear == year && historyMonth == month - 1
-        }
+    }
+    
+    func getMonthlyFuelCost(car: Car, month: Int) -> Double {
         
-        // 이전 달 마지막 주행거리 (기록이 없으면 0으로 처리)
-        let previousMonthMileage = Double(previousMonthLastEntry?.mileage ?? "0") ?? 0
-        
-        // 이번 달의 주행 기록들을 필터링
-        let currentMonthEntries = sortedHistory.filter { history in
-            let historyMonth = Calendar.current.component(.month, from: history.date)
-            let historyYear = Calendar.current.component(.year, from: history.date)
-            return historyYear == year && historyMonth == month
-        }
-        
-        // 만약 이번 달 첫 번째 기록이 이전 달 기록보다 적다면 첫 기록을 기준으로 시작
-        var lastMileage = currentMonthEntries.first.flatMap { Double($0.mileage) } ?? previousMonthMileage
-        
-        // 이번 달 총 주행거리 계산
-        var totalMileage: Double = 0
-        
-        for entry in currentMonthEntries {
-            if let currentMileage = Double(entry.mileage) {
-                totalMileage += currentMileage - lastMileage
-                lastMileage = currentMileage
-            }
-        }
-        
-        return totalMileage
+        0.0
+    }
+    
+    func getLastCarWashDate() -> String {
+        ""
     }
 }
 
 // 자동차 CRUD
 extension CarDataManager {
-    
-    func fetchCars() {
-        let results = realm.objects(Car.self)
-        cars = Array(results)
-    }
-    
-    func addNewCar(car: Car, image: UIImage?) {
+    func addNewCar(car: Car) {
         do {
             try realm.write {
                 realm.add(car)
             }
-            if let image {
-                saveImageToDocument(image: image, filename: "\(car.id)")
-            }
-            fetchCars()
         } catch {
             print("Error adding car: \(error)")
         }
@@ -90,8 +66,6 @@ extension CarDataManager {
             try realm.write {
                 realm.delete(car)
             }
-            removeImageFromDocument(filename: "\(car.id)")
-            fetchCars()
         } catch {
             print("Error deleting car: \(error)")
         }
@@ -102,7 +76,6 @@ extension CarDataManager {
             try realm.write {
                 car.name = newName
             }
-            fetchCars()
         } catch {
             print("Error editing car: \(error)")
         }
@@ -112,51 +85,41 @@ extension CarDataManager {
 // 히스토리 CRUD
 extension CarDataManager {
     
-    func fetchHistories(for car: Car?) {
-        guard let car else {
-            historyList = []
-            return
-        }
-        let results = realm.objects(CarHistory.self).filter { $0.car == car }
-        historyList = Array(results)
-    }
-    
-    func addNewHistory(history: CarHistory) {
+    func addNewLog(log: CarLog) {
         do {
             try realm.write {
-                realm.add(history)
+                realm.add(log)
             }
-            fetchCars()
         } catch {
             print("Error: \(error)")
         }
     }
     
-    func deleteHistory(history: CarHistory) {
+    func deleteLog(log: CarLog) {
         do {
             try realm.write {
-                realm.delete(history)
+                realm.delete(log)
             }
-            fetchHistories(for: history.car)
         } catch {
-            print("Error deleting history: \(error)")
+            print("Error deleting log: \(error)")
         }
     }
     
-    func editHistory(history: CarHistory) {
+    func editLog(log: CarLog) {
         do {
             try realm.write {
                 
             }
-            fetchHistories(for: history.car)
         } catch {
-            print("Error editing history: \(error)")
+            print("Error editing log: \(error)")
         }
     }
 }
 
 // 자동차 이미지 저장
-extension CarDataManager {
+final class CarImageManager {
+    static let shared = CarImageManager()
+    private init() { }
     
     func saveImageToDocument(image: UIImage, filename: String) {
         

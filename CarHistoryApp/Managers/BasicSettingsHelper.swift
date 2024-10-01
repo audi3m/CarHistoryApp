@@ -25,12 +25,12 @@ final class BasicSettingsHelper {
     }
     
     // 자동차
-    var selectedCar: String {
+    var selectedCarNumber: String {
         get {
-            return UserDefaults.standard.string(forKey: "selectedCar") ?? ""
+            return UserDefaults.standard.string(forKey: "selectedCarNumber") ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "selectedCar")
+            UserDefaults.standard.set(newValue, forKey: "selectedCarNumber")
         }
     }
     
