@@ -16,9 +16,8 @@ final class LogValidator: ObservableObject {
     @Published var date = Date()
     @Published var mileage = ""
     @Published var companyName = ""
-    @Published var totalCost = ""
-    @Published var price = ""
-    @Published var refuelAmount = ""
+    @Published var totalCost = "" 
+    @Published var refuelAmount = 30.0
     @Published var notes = ""
     @Published var coordinates: CLLocationCoordinate2D?
     
@@ -31,31 +30,26 @@ final class LogValidator: ObservableObject {
     }
     
     private func combineStart() {
-        Publishers.CombineLatest4($mileage, $totalCost, $price, $refuelAmount)
-            .map { mileage, totalCost, price, refuelAmount in
-                guard
-                    let _ = Double(mileage),
-                    let _ = Double(totalCost),
-                    let _ = Double(price),
-                    let _ = Double(refuelAmount)
-                else {
+        Publishers.CombineLatest($mileage, $totalCost)
+            .map { mileage, totalCost in
+                guard let _ = Int(mileage), let _ = Double(totalCost) else {
                     return false
                 }
                 return true
             }
             .assign(to: \.isValid, on: self)
             .store(in: &cancellables)
+        
     }
     
     func makeNewLog() -> CarLog {
         let newLog = CarLog()
         newLog.logType = logType
         newLog.date = date
-        newLog.mileage = Double(mileage) ?? 0.0
+        newLog.mileage = Int(mileage) ?? 0
         newLog.companyName = companyName
         newLog.totalCost = Double(totalCost) ?? 0.0
-        newLog.price = Double(price) ?? 0.0
-        newLog.refuelAmount = Double(refuelAmount) ?? 0.0
+        newLog.refuelAmount = refuelAmount
         newLog.notes = notes
         
         if let coordinates {

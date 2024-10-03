@@ -14,16 +14,14 @@ final class CarLog: Object, ObjectKeyIdentifiable {
     @Persisted var date = Date()
     @Persisted var logType = LogType.refuel
     @Persisted var companyName = ""
-    @Persisted var mileage = 0.0
+    @Persisted var mileage = 0
     @Persisted var totalCost = 0.0
-    @Persisted var price = 0.0
     @Persisted var refuelAmount = 0.0
     @Persisted var notes = ""
     @Persisted var latitude = 0.0
-    @Persisted var longitude = 0.0
-    @Persisted var car: Car?
+    @Persisted var longitude = 0.0 
     
-    @Persisted(originProperty: "logList") var owner: LinkingObjects<Car>
+    @Persisted(originProperty: "logList") var car: LinkingObjects<Car>
 }
 
 extension CarLog {
@@ -47,7 +45,7 @@ extension CarLog {
     var subDescription: String {
         switch logType {
         case .refuel:
-            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())"
+            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
         default:
             CurrencyInfo().symbol + "\(totalCost.formatted()) · \(notes)"
         }
@@ -55,10 +53,10 @@ extension CarLog {
 }
 
 enum LogType: String, PersistableEnum, CaseIterable {
-    case refuel = "Refuel"
-    case maintenance = "Maintenance"
-    case carWash = "Car Wash"
-    case etc = "etc"
+    case refuel = "주유/충전"
+    case maintenance = "정비"
+    case carWash = "세차"
+    case etc = "기타"
     
     var color: Color {
         switch self {

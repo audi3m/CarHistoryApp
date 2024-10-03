@@ -38,6 +38,7 @@ struct SummaryView: View {
             .padding()
         }
         .navigationTitle("Chart")
+        .background(.appBackground)
     }
 }
 

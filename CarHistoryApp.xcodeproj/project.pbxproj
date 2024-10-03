@@ -31,6 +31,10 @@
 		D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173012C9FEF2E003A1E8C /* OnboardingView.swift */; };
 		D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewLogSheet.swift */; };
 		D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* DateHelper.swift */; };
+		D4C3FE022CAC5B9C00E751EA /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */; };
+		D4C3FE042CACD03E00E751EA /* LinkToAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE032CACD03E00E751EA /* LinkToAppManager.swift */; };
+		D4C3FE0A2CAEBD4B00E751EA /* SettingsView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */; };
+		D4C3FE0C2CAEBFCB00E751EA /* CarManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */; };
 		D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6012CA431F9003169A6 /* TestView.swift */; };
 		D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6072CA58020003169A6 /* CalendarView.swift */; };
 		D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6352CA69984003169A6 /* CarLog.swift */; };
@@ -83,6 +87,10 @@
 		D45173062CA04CB9003A1E8C /* NewLogSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogSheet.swift; sourceTree = "<group>"; };
 		D45173082CA0519D003A1E8C /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
+		D4C3FE032CACD03E00E751EA /* LinkToAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkToAppManager.swift; sourceTree = "<group>"; };
+		D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView2.swift; sourceTree = "<group>"; };
+		D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarManageView.swift; sourceTree = "<group>"; };
 		D4E1F6012CA431F9003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D4E1F6072CA58020003169A6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D4E1F6352CA69984003169A6 /* CarLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLog.swift; sourceTree = "<group>"; };
@@ -130,12 +138,11 @@
 				D451730A2CA110F8003A1E8C /* Info.plist */,
 				D408C4592C9081CA001464E7 /* CarHistoryAppApp.swift */,
 				D45173012C9FEF2E003A1E8C /* OnboardingView.swift */,
-				D4E1F5FC2CA3FC41003169A6 /* Test */,
 				D42345142C99A97D0019F434 /* Data */,
 				D45173032CA02CAF003A1E8C /* Home */,
 				D45172F22C9DAABB003A1E8C /* Summary */,
 				D4E1F6462CA7C217003169A6 /* Nearby */,
-				D4E1F6612CA9AACE003169A6 /* MonthlyLog */,
+				D4E1F6612CA9AACE003169A6 /* AllLogs */,
 				D45172EF2C9D999A003A1E8C /* CarEnroll */,
 				D408C4E72C97F7BC001464E7 /* NewHistory */,
 				D408C4E52C97E7CE001464E7 /* Settings */,
@@ -160,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				D408C4DF2C971A1C001464E7 /* SettingsView.swift */,
+				D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */,
+				D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -225,13 +234,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		D4E1F5FC2CA3FC41003169A6 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Test;
-			sourceTree = "<group>";
-		};
 		D4E1F6032CA46500003169A6 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +242,8 @@
 				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
 				D4E1F65D2CA968BD003169A6 /* LocaleManager.swift */,
 				D45173082CA0519D003A1E8C /* DateHelper.swift */,
+				D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */,
+				D4C3FE032CACD03E00E751EA /* LinkToAppManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -270,12 +274,12 @@
 			path = Nearby;
 			sourceTree = "<group>";
 		};
-		D4E1F6612CA9AACE003169A6 /* MonthlyLog */ = {
+		D4E1F6612CA9AACE003169A6 /* AllLogs */ = {
 			isa = PBXGroup;
 			children = (
 				D4E1F6622CA9AAE8003169A6 /* YearlyLogView.swift */,
 			);
-			path = MonthlyLog;
+			path = AllLogs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,9 +371,12 @@
 				D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */,
 				D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */,
 				D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */,
+				D4C3FE0C2CAEBFCB00E751EA /* CarManageView.swift in Sources */,
 				D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */,
+				D4C3FE022CAC5B9C00E751EA /* UnitHelper.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
 				D45172F62C9DAAEB003A1E8C /* FuelCostView.swift in Sources */,
+				D4C3FE0A2CAEBD4B00E751EA /* SettingsView2.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
 				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
@@ -388,6 +395,7 @@
 				D4E1F6532CA87256003169A6 /* NearbyMapView.swift in Sources */,
 				D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */,
 				D45172F82C9DAEC0003A1E8C /* MaintanenceView.swift in Sources */,
+				D4C3FE042CACD03E00E751EA /* LinkToAppManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,14 +527,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"CarHistoryApp/Preview Content\"";
 				DEVELOPMENT_TEAM = NWL6WKXWCJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Car Log";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 장소를 검색하려면 ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 주변 장소 정보를 제공하기 위해 위치 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "자동차 사진을 저장하기 위해 사진 접근 권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -556,14 +566,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"CarHistoryApp/Preview Content\"";
 				DEVELOPMENT_TEAM = NWL6WKXWCJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CarHistoryApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Car Log";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 장소를 검색하려면 ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 주변 장소 정보를 제공하기 위해 위치 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "자동차 사진을 저장하기 위해 사진 접근 권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

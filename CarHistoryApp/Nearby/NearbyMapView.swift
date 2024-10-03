@@ -9,20 +9,19 @@ import SwiftUI
 import MapKit
 
 struct NearbyMapView: View {
-    @ObservedObject var locationManager = LocationManager.shared
     @Environment(\.dismiss) private var dismiss
+    
+    @ObservedObject var locationManager = LocationManager()
     
     let nearby: Nearby
     
-    @State private var position: MapCameraPosition = .automatic
+    @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var region: MKCoordinateRegion = .init()
     @State private var isFirstAppear = true
     @State private var regionChanged = false
     @Namespace private var mapScope
     
     @State private var selectedPlace: Place?
-    
-    @State private var place: Place?
     @State private var address: String?
     
     @State private var mapSelection: MKMapItem?
@@ -36,16 +35,16 @@ struct NearbyMapView: View {
                 ForEach(locationManager.searchedPlaces) { place in
                     Annotation(place.name, coordinate: place.coordinate) {
                         CustomMarker(nearby: nearby)
-                            .scaleEffect(self.place == place ? 1.2 : 1)
+                            .scaleEffect(self.selectedPlace == place ? 1.2 : 1)
                             .animation(
-                                self.place == place ?
+                                self.selectedPlace == place ?
                                 Animation.easeInOut(duration: 0.4).repeatForever(autoreverses: true) :
                                 .default,
-                                value: self.place == place
+                                value: self.selectedPlace == place
                             )
                             .onTapGesture {
                                 mapSelection = MKMapItem(placemark: place.placemark)
-                                self.place = place
+                                self.selectedPlace = place
                             }
                     }
                 }
@@ -53,11 +52,6 @@ struct NearbyMapView: View {
             .mapScope(mapScope)
             .mapControls {
                 MapUserLocationButton(scope: mapScope)
-            }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isFirstAppear = false
-                }
             }
             .onMapCameraChange { context in
                 if !isFirstAppear {
@@ -67,14 +61,17 @@ struct NearbyMapView: View {
                     }
                 }
             }
-            .onAppear {
-                if let place = locationManager.userPlace {
-                    position = .region(MKCoordinateRegion(center: place.coordinate, span: .span))
-                    region = .init(center: place.coordinate, span: .span)
+            .task {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    if let userPlace = locationManager.userPlace {
+                        locationManager.search(for: nearby.query, in: .init(center: userPlace.coordinate, span: .span))
+                    }
                 }
-                
-                locationManager.search(for: nearby.query, in: region)
-                
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    isFirstAppear = false
+                }
             }
             .onDisappear {
                 locationManager.deleteSearchResult()
@@ -143,8 +140,9 @@ extension NearbyMapView {
             Group {
                 if let address {
                     Text(address)
+                        .lineLimit(2)
                 } else {
-                    Text("Address will appear here")
+                    Text("이름")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -155,8 +153,9 @@ extension NearbyMapView {
                 .padding(.vertical, 10)
             
             Button {
-                selectedPlace = place
-                dismiss()
+                if let selectedPlace {
+                    LinkToAppManager.openLocationInBrowser(place: selectedPlace)
+                }
             } label: {
                 Image(systemName: "arrow.right")
                     .font(.title3)
@@ -164,15 +163,14 @@ extension NearbyMapView {
                     .padding()
             }
         }
-        .onChange(of: place) {
-            address = place?.name ?? nearby.query
+        .onChange(of: selectedPlace) {
+            address = selectedPlace?.name ?? nearby.query
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 60)
+        .frame(height: 75)
         .background(.whiteBlack)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 3)
         .padding(.bottom, 10)
     }
 }
- 

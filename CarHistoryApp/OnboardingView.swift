@@ -18,6 +18,7 @@ struct OnboardingView: View {
                         Image(systemName: "car")
                         TextField("asd", text: $text)
                     }
+                    
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: "car")
                         TextField("qwe", text: $text, axis: .vertical)

@@ -10,7 +10,6 @@ import MapKit
 
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
-    static let shared = LocationManager()
      
     @Published var authorizationStatus : CLAuthorizationStatus = .notDetermined
     @Published var userPlace: Place?
@@ -21,6 +20,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     override init() {
         super.init()
         manager.delegate = self
+        checkDeviceLocationAuthorization()
     }
     
     func requestLocation() {
@@ -52,7 +52,6 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             guard let response else { return }
             
             DispatchQueue.main.async {
-                
                 self.searchedPlaces = response.mapItems.map { item in
                     Place(latitude: item.placemark.coordinate.latitude,
                           longitude: item.placemark.coordinate.longitude, 

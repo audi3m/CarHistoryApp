@@ -14,7 +14,7 @@ final class DateHelper {
     let formatter = DateFormatter()
     
     func currentMonthLong() -> String {
-        formatter.locale = Locale.current
+        formatter.locale = Locale.init(identifier: "ko_kr")
         formatter.dateFormat = "MMMM"
         return formatter.string(from: Date())
     }
@@ -29,8 +29,9 @@ final class DateHelper {
 
 extension Date {
     func toSep30() -> String {
-        let date = DateFormatter()
-        date.dateFormat = DateFormatter.dateFormat(fromTemplate: "MMMd", options: 0, locale: .autoupdatingCurrent)
-        return date.string(from: self)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.locale = Locale(identifier: "ko_kr")
+        return formatter.string(from: self)
     }
 }

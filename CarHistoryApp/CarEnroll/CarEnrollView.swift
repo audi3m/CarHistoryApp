@@ -14,6 +14,7 @@ struct CarEnrollView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedResults(Car.self) var cars
     
+    @Binding var addedCar: Car?
     
     @State private var manufacturer = ""
     @State private var plateNumber = ""
@@ -34,18 +35,18 @@ struct CarEnrollView: View {
                 carDetailSection()
                 
             }
-            .navigationTitle("Car Enroll")
+            .navigationTitle("차량 등록")
             .navigationBarTitleDisplayMode(.inline)
             .scrollDismissesKeyboard(.immediately)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
+                    Button("취소") {
                         dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {
+                    Button("완료") {
                         addNewCar()
                     }
                     .disabled(plateNumber.isEmpty)
@@ -57,7 +58,7 @@ struct CarEnrollView: View {
             ImagePicker(selectedImage: $selectedImage)
                 .interactiveDismissDisabled(true)
         }
-        .alert("This Vehicle is already registered", isPresented: $carAlreadyExists) { }
+        .alert("이미 등록된 차량입니다", isPresented: $carAlreadyExists) { }
     }
 }
 
@@ -78,7 +79,7 @@ extension CarEnrollView {
                         Image(systemName: "car.side")
                             .font(.system(size: 60, weight: .ultraLight))
                             .foregroundStyle(.secondary)
-                        Text("Tap to Select an Image")
+                        Text("이미지를 선택하려면 탭하세요")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -111,14 +112,14 @@ extension CarEnrollView {
     
     private func carDetailSection() -> some View {
         Section {
-            CustomTextField(image: "licenseplate", placeHolder: "Plate Number *", keyboardType: .default, text: $plateNumber)
-            CustomTextField(image: "building.2", placeHolder: "Manufacturer", text: $manufacturer)
-            CustomTextField(image: "car.fill", placeHolder: "Name", keyboardType: .default, text: $manufacturer)
-            CustomTextField(image: "calendar", placeHolder: "Model Year", keyboardType: .numberPad, text: $year)
+            CustomTextField(image: "licenseplate", placeHolder: "차량번호 *", keyboardType: .default, text: $plateNumber)
+            CustomTextField(image: "building.2", placeHolder: "제조사", text: $manufacturer)
+            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $manufacturer)
+            CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $year)
         } footer: {
             HStack {
                 Spacer()
-                Text("* Required")
+                Text("* 필수")
             }
         }
     }
@@ -141,10 +142,9 @@ extension CarEnrollView {
         if let selectedImage {
             CarImageManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
         }
+        
+        addedCar = newCar
+        
         dismiss()
     }
-}
-
-#Preview {
-    CarEnrollView()
 }

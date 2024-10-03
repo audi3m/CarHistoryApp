@@ -7,15 +7,16 @@
 
 import SwiftUI
 
-enum MonthlySummary: String, CaseIterable {
-    case mileage = "Mileage"
-    case fuelCost = "Fuel Cost"
-    case carWash = "Last wash"
+enum MonthlySummary: CaseIterable, Hashable {
+    
+//    case mileage = "주행거리"
+    case fuelCost(cost: String?)
+    case carWash(date: String?)
     
     var value: String {
         switch self {
-        case .mileage:
-            "1,123 km"
+//        case .mileage:
+//            "1,123 km"
         case .fuelCost:
             "₩ 120,000"
         case .carWash:
@@ -25,8 +26,8 @@ enum MonthlySummary: String, CaseIterable {
     
     var image: String {
         switch self {
-        case .mileage:
-            "road.lanes"
+//        case .mileage:
+//            "road.lanes"
         case .fuelCost:
             "fuelpump.fill"
         case .carWash:
@@ -34,15 +35,8 @@ enum MonthlySummary: String, CaseIterable {
         }
     }
     
-//    @ViewBuilder
-//    var navigationLink: some View {
-//        switch self {
-//        case .mileage:
-//            MileageView()
-//        case .fuelCost:
-//            FuelCostView()
-//        case .carWash:
-//            MaintanenceView()
-//        }
-//    }
+    static var allCases: [MonthlySummary] = [
+        .fuelCost(cost: "₩ 0"),  // 기본 연관 값을 넣음
+        .carWash(date: "기록없음")
+    ]
 }

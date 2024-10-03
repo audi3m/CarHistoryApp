@@ -9,23 +9,19 @@ import SwiftUI
 import RealmSwift
 
 struct HomeView: View {
-    @StateObject private var carManager = CarDataManager.shared
-    
     @ObservedResults(Car.self) var cars
-    @ObservedResults(CarLog.self) var allLogs
+    @State private var filteredLogs = RealmSwift.List<CarLog>()
     
-    var filteredLogs: Results<CarLog> {
-        allLogs.where { $0.car == selectedCar }
-    }
-    
-    @State private var isFirstAppear = true
+    @State private var addedCar: Car?
     
     @State private var selectedCar: Car?
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
+    @State private var showSettings = false
     
     @State private var noEnrolledCar = false
     
+    let columns2 = Array(repeating: GridItem(.flexible()), count: 2)
     let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     
@@ -46,40 +42,125 @@ struct HomeView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) { carSelector() }
-                ToolbarItem(placement: .topBarTrailing) { side() }
+                ToolbarItem(placement: .topBarTrailing) { goToSettingsButton() }
+            }
+            .navigationDestination(for: Nearby.self) { nearby in
+                NearbyMapView(nearby: nearby)
+            }
+            .navigationDestination(for: Car.self) { car in
+                YearlyLogView(car: car)
             }
         }
+        .onChange(of: selectedCar) {
+            BasicSettingsHelper.shared.selectedCarNumber = selectedCar?.plateNumber ?? ""
+            print(BasicSettingsHelper.shared.selectedCarNumber)
+        }
         .onAppear {
-            if isFirstAppear { onAppearTask() }
+            print("HomeView Appeared")
+            let plateNumber = BasicSettingsHelper.shared.selectedCarNumber
+            if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
+                selectedCar = car
+                fetchLogs()
+            }
+        }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsView2()
         }
         .sheet(isPresented: $showAddNewLogSheet) {
             if let selectedCar {
                 NewLogSheet(car: selectedCar)
+                    .onDisappear {
+                        fetchLogs()
+                    }
             }
         }
         .sheet(isPresented: $showAddNewCarSheet) {
-            CarEnrollView()
+            CarEnrollView(addedCar: $addedCar)
+                .onDisappear {
+                    if let addedCar {
+                        selectedCar = addedCar
+                    }
+                }
         }
         .alert("등록된 차량이 없습니다", isPresented: $noEnrolledCar) {
-            Button("차량 등록하기") { showAddNewCarSheet = true }
+            Button("차량 등록") { showAddNewCarSheet = true }
+            Button("닫기", role: .cancel) { }
         } message: {
             Text("차량을 등록한 후에 기록을 추가할 수 있습니다")
         }
-
+        
     }
+    
+    private func fetchLogs() {
+        guard let selectedCar else { return }
+        let sortedLogs = RealmSwift.List<CarLog>()
+        let sortedArray = selectedCar.logList.sorted(byKeyPath: "date", ascending: false)
+        for log in sortedArray {
+            sortedLogs.append(log)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            filteredLogs = sortedLogs
+        }
+        print("Fetch logs ---------\n\(filteredLogs)")
+    }
+    
 }
 
+// Summary Section
 extension HomeView {
-    private func onAppearTask() {
-        let number = BasicSettingsHelper.shared.selectedCarNumber
-        if number.isEmpty {
-            selectedCar = cars.first
-        } else {
-            selectedCar = cars.first { $0.plateNumber == number }
+    
+    private func getMileage() { }
+    
+    private func getFuelExpense() -> some View {
+        guard let selectedCar else {
+            return Text("₩0")
+                .font(.footnote)
+                .foregroundStyle(.placeholder)
+                .fontWeight(.semibold)
+                .minimumScaleFactor(0.8)
         }
-        CarDataManager.shared.printDirectory()
         
-        isFirstAppear = false
+        let calendar = Calendar.current
+        let currentYear = calendar.component(.year, from: Date())
+        let currentMonth = calendar.component(.month, from: Date())
+        
+        let refuelList = selectedCar.logList
+            .filter { $0.logType == .refuel }
+            .filter {
+                let logYear = calendar.component(.year, from: $0.date)
+                let logMonth = calendar.component(.month, from: $0.date)
+                return logYear == currentYear && logMonth == currentMonth
+            }
+        
+        let totalCost = refuelList.reduce(0) { $0 + $1.totalCost }
+        
+        return Text("₩\(Int(totalCost))")
+            .font(.footnote)
+            .fontWeight(.semibold)
+            .minimumScaleFactor(0.8)
+    }
+    
+    //    private func getLatestWashThisMonth() {
+    //        if let selectedCar, let wash = selectedCar.logList.last(where: { $0.logType == .carWash }) {
+    //            monthlyMileage = wash.date.toSep30()
+    //        } else {
+    //            monthlyMileage = nil
+    //        }
+    //    }
+    
+    private func getLatestWash() -> some View {
+        if let selectedCar, let wash = selectedCar.logList.last(where: { $0.logType == .carWash }) {
+            Text(wash.date.toSep30())
+                .font(.footnote)
+                .fontWeight(.semibold)
+                .minimumScaleFactor(0.8)
+        } else {
+            Text("기록 없음")
+                .font(.footnote)
+                .foregroundStyle(.placeholder)
+                .fontWeight(.semibold)
+                .minimumScaleFactor(0.8)
+        }
     }
 }
 
@@ -87,32 +168,40 @@ extension HomeView {
 extension HomeView {
     private func monthlySummary() -> some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(spacing: 10) {
+                Image(systemName: "gauge.open.with.lines.needle.33percent")
+                    .font(.title2)
                 Text(DateHelper.shared.currentMonthLong())
-                    .font(.system(size: 19, weight: .bold))
+                    .font(.system(size: 18, weight: .bold))
                 
                 Spacer()
                 
-                NavigationLink {
-                    SummaryView()
-                } label: {
-                    Image(systemName: "chart.bar.xaxis")
-                    Image(systemName: "chevron.right")
-                        .font(.footnote)
-                }
-                .foregroundStyle(.blackWhite)
+                //                NavigationLink {
+                //                    SummaryView()
+                //                } label: {
+                //                    Image(systemName: "chart.bar.xaxis")
+                //                    Image(systemName: "chevron.right")
+                //                        .font(.footnote)
+                //                }
+                //                .foregroundStyle(.blackWhite)
             }
             .padding(.horizontal, 6)
             
-            LazyVGrid(columns: columns3) {
+            LazyVGrid(columns: columns2) {
                 ForEach(MonthlySummary.allCases, id: \.self) { summary in
                     VStack(spacing: 8) {
                         Image(systemName: summary.image)
                             .frame(height: 15)
-                        Text(summary.value)
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                            .minimumScaleFactor(0.8)
+                        
+                        switch summary {
+                            //                        case .mileage:
+                            //                            getMileage()
+                        case .fuelCost:
+                            getFuelExpense()
+                        case .carWash:
+                            getLatestWash()
+                        }
+                        
                     }
                     .foregroundStyle(.blackWhite)
                     .padding(.vertical, 12)
@@ -129,15 +218,15 @@ extension HomeView {
     }
     private func nearby() -> some View {
         VStack(alignment: .leading) {
-            Text("Nearby")
-                .font(.system(size: 19, weight: .bold))
-                .padding(.horizontal, 6)
+            HStack(spacing: 10) {
+                Text("주변 검색")
+                    .font(.system(size: 18, weight: .bold))
+            }
+            .padding(.horizontal, 6)
             
             LazyVGrid(columns: columns4) {
                 ForEach(Nearby.allCases, id: \.self) { nearby in
-                    NavigationLink {
-                        NearbyMapView(nearby: nearby)
-                    } label: {
+                    NavigationLink(value: nearby) {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
                                 .frame(height: 17)
@@ -167,26 +256,35 @@ extension HomeView {
     private func recent() -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("Recent")
-                    .font(.system(size: 19, weight: .bold))
-                
+                Text("최근 기록")
+                    .font(.system(size: 18, weight: .bold))
                 Spacer()
-                
-                NavigationLink {
-                    if let selectedCar {
-                        YearlyLogView(car: selectedCar)
+                if let selectedCar {
+                    NavigationLink(value: selectedCar) {
+                        HStack {
+                            Text("All")
+                                .font(.footnote)
+                            Image(systemName: "chevron.right")
+                                .font(.footnote)
+                        }
+                        .foregroundStyle(.blackWhite)
                     }
-                } label: {
-                    Text("All")
-                        .font(.footnote)
-                    Image(systemName: "chevron.right")
-                        .font(.footnote)
                 }
-                .foregroundStyle(.blackWhite)
             }
             .padding(.horizontal, 6)
             
             VStack {
+                if filteredLogs.isEmpty {
+                    HStack {
+                        Text("기록 없음")
+                            .foregroundStyle(.placeholder)
+                    }
+                    .frame(height: 60)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.whiteBlack)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+                
                 ForEach(filteredLogs.prefix(5)) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
@@ -202,12 +300,10 @@ extension HomeView {
                         VStack(alignment: .leading) {
                             Text(log.companyName)
                                 .font(.footnote)
-                            
                             Text(log.subDescription)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
-                        
                         Spacer()
                         Text(DateHelper.shared.shortFormat(date: log.date))
                             .font(.caption)
@@ -224,30 +320,20 @@ extension HomeView {
     }
     private func carProfile() -> some View {
         VStack {
-            if let selectedCar {
-                if let image = CarImageManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
-                    ZStack(alignment: .bottom) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .padding()
-                            .frame(height: 150)
-                        
-                        Ellipse()
-                            .fill(EllipticalGradient(colors: [.blackWhite.opacity(0.5), .clear]))
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .padding(.bottom, 10)
-                            .zIndex(-1000)
-                    }
-                    
-                } else {
-                    Image(systemName: "car.side")
+            if let selectedCar, let image = CarImageManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
+                ZStack(alignment: .bottom) {
+                    Image(uiImage: image)
                         .resizable()
-                        .fontWeight(.ultraLight)
                         .scaledToFit()
-                        .frame(height: 120)
-                        .padding(15)
+                        .padding()
+                        .frame(height: 150)
+                    
+                    Ellipse()
+                        .fill(EllipticalGradient(colors: [.blackWhite.opacity(0.5), .clear]))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .padding(.bottom, 10)
+                        .zIndex(-1000)
                 }
             } else {
                 Image(systemName: "car.side")
@@ -272,23 +358,34 @@ extension HomeView {
                 showAddNewCarSheet = true
             } label: {
                 HStack {
-                    Text("Car Enroll")
+                    Text("차량 등록")
                     Image(systemName: "plus.circle")
                 }
             }
         } else {
             Menu {
-                ForEach(cars) { car in
-                    Button {
-                        selectedCar = car
-                        BasicSettingsHelper.shared.selectedCarNumber = car.plateNumber
-                    } label: {
-                        Text(car.plateNumber)
-                        if BasicSettingsHelper.shared.selectedCarNumber == car.plateNumber {
-                            Image(systemName: "checkmark")
+                Section {
+                    ForEach(cars) { car in
+                        Button {
+                            selectedCar = car
+                            fetchLogs()
+                        } label: {
+                            Text(car.plateNumber)
+                            if let selectedCar, selectedCar == car {
+                                Image(systemName: "checkmark")
+                            }
                         }
                     }
                 }
+                
+                Section{
+                    Button {
+                        showAddNewCarSheet = true
+                    } label: {
+                        Label("추가하기", systemImage: "plus.circle")
+                    }
+                }
+                
             } label: {
                 HStack {
                     Text(selectedCar?.plateNumber ?? "None")
@@ -302,15 +399,16 @@ extension HomeView {
         }
     }
     
-    private func side() -> some View {
-        Button {
-            showAddNewCarSheet = true
+    private func goToSettingsButton() -> some View {
+        NavigationLink {
+            SettingsView2()
         } label: {
             Image(systemName: "line.3.horizontal")
                 .foregroundStyle(.blackWhite)
                 .scaleEffect(y: 1.3)
         }
     }
+    
 }
 
 // Plus Button

@@ -13,7 +13,7 @@ struct NewLogSheet: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var logValidator = LogValidator()
     
-    let car: Car
+    @ObservedRealmObject var car: Car
     
     var body: some View {
         NavigationStack {
@@ -22,7 +22,7 @@ struct NewLogSheet: View {
                 companyNameSection()
                 typeAndValueSection()
             }
-            .navigationTitle("New Log")
+            .navigationTitle("새 기록")
             .navigationBarTitleDisplayMode(.inline)
             .scrollDismissesKeyboard(.immediately)
             .toolbar {
@@ -30,18 +30,18 @@ struct NewLogSheet: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Cancel")
+                        Text("취소")
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        addNewLog()
+                        addNewLog() 
                         dismiss()
                     } label: {
-                        Text("Save")
+                        Text("저장")
                     }
-                    .disabled(logValidator.isValid)
+                    .disabled(!logValidator.isValid)
                 }
             }
         }
@@ -53,10 +53,18 @@ struct NewLogSheet: View {
 extension NewLogSheet {
     private func addNewLog() {
         let newLog = logValidator.makeNewLog()
+        $car.logList.append(newLog)
+    }
+    
+    private func getLastMileage() -> String {
+        if let log = car.logList.last {
+            return "\(log.mileage)"
+        } else {
+            return "0"
+        }
         
     }
 }
-
 
 // SubViews
 extension NewLogSheet {
@@ -87,7 +95,7 @@ extension NewLogSheet {
                     .frame(width: 23, height: 23)
                 
                 HStack {
-                    Text("0 km")
+                    Text(getLastMileage() + "km")
                     
                     Spacer(minLength: 10)
                     
@@ -96,8 +104,8 @@ extension NewLogSheet {
                     
                     Spacer(minLength: 10)
                     
-                    TextField("Mileage", text: $logValidator.mileage)
-                        .keyboardType(.decimalPad)
+                    TextField("주행거리", text: $logValidator.mileage)
+                        .keyboardType(.numberPad)
                 }
                 .minimumScaleFactor(0.8)
             }
@@ -106,7 +114,7 @@ extension NewLogSheet {
     
     private func companyNameSection() -> some View {
         Section {
-            CustomTextField(image: "building.2.fill", placeHolder: "Company Name", keyboardType: .default, text: $logValidator.companyName)
+            CustomTextField(image: "building.2.fill", placeHolder: "상호명", keyboardType: .default, text: $logValidator.companyName)
         }
     }
     
@@ -119,20 +127,37 @@ extension NewLogSheet {
             }
             .foregroundStyle(.blackWhite.opacity(0.7))
             .tint(.blackWhite)
+            .onChange(of: logValidator.logType) { oldValue, newValue in
+                logValidator.totalCost = ""
+                logValidator.refuelAmount = 30
+                logValidator.notes = ""
+            }
             
-            CustomTextField(image: "creditcard.fill", placeHolder: "Cost", text: $logValidator.totalCost)
+            CustomTextField(image: "creditcard.fill", placeHolder: "총 비용", text: $logValidator.totalCost)
             
             if logValidator.logType == .refuel {
-                CustomTextField(image: "drop.halffull", placeHolder: "Amount", text: $logValidator.refuelAmount)
+                HStack {
+                    Image(systemName: "fuelpump")
+                    Picker("주유량", selection: $logValidator.refuelAmount) {
+                        ForEach(Array(stride(from: 0.0, through: 200.0, by: 0.5)), id: \.self) { num in
+                            Text("\(num, specifier: "%.1f")")
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    Text("L")
+                }
+                .frame(height: 120)
+//                CustomTextField(image: "drop.halffull", placeHolder: "주유/충전량", text: $logValidator.refuelAmount)
             }
             
             if !(logValidator.logType == .refuel) {
-                CustomTextField(image: "text.bubble", placeHolder: "Notes", axis: .vertical, keyboardType: .default, text: $logValidator.notes)
+                CustomTextField(image: "text.bubble", placeHolder: "내용", axis: .vertical, keyboardType: .default, text: $logValidator.notes)
                     .lineLimit(5...)
             }
+            
         } footer: {
-            Text("Enter Accurate Information To Get Meaningful Results")
-                .frame(maxWidth: .infinity, alignment: .trailing)
+            Text("정확한 정보를 입력해주세요")
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     
@@ -158,5 +183,6 @@ extension NewLogSheet {
     //
     //        }
     //    }
+    
     
 }
