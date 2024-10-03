@@ -46,6 +46,8 @@ extension CarLog {
         switch logType {
         case .refuel:
             CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
+        case .carWash:
+            CurrencyInfo().symbol + "\(totalCost.formatted())"
         default:
             CurrencyInfo().symbol + "\(totalCost.formatted()) · \(notes)"
         }

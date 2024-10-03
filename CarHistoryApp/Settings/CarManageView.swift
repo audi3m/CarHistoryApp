@@ -9,31 +9,46 @@ import SwiftUI
 import RealmSwift
 
 struct CarManageView: View {
-    @Environment(\.dismiss) private var dismiss
-    @ObservedResults(Car.self) var cars
     
-    @State private var checkDeleteAll = false
+    @ObservedResults(Car.self) var cars
+    @ObservedResults(CarLog.self) var logs
+    
+    @State private var showDeleteConfirmation = false
+    @State private var deleteOffsets: IndexSet?
     
     var body: some View {
         List {
             ForEach(cars) { car in
                 Text(car.plateNumber)
             }
-            .onDelete(perform: deleteCar(atOffsets:))
+            .onDelete { offsets in
+                deleteOffsets = offsets
+                showDeleteConfirmation = true
+            }
         }
         .navigationTitle("차량관리")
-        .alert("등록된 차량이 없습니다", isPresented: $checkDeleteAll) {
-            Button("삭제") {
-                
-            }
-            Button("닫기", role: .cancel) { }
-        } message: {
-            Text("차량을 등록한 후에 기록을 추가할 수 있습니다")
+        .alert(isPresented: $showDeleteConfirmation) {
+            Alert(
+                title: Text("삭제 확인"),
+                message: Text("이 차량 및 관련 로그를 삭제하시겠습니까?"),
+                primaryButton: .destructive(Text("삭제")) {
+                    if let offsets = deleteOffsets {
+                        deleteCarLogs(atOffsets: offsets)
+                    }
+                },
+                secondaryButton: .cancel(Text("취소"))
+            )
         }
     }
     
-    private func deleteCar(atOffsets: IndexSet) {
-        
+    private func deleteCarLogs(atOffsets offsets: IndexSet) {
+        for index in offsets {
+            let carToDelete = cars[index]
+            for log in carToDelete.logList {
+                $logs.remove(log)
+            }
+            $cars.remove(carToDelete)
+        }
     }
 }
 

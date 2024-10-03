@@ -15,9 +15,10 @@ struct HomeView: View {
     @State private var addedCar: Car?
     
     @State private var selectedCar: Car?
+//    @ObservedRealmObject var selectedCar: Car?
+    
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
-    @State private var showSettings = false
     
     @State private var noEnrolledCar = false
     
@@ -53,18 +54,21 @@ struct HomeView: View {
         }
         .onChange(of: selectedCar) {
             BasicSettingsHelper.shared.selectedCarNumber = selectedCar?.plateNumber ?? ""
-            print(BasicSettingsHelper.shared.selectedCarNumber)
+            fetchLogs()
+        }
+        .onChange(of: cars) {
+            if let car = selectedCar {
+                selectedCar = cars.first(where: { $0.id == car.id }) ?? cars.first
+            } else {
+                selectedCar = cars.first
+            }
         }
         .onAppear {
-            print("HomeView Appeared")
             let plateNumber = BasicSettingsHelper.shared.selectedCarNumber
             if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
                 selectedCar = car
                 fetchLogs()
             }
-        }
-        .fullScreenCover(isPresented: $showSettings) {
-            SettingsView2()
         }
         .sheet(isPresented: $showAddNewLogSheet) {
             if let selectedCar {
@@ -98,10 +102,7 @@ struct HomeView: View {
         for log in sortedArray {
             sortedLogs.append(log)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            filteredLogs = sortedLogs
-        }
-        print("Fetch logs ---------\n\(filteredLogs)")
+        filteredLogs = sortedLogs
     }
     
 }
@@ -429,7 +430,4 @@ extension HomeView {
         .padding()
     }
 }
-
-#Preview {
-    HomeView()
-}
+ 
