@@ -19,15 +19,27 @@ struct YearlyLogView: View {
         let filteredList = RealmSwift.List<CarLog>()
         let calendar = Calendar.current
         let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
-        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))!
+        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))! 
         
         for log in car.logList {
             if log.date >= startOfYear && log.date <= endOfYear {
                 filteredList.append(log)
             }
         }
-        
         return filteredList
+    }
+    
+    var monthlyLogs: [Int: [CarLog]] {
+        let filteredList = filteredLogs
+        var groupedLogs = Dictionary(grouping: filteredList, by: { log in
+            Calendar.current.component(.month, from: log.date)
+        })
+        
+        for (month, logs) in groupedLogs {
+            groupedLogs[month] = logs.sorted(by: { $0.date > $1.date })  // 날짜를 역순으로 정렬
+        }
+        
+        return groupedLogs
     }
     
     var body: some View {
@@ -38,27 +50,57 @@ struct YearlyLogView: View {
                 ContentUnavailableView("비어있음", systemImage: "tray.2", description: Text("\(String(selectedYear))년 기록이 없습니다"))
                     .padding(.bottom, 100)
             } else {
+                
                 List {
-                    ForEach(filteredLogs.reversed()) { log in
-                        logCell(log)
-                            .listRowSeparator(.hidden)
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    deleteLog(log)
-                                } label: {
-                                    Label("삭제", systemImage: "trash")
+                    ForEach(Array(stride(from: 12, through: 1, by: -1)), id: \.self) { month in
+                        if let logs = monthlyLogs[month], !logs.isEmpty {
+                            Section(header: Text("\(month)월")) {
+                                ForEach(logs, id: \.self) { log in
+                                    logCell(log)
+                                        .listRowSeparator(.hidden)
+                                        .swipeActions(edge: .trailing) {
+                                            Button(role: .destructive) {
+                                                deleteLog(log)
+                                            } label: {
+                                                Label("삭제", systemImage: "trash")
+                                            }
+                                        }
+                                        .listRowInsets(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
+                                    
                                 }
                             }
-                            .listRowInsets(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
+                        }
                     }
-//                    .onDelete(perform: $car.logList.remove)
                     
                     Spacer(minLength: 100)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
-                    
                 }
                 .listStyle(.plain)
+                
+                
+                
+//                List {
+//                    ForEach(filteredLogs.reversed()) { log in
+//                        logCell(log)
+//                            .listRowSeparator(.hidden)
+//                            .swipeActions(edge: .trailing) {
+//                                Button(role: .destructive) {
+//                                    deleteLog(log)
+//                                } label: {
+//                                    Label("삭제", systemImage: "trash")
+//                                }
+//                            }
+//                            .listRowInsets(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
+//                    }
+////                    .onDelete(perform: $car.logList.remove)
+//                    
+//                    Spacer(minLength: 100)
+//                        .listRowSeparator(.hidden)
+//                        .listRowBackground(Color.clear)
+//                    
+//                }
+//                .listStyle(.plain)
             }
         }
         .navigationTitle("연도별 기록")
@@ -71,7 +113,6 @@ extension YearlyLogView {
     private func deleteLog(_ log: CarLog) {
         $logs.remove(log)
     }
-    
 }
 
 extension YearlyLogView {
@@ -135,8 +176,4 @@ extension YearlyLogView {
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .listRowBackground(Color.clear)
     }
-    
-    
 }
-
-
