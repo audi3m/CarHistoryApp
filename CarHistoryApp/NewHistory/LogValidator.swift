@@ -17,9 +17,13 @@ final class LogValidator: ObservableObject {
     @Published var mileage = ""
     @Published var companyName = ""
     @Published var totalCost = "" 
-    @Published var refuelAmount = 30.0
+    @Published var refuelInt = 30.0
+    @Published var refuelPoint = 0.0
     @Published var notes = ""
     @Published var coordinates: CLLocationCoordinate2D?
+    
+    @Published var mileageErrorMessage = ""
+    @Published var costErrorMessage = ""
     
     @Published var isValid: Bool = false
     
@@ -27,6 +31,14 @@ final class LogValidator: ObservableObject {
     
     init() {
         combineStart()
+    }
+    
+    private var validUsernamePublisher: AnyPublisher<Bool, Never> {
+        $mileage
+            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .removeDuplicates()
+            .map { Int($0) != nil }
+            .eraseToAnyPublisher()
     }
     
     private func combineStart() {
@@ -39,7 +51,6 @@ final class LogValidator: ObservableObject {
             }
             .assign(to: \.isValid, on: self)
             .store(in: &cancellables)
-        
     }
     
     func makeNewLog() -> CarLog {
@@ -49,7 +60,7 @@ final class LogValidator: ObservableObject {
         newLog.mileage = Int(mileage) ?? 0
         newLog.companyName = companyName
         newLog.totalCost = Double(totalCost) ?? 0.0
-        newLog.refuelAmount = refuelAmount
+        newLog.refuelAmount = refuelInt + refuelPoint * 0.1
         newLog.notes = notes
         
         if let coordinates {

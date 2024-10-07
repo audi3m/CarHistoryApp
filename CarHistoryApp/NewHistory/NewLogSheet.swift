@@ -27,19 +27,13 @@ struct NewLogSheet: View {
             .scrollDismissesKeyboard(.immediately)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("취소")
-                    }
+                    Button("취소") { dismiss() }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        addNewLog() 
+                    Button("저장") {
+                        addNewLog()
                         dismiss()
-                    } label: {
-                        Text("저장")
                     }
                     .disabled(!logValidator.isValid)
                 }
@@ -129,7 +123,8 @@ extension NewLogSheet {
             .tint(.blackWhite)
             .onChange(of: logValidator.logType) { oldValue, newValue in
                 logValidator.totalCost = ""
-                logValidator.refuelAmount = 30
+                logValidator.refuelInt = 30.0
+                logValidator.refuelPoint = 0.0
                 logValidator.notes = ""
             }
             
@@ -138,16 +133,30 @@ extension NewLogSheet {
             if logValidator.logType == .refuel {
                 HStack {
                     Image(systemName: "fuelpump")
-                    Picker("주유량", selection: $logValidator.refuelAmount) {
-                        ForEach(Array(stride(from: 0.0, through: 200.0, by: 0.5)), id: \.self) { num in
-                            Text("\(num, specifier: "%.1f")")
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Picker("주유량", selection: $logValidator.refuelInt) {
+                            ForEach(Array(stride(from: 0.0, through: 200.0, by: 1)), id: \.self) { num in
+                                Text("\(num, specifier: "%.f")")
+                            }
                         }
+                        .pickerStyle(.wheel)
+                        .frame(width: 100)
+                        
+                        Text(".")
+                            .frame(width: 7)
+                        
+                        Picker("주유량", selection: $logValidator.refuelPoint) {
+                            ForEach(Array(stride(from: 0.0, through: 9.0, by: 1)), id: \.self) { num in
+                                Text("\(num, specifier: "%.f")")
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        .frame(width: 70)
                     }
-                    .pickerStyle(.wheel)
                     Text("L")
                 }
-                .frame(height: 120)
-//                CustomTextField(image: "drop.halffull", placeHolder: "주유/충전량", text: $logValidator.refuelAmount)
+                .frame(height: 100)
             }
             
             if !(logValidator.logType == .refuel) {
@@ -183,6 +192,5 @@ extension NewLogSheet {
     //
     //        }
     //    }
-    
     
 }

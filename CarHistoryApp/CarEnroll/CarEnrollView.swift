@@ -112,15 +112,10 @@ extension CarEnrollView {
     
     private func carDetailSection() -> some View {
         Section {
-            CustomTextField(image: "licenseplate", placeHolder: "차량번호 *", keyboardType: .default, text: $plateNumber)
+            CustomTextField(image: "licenseplate", placeHolder: "[필수] 차량번호", keyboardType: .default, text: $plateNumber)
             CustomTextField(image: "building.2", placeHolder: "제조사", text: $manufacturer)
             CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $manufacturer)
             CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $year)
-        } footer: {
-            HStack {
-                Spacer()
-                Text("* 필수")
-            }
         }
     }
 }

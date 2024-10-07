@@ -5,27 +5,6 @@
 //  Created by J Oh on 9/20/24.
 //
 
-/*
- ------------------------
- |                      |
- |  |                   |
- |  |         .. ..     |
- |  |..    ..           |
- |  |   ..              |
- |  |                   |
- |  ------------------  |
- |  평균연비              |
- |  월평균 주유비용         |
- |                      |
- |                      |
- | <        9월        > |
- | - 주유 1              |
- | - 주유 2              |
- | - 주유 3              |
- |                      |
- ------------------------
- */
-
 import SwiftUI
 import Charts
 
@@ -41,7 +20,7 @@ struct FuelCostView: View {
             guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -5, to: currentDate) else { return false }
             return data.date >= threeMonthsAgo
         }
-
+        
         let groupedByMonth = Dictionary(grouping: filteredFuel) { data in
             calendar.dateComponents([.year, .month], from: data.date)
         }.map { (key, values) -> (String, Double) in
