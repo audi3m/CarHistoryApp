@@ -19,6 +19,7 @@ struct CarEnrollView: View {
     @State private var manufacturer = ""
     @State private var plateNumber = ""
     @State private var year = ""
+    @State private var name = ""
     @State private var carColor = Color.black
     @State private var fuelType = FuelType.gasoline
     
@@ -113,8 +114,8 @@ extension CarEnrollView {
     private func carDetailSection() -> some View {
         Section {
             CustomTextField(image: "licenseplate", placeHolder: "[필수] 차량번호", keyboardType: .default, text: $plateNumber)
-            CustomTextField(image: "building.2", placeHolder: "제조사", text: $manufacturer)
-            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $manufacturer)
+            CustomTextField(image: "building.2", placeHolder: "제조사", keyboardType: .default, text: $manufacturer)
+            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $name)
             CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $year)
         }
     }
@@ -131,6 +132,7 @@ extension CarEnrollView {
         let newCar = Car()
         newCar.plateNumber = plateNumber
         newCar.manufacturer = manufacturer
+        newCar.name = name
         newCar.fuelType = fuelType
         
         $cars.append(newCar)

@@ -195,14 +195,13 @@ extension HomeView {
                             .frame(height: 15)
                         
                         switch summary {
-                            //                        case .mileage:
-                            //                            getMileage()
+//                        case .mileage:
+//                            getMileage()
                         case .fuelCost:
                             getFuelExpense()
                         case .carWash:
                             getLatestWash()
                         }
-                        
                     }
                     .foregroundStyle(.blackWhite)
                     .padding(.vertical, 12)
