@@ -85,7 +85,7 @@ extension NewLogSheet {
                 Image(systemName: "road.lanes")
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(.black.opacity(0.7))
+                    .foregroundStyle(.blackWhite.opacity(0.7))
                     .frame(width: 23, height: 23)
                 
                 HStack {

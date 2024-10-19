@@ -12,11 +12,22 @@ struct SettingsView2: View {
     
     var body: some View {
         List {
-            NavigationLink {
-                CarManageView()
-            } label: {
-                Text("차량관리")
-                    .foregroundStyle(.blackWhite)
+            
+            Section {
+                NavigationLink {
+                    CarManageView()
+                } label: {
+                    Text("차량관리")
+                        .foregroundStyle(.blackWhite)
+                }
+            }
+            
+            Section {
+                HStack {
+                    Text("버전정보")
+                    Spacer()
+                    Text("1.0.3")
+                }
             }
             
         }

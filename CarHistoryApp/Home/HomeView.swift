@@ -46,7 +46,7 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarTrailing) { goToSettingsButton() }
             }
             .navigationDestination(for: Nearby.self) { nearby in
-                NearbyMapView(nearby: nearby)
+                NavigationLazyView(NearbyMapView(nearby: nearby))
             }
             .navigationDestination(for: Car.self) { car in
                 YearlyLogView(car: car)
@@ -58,7 +58,7 @@ struct HomeView: View {
         }
         .onChange(of: cars) {
             if let car = selectedCar {
-                selectedCar = cars.first(where: { $0.id == car.id }) ?? cars.first
+                selectedCar = cars.first { $0.id == car.id } ?? cars.first
             } else {
                 selectedCar = cars.first
             }
@@ -208,7 +208,7 @@ extension HomeView {
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(.whiteBlack)
+                            .fill(.cellBG)
                             .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
                     )
                 }
@@ -244,7 +244,7 @@ extension HomeView {
                         .frame(maxWidth: .infinity)
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(.whiteBlack)
+                                .fill(.cellBG)
                                 .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
                         )
                     }
@@ -311,7 +311,7 @@ extension HomeView {
                     .padding(10)
                     .padding(.vertical, 5)
                     .frame(height: 60)
-                    .background(Color.whiteBlack)
+                    .background(.cellBG)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
             }
