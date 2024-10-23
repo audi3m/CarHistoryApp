@@ -40,7 +40,6 @@ extension CarDataManager {
     }
     
     func getMonthlyFuelCost(car: Car, month: Int) -> Double {
-        
         0.0
     }
     
