@@ -10,6 +10,7 @@ import RealmSwift
 
 @main
 struct CarHistoryAppApp: App {
+    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
     
     init() {
         setupRealm()
@@ -18,6 +19,7 @@ struct CarHistoryAppApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
         }
     }
     
@@ -32,5 +34,16 @@ struct CarHistoryAppApp: App {
         
         Realm.Configuration.defaultConfiguration = config
         
+    }
+    
+    private func colorScheme(for mode: String) -> ColorScheme? {
+        switch mode {
+        case "light":
+            return .light
+        case "dark":
+            return .dark
+        default:
+            return nil // 시스템 설정 따르기
+        }
     }
 }

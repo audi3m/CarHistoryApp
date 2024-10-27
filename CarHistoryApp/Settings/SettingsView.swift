@@ -1,5 +1,5 @@
 //
-//  SettingsView2.swift
+//  SettingsView.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 10/3/24.
@@ -8,10 +8,21 @@
 import SwiftUI
 import RealmSwift
 
-struct SettingsView2: View {
+struct SettingsView: View {
+    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
     
     var body: some View {
         List {
+            Section {
+                Picker("Appearance Mode", selection: $selectedAppearanceMode) {
+                    Text("시스템").tag("system")
+                    Text("라이트").tag("light")
+                    Text("다크").tag("dark")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+            }
+//            .listRowBackground(Color.clear)
+//            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
             
             Section {
                 NavigationLink {
@@ -33,9 +44,7 @@ struct SettingsView2: View {
         }
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
-
-#Preview {
-    SettingsView2()
-}
+ 
