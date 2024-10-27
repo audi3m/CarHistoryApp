@@ -7,20 +7,18 @@
 
 import Foundation
 
-final class DateHelper {
-    static let shared = DateHelper()
-    private init() { }
+struct DateHelper {
     
-    let formatter = DateFormatter()
+    static var formatter = DateFormatter()
     
-    func currentMonthLong() -> String {
+    static func currentMonthLong() -> String {
         formatter.locale = Locale.init(identifier: "ko_kr")
         formatter.dateFormat = "MMMM"
         return formatter.string(from: Date())
     }
     
     // Sep 30, 2024
-    func shortFormat(date: Date) -> String {
+    static func shortFormat(date: Date) -> String {
         formatter.dateStyle = .medium
         return formatter.string(from: date)
     }
