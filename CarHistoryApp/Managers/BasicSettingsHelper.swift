@@ -34,7 +34,7 @@ final class BasicSettingsHelper {
         }
     }
     
-    // 라이트/다크
+    // 시스템 / 라이트 / 다크
     var appearance: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "appearance")
@@ -63,5 +63,4 @@ final class BasicSettingsHelper {
             UserDefaults.standard.set(newValue, forKey: "volumeUnit")
         }
     }
-    
 }

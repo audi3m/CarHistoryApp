@@ -12,8 +12,6 @@
 		D408C4612C9081CC001464E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D408C4602C9081CC001464E7 /* Preview Assets.xcassets */; };
 		D408C46A2C908740001464E7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4692C908740001464E7 /* HomeView.swift */; };
 		D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C46B2C9087BF001464E7 /* CarEnrollView.swift */; };
-		D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4DF2C971A1C001464E7 /* SettingsView.swift */; };
-		D408C4E42C971AAA001464E7 /* CarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E32C971AAA001464E7 /* CarDataManager.swift */; };
 		D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */; };
 		D42345112C99A9520019F434 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345102C99A9520019F434 /* DummyData.swift */; };
 		D42345182C99AB5E0019F434 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42345172C99AB5E0019F434 /* Car.swift */; };
@@ -33,8 +31,13 @@
 		D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* DateHelper.swift */; };
 		D4C3FE022CAC5B9C00E751EA /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */; };
 		D4C3FE042CACD03E00E751EA /* LinkToAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE032CACD03E00E751EA /* LinkToAppManager.swift */; };
-		D4C3FE0A2CAEBD4B00E751EA /* SettingsView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */; };
+		D4C3FE0A2CAEBD4B00E751EA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE092CAEBD4B00E751EA /* SettingsView.swift */; };
 		D4C3FE0C2CAEBFCB00E751EA /* CarManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */; };
+		D4CF7D2C2CC397F5009DB083 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D4CF7D2B2CC397F5009DB083 /* .gitignore */; };
+		D4CF7D302CC540B3009DB083 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF7D2F2CC540B3009DB083 /* Repository.swift */; };
+		D4CF7D4E2CC7919D009DB083 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF7D4D2CC7919D009DB083 /* LogManager.swift */; };
+		D4CF7D502CC792D6009DB083 /* CarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF7D4F2CC792D6009DB083 /* CarDataManager.swift */; };
+		D4CF7D522CC79ACE009DB083 /* CarImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CF7D512CC79ACE009DB083 /* CarImageManager.swift */; };
 		D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6012CA431F9003169A6 /* TestView.swift */; };
 		D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6072CA58020003169A6 /* CalendarView.swift */; };
 		D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6352CA69984003169A6 /* CarLog.swift */; };
@@ -69,8 +72,6 @@
 		D408C4602C9081CC001464E7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D408C4692C908740001464E7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D408C46B2C9087BF001464E7 /* CarEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollView.swift; sourceTree = "<group>"; };
-		D408C4DF2C971A1C001464E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		D408C4E32C971AAA001464E7 /* CarDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDataManager.swift; sourceTree = "<group>"; };
 		D408C4E82C97F7D2001464E7 /* LocationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectView.swift; sourceTree = "<group>"; };
 		D42345102C99A9520019F434 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		D42345172C99AB5E0019F434 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
@@ -89,8 +90,13 @@
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
 		D4C3FE032CACD03E00E751EA /* LinkToAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkToAppManager.swift; sourceTree = "<group>"; };
-		D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView2.swift; sourceTree = "<group>"; };
+		D4C3FE092CAEBD4B00E751EA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarManageView.swift; sourceTree = "<group>"; };
+		D4CF7D2B2CC397F5009DB083 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		D4CF7D2F2CC540B3009DB083 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		D4CF7D4D2CC7919D009DB083 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		D4CF7D4F2CC792D6009DB083 /* CarDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarDataManager.swift; sourceTree = "<group>"; };
+		D4CF7D512CC79ACE009DB083 /* CarImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarImageManager.swift; sourceTree = "<group>"; };
 		D4E1F6012CA431F9003169A6 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D4E1F6072CA58020003169A6 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D4E1F6352CA69984003169A6 /* CarLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarLog.swift; sourceTree = "<group>"; };
@@ -119,6 +125,7 @@
 		D408C44D2C9081CA001464E7 = {
 			isa = PBXGroup;
 			children = (
+				D4CF7D2B2CC397F5009DB083 /* .gitignore */,
 				D408C4582C9081CA001464E7 /* CarHistoryApp */,
 				D408C4572C9081CA001464E7 /* Products */,
 			);
@@ -166,8 +173,7 @@
 		D408C4E52C97E7CE001464E7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				D408C4DF2C971A1C001464E7 /* SettingsView.swift */,
-				D4C3FE092CAEBD4B00E751EA /* SettingsView2.swift */,
+				D4C3FE092CAEBD4B00E751EA /* SettingsView.swift */,
 				D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */,
 			);
 			path = Settings;
@@ -189,6 +195,7 @@
 				D42345172C99AB5E0019F434 /* Car.swift */,
 				D4E1F6352CA69984003169A6 /* CarLog.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
+				D4CF7D2F2CC540B3009DB083 /* Repository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -238,8 +245,10 @@
 			isa = PBXGroup;
 			children = (
 				D4E1F6542CA87260003169A6 /* LocationManager.swift */,
-				D408C4E32C971AAA001464E7 /* CarDataManager.swift */,
+				D4CF7D4F2CC792D6009DB083 /* CarDataManager.swift */,
+				D4CF7D512CC79ACE009DB083 /* CarImageManager.swift */,
 				D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */,
+				D4CF7D4D2CC7919D009DB083 /* LogManager.swift */,
 				D4E1F65D2CA968BD003169A6 /* LocaleManager.swift */,
 				D45173082CA0519D003A1E8C /* DateHelper.swift */,
 				D4C3FE012CAC5B9C00E751EA /* UnitHelper.swift */,
@@ -350,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D408C4612C9081CC001464E7 /* Preview Assets.xcassets in Resources */,
+				D4CF7D2C2CC397F5009DB083 /* .gitignore in Resources */,
 				D408C45E2C9081CC001464E7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,20 +375,21 @@
 				D45172EE2C9C6E6A003A1E8C /* MonthlySummary.swift in Sources */,
 				D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */,
 				D42345202C9AF6400019F434 /* Nearby.swift in Sources */,
-				D408C4E02C971A1C001464E7 /* SettingsView.swift in Sources */,
-				D408C4E42C971AAA001464E7 /* CarDataManager.swift in Sources */,
 				D4E1F6552CA87260003169A6 /* LocationManager.swift in Sources */,
 				D4E1F6362CA69984003169A6 /* CarLog.swift in Sources */,
+				D4CF7D302CC540B3009DB083 /* Repository.swift in Sources */,
 				D4E1F6382CA69A11003169A6 /* Color+Ex.swift in Sources */,
 				D4E1F6082CA58020003169A6 /* CalendarView.swift in Sources */,
 				D4C3FE0C2CAEBFCB00E751EA /* CarManageView.swift in Sources */,
+				D4CF7D502CC792D6009DB083 /* CarDataManager.swift in Sources */,
 				D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */,
 				D4C3FE022CAC5B9C00E751EA /* UnitHelper.swift in Sources */,
 				D408C46C2C9087BF001464E7 /* CarEnrollView.swift in Sources */,
 				D45172F62C9DAAEB003A1E8C /* FuelCostView.swift in Sources */,
-				D4C3FE0A2CAEBD4B00E751EA /* SettingsView2.swift in Sources */,
+				D4C3FE0A2CAEBD4B00E751EA /* SettingsView.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
 				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
+				D4CF7D4E2CC7919D009DB083 /* LogManager.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
 				D4E1F6402CA7ADD6003169A6 /* SummaryView.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
@@ -386,6 +397,7 @@
 				D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */,
 				D4E1F65E2CA968BD003169A6 /* LocaleManager.swift in Sources */,
 				D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */,
+				D4CF7D522CC79ACE009DB083 /* CarImageManager.swift in Sources */,
 				D4E1F6572CA87266003169A6 /* CustomMarker.swift in Sources */,
 				D42345112C99A9520019F434 /* DummyData.swift in Sources */,
 				D4E1F6632CA9AAE8003169A6 /* YearlyLogView.swift in Sources */,
@@ -547,7 +559,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarHistoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -586,7 +598,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarHistoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

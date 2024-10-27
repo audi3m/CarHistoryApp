@@ -11,22 +11,12 @@ import RealmSwift
 // 기본 프로퍼티 & 메서드
 final class CarDataManager: ObservableObject {
     
-    static let shared = CarDataManager()
-    private init() {
-        initializeRealm()
-    }
+    private let realm = try! Realm()
     
-    var realm: Realm!
+    static let shared = CarDataManager()
+    private init() { }
     
     @Published var yearlyLogList = [CarLog]()
-    
-    func initializeRealm() {
-        do {
-            self.realm = try Realm()
-        } catch {
-            print("Error initializing Realm: \(error)")
-        }
-    }
     
     func printDirectory() {
         print(Realm.Configuration.defaultConfiguration.fileURL ?? "NOT FOUND")
@@ -114,63 +104,3 @@ extension CarDataManager {
         }
     }
 }
-
-// 자동차 이미지 저장
-final class CarImageManager {
-    static let shared = CarImageManager()
-    private init() { }
-    
-    func saveImageToDocument(image: UIImage, filename: String) {
-        
-        guard let documentDirectory = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask).first else { return }
-        
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).png")
-        
-        guard let data = image.pngData() else { return }
-        
-        do {
-            try data.write(to: fileURL)
-        } catch {
-            print("File save error", error)
-        }
-    }
-    
-    func loadImageToDocument(filename: String) -> UIImage? {
-        
-        guard let documentDirectory = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask).first else { return nil }
-        
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).png")
-        
-        if FileManager.default.fileExists(atPath: fileURL.path()) {
-            return UIImage(contentsOfFile: fileURL.path())
-        } else {
-            return nil
-        }
-    }
-    
-    func removeImageFromDocument(filename: String) {
-        guard let documentDirectory = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask).first else { return }
-        
-        let fileURL = documentDirectory.appendingPathComponent("\(filename).png")
-        
-        if FileManager.default.fileExists(atPath: fileURL.path()) {
-            
-            do {
-                try FileManager.default.removeItem(atPath: fileURL.path())
-            } catch {
-                print("File remove error", error)
-            }
-            
-        } else {
-            print("File does not exist")
-        }
-    }
-    
-}
-

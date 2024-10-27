@@ -6,3 +6,24 @@
 //
 
 import Foundation
+import RealmSwift
+
+struct Repository {
+    
+    func create() {
+        
+    }
+    
+    func delete() { 
+        
+    }
+    
+    func fetch() {
+        
+    }
+    
+    
+    
+    
+}
+

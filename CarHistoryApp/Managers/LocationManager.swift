@@ -10,13 +10,13 @@ import MapKit
 
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
-     
+    
     @Published var authorizationStatus : CLAuthorizationStatus = .notDetermined
     @Published var userPlace: Place?
     
     @Published private(set) var searchedPlaces = [Place]()
     @Published private(set) var selectedItem: SearchedItem?
-
+    
     override init() {
         super.init()
         manager.delegate = self
@@ -38,7 +38,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-         print("Current Location Error:: \(error.localizedDescription)")
+        print("Current Location Error: \(error.localizedDescription)")
     }
     
     func search(for text: String, in region: MKCoordinateRegion) {
@@ -54,7 +54,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             DispatchQueue.main.async {
                 self.searchedPlaces = response.mapItems.map { item in
                     Place(latitude: item.placemark.coordinate.latitude,
-                          longitude: item.placemark.coordinate.longitude, 
+                          longitude: item.placemark.coordinate.longitude,
                           name: item.name ?? "Unknown")
                 }
             }
@@ -118,8 +118,7 @@ struct Place: Identifiable, Equatable, Codable {
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-
-    // Asynchronous computed property to get address
+    
     var address: String {
         get async {
             let preferredLocale = Locale.preferredLanguages.first
@@ -131,9 +130,7 @@ struct Place: Identifiable, Equatable, Codable {
                 guard let placemark = placemarks.first else {
                     return "Unknown"
                 }
-                
                 return MKPlacemark(placemark: placemark).title ?? "Unknown"
-                    
             } catch {
                 print("Unable to reverse geocode the given location. Error: \(error.localizedDescription)")
                 return "Unknown"
@@ -142,4 +139,4 @@ struct Place: Identifiable, Equatable, Codable {
     }
 }
 
- 
+
