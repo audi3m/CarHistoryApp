@@ -76,7 +76,8 @@ extension NewLogSheet {
                             .scaledToFit()
                             .foregroundStyle(.blackWhite.opacity(0.7))
                             .frame(width: 23, height: 23)
-                        Text(DateHelper.shared.shortFormat(date: logValidator.date))
+                        
+                        Text(DateHelper.shortFormat(date: logValidator.date))
                     }
                 }
             )

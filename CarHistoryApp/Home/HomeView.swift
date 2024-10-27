@@ -46,7 +46,7 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarTrailing) { goToSettingsButton() }
             }
             .navigationDestination(for: Nearby.self) { nearby in
-                NavigationLazyView(NearbyMapView(nearby: nearby))
+                NearbyMapView(nearby: nearby)
             }
             .navigationDestination(for: Car.self) { car in
                 YearlyLogView(car: car)
@@ -172,7 +172,7 @@ extension HomeView {
             HStack(spacing: 10) {
                 Image(systemName: "gauge.open.with.lines.needle.33percent")
                     .font(.title2)
-                Text(DateHelper.shared.currentMonthLong())
+                Text(DateHelper.currentMonthLong())
                     .font(.system(size: 18, weight: .bold))
                 
                 Spacer()
@@ -305,7 +305,7 @@ extension HomeView {
                                 .foregroundStyle(.secondary)
                         }
                         Spacer()
-                        Text(DateHelper.shared.shortFormat(date: log.date))
+                        Text(DateHelper.shortFormat(date: log.date))
                             .font(.caption)
                     }
                     .padding(10)
@@ -320,7 +320,7 @@ extension HomeView {
     }
     private func carProfile() -> some View {
         VStack {
-            if let selectedCar, let image = CarImageManager.shared.loadImageToDocument(filename: "\(selectedCar.id)") {
+            if let selectedCar, let image = CarImageManager.loadImageToDocument(filename: "\(selectedCar.id)") {
                 ZStack(alignment: .bottom) {
                     Image(uiImage: image)
                         .resizable()
@@ -401,7 +401,7 @@ extension HomeView {
     
     private func goToSettingsButton() -> some View {
         NavigationLink {
-            SettingsView2()
+            SettingsView()
         } label: {
             Image(systemName: "line.3.horizontal")
                 .foregroundStyle(.blackWhite)

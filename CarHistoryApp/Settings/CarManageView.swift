@@ -47,7 +47,7 @@ struct CarManageView: View {
             for log in carToDelete.logList {
                 $logs.remove(log)
             }
-            CarImageManager.shared.removeImageFromDocument(filename: "\(carToDelete.id)")
+            CarImageManager.removeImageFromDocument(filename: "\(carToDelete.id)")
             $cars.remove(carToDelete)
         }
     }

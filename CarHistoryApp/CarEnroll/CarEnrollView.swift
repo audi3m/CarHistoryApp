@@ -137,7 +137,7 @@ extension CarEnrollView {
         
         $cars.append(newCar)
         if let selectedImage {
-            CarImageManager.shared.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
+            CarImageManager.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
         }
         
         addedCar = newCar
