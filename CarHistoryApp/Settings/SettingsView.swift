@@ -8,21 +8,54 @@
 import SwiftUI
 import RealmSwift
 
+enum Appearance: String, CaseIterable {
+    case system, light, dark
+    
+    var name: String {
+        switch self {
+        case .system:
+            "시스템"
+        case .light:
+            "라이트"
+        case .dark:
+            "다크"
+        }
+    }
+}
+
 struct SettingsView: View {
-    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
+    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode = "system"
+    @Namespace private var pickerSpace
     
     var body: some View {
         List {
             Section {
-                Picker("Appearance Mode", selection: $selectedAppearanceMode) {
-                    Text("시스템").tag("system")
-                    Text("라이트").tag("light")
-                    Text("다크").tag("dark")
+                HStack {
+                    ForEach(Appearance.allCases, id: \.self) { item in
+                        
+                        VStack(spacing: 8) {
+                            Text(item.name)
+                            Image(systemName: selectedAppearanceMode == item.rawValue ? "checkmark.circle.fill" : "circle")
+                                .font(.title3)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .onTapGesture {
+                            withAnimation {
+                                selectedAppearanceMode = item.rawValue
+                            }
+                        }
+                        
+                        if item.rawValue != "dark" {
+                            Divider()
+                                .frame(width: 5)
+                                .padding(.vertical, 12)
+                        }
+                    }
                 }
-                .pickerStyle(SegmentedPickerStyle())
             }
 //            .listRowBackground(Color.clear)
-//            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .listRowInsets(.init(top: 0, leading: 8, bottom: 0, trailing: 8))
             
             Section {
                 NavigationLink {
@@ -37,7 +70,7 @@ struct SettingsView: View {
                 HStack {
                     Text("버전정보")
                     Spacer()
-                    Text("1.0.4")
+                    Text("1.0.5")
                 }
             }
             
