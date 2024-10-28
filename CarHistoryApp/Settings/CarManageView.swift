@@ -33,7 +33,8 @@ struct CarManageView: View {
                 message: Text("이 차량 및 관련 로그를 삭제하시겠습니까?"),
                 primaryButton: .destructive(Text("삭제")) {
                     if let offsets = deleteOffsets {
-                        deleteCarLogs(atOffsets: offsets)
+                        deleteCarLogs(at: offsets)
+                        deleteOffsets = nil
                     }
                 },
                 secondaryButton: .cancel(Text("취소"))
@@ -41,7 +42,7 @@ struct CarManageView: View {
         }
     }
     
-    private func deleteCarLogs(atOffsets offsets: IndexSet) {
+    private func deleteCarLogs(at offsets: IndexSet) {
         for index in offsets {
             let carToDelete = cars[index]
             for log in carToDelete.logList {
