@@ -8,8 +8,7 @@
 import UIKit
 import MapKit
 
-enum LinkToAppManager {
-    
+enum LinkToApp {
     static func openInAppleMaps(place: Place) {
         let mapItem = MKMapItem(placemark: place.placemark)
         mapItem.name = place.name

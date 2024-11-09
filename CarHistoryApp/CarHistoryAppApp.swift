@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealmSwift
+import Firebase
 
 @main
 struct CarHistoryAppApp: App {
@@ -14,12 +15,14 @@ struct CarHistoryAppApp: App {
     
     init() {
         setupRealm()
+        FirebaseApp.configure()
     }
     
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
+            
         }
     }
     
