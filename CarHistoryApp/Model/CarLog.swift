@@ -22,6 +22,44 @@ final class CarLog: Object, ObjectKeyIdentifiable {
     @Persisted var longitude = 0.0 
     
     @Persisted(originProperty: "logList") var car: LinkingObjects<Car>
+    
+    convenience init(date: Date = Date(),
+                     logType: LogType = LogType.refuel,
+                     companyName: String = "",
+                     mileage: Int = 0,
+                     totalCost: Double = 0.0,
+                     refuelAmount: Double = 0.0,
+                     notes: String = "",
+                     latitude: Double = 0.0,
+                     longitude: Double = 0.0) {
+        self.init()
+        self.date = date
+        self.logType = logType
+        self.companyName = companyName
+        self.mileage = mileage
+        self.totalCost = totalCost
+        self.refuelAmount = refuelAmount
+        self.notes = notes
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+}
+
+extension CarLog {
+    func toDomain() -> LogDomain {
+        let log = LogDomain(id: id.stringValue,
+                            date: date,
+                            logType: logType,
+                            companyName: companyName,
+                            mileage: mileage,
+                            totalCost: totalCost,
+                            refuelAmount: refuelAmount,
+                            notes: notes,
+                            latitude: latitude,
+                            longitude: longitude)
+        return log
+    }
 }
 
 extension CarLog {
