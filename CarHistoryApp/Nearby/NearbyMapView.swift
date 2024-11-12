@@ -154,7 +154,7 @@ extension NearbyMapView {
             
             Button {
                 if let selectedPlace {
-                    LinkToAppManager.openInAppleMaps(place: selectedPlace)
+                    LinkToApp.openInAppleMaps(place: selectedPlace)
                 }
             } label: {
                 Image(systemName: "arrow.right")

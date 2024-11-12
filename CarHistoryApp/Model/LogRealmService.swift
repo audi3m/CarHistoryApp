@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class LogRealmService: LogRepositoryProtocol {
+final class LogRealmService: LogRepository {
     
     private let realm = try! Realm()
     
@@ -61,6 +61,4 @@ extension LogRealmService {
             print(error.localizedDescription)
         }
     }
-    
-    
 }

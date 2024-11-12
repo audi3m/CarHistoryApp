@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-protocol CarRepositoryProtocol {
+protocol CarRepository {
     func fetchCars() -> [CarDomain]
     func createCar(car: CarDomain)
     func deleteCar(car: CarDomain)

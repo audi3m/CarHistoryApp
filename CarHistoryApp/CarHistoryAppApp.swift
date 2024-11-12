@@ -7,15 +7,15 @@
 
 import SwiftUI
 import RealmSwift
-import Firebase
+//import Firebase
 
 @main
 struct CarHistoryAppApp: App {
     @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
     
     init() {
-        setupRealm()
-        FirebaseApp.configure()
+        configureRealm()
+//        FirebaseApp.configure()
     }
     
     var body: some Scene {
@@ -26,7 +26,7 @@ struct CarHistoryAppApp: App {
         }
     }
     
-    private func setupRealm() {
+    private func configureRealm() {
         let config = Realm.Configuration(schemaVersion: 0, migrationBlock: { migration, oldSchemaVersion in
             
 //            if oldSchemaVersion < 1 {

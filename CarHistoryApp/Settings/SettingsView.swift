@@ -29,7 +29,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section {
+            Section("화면 모드") {
                 HStack {
                     ForEach(Appearance.allCases, id: \.self) { item in
                         

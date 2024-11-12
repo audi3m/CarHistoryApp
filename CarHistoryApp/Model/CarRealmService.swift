@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class CarRealmService: CarRepositoryProtocol {
+final class CarRealmService: CarRepository {
     
     private let realm = try! Realm()
     

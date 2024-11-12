@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-protocol LogRepositoryProtocol {
+protocol LogRepository {
     func fetchLogs(carID: String) -> [LogDomain]
     func createLog(log: LogDomain)
     func deleteLog(logID: String)

@@ -36,7 +36,7 @@ struct YearlyLogView: View {
         })
         
         for (month, logs) in groupedLogs {
-            groupedLogs[month] = logs.sorted(by: { $0.date > $1.date })  // 날짜를 역순으로 정렬
+            groupedLogs[month] = logs.sorted(by: { $0.date > $1.date })
         }
         
         return groupedLogs
@@ -44,12 +44,10 @@ struct YearlyLogView: View {
     
     var body: some View {
         VStack {
-            
             if filteredLogs.isEmpty {
                 ContentUnavailableView("비어있음", systemImage: "tray.2", description: Text("\(String(selectedYear))년 기록이 없습니다"))
                     .padding(.bottom, 100)
             } else {
-                
                 List {
                     ForEach(Array(stride(from: 12, through: 1, by: -1)), id: \.self) { month in
                         if let logs = monthlyLogs[month], !logs.isEmpty {
@@ -113,35 +111,6 @@ extension YearlyLogView {
 }
 
 extension YearlyLogView {
-//    private func yearSelector() -> some View {
-//        HStack(spacing: 50) {
-//            Button {
-//                selectedYear -= 1
-//            } label: {
-//                Image(systemName: "chevron.left")
-//                    .font(.title2)
-//                    .fontWeight(.semibold)
-//            }
-//            .disabled(selectedYear <= 2000)
-//            
-//            Text(String(selectedYear))
-//                .font(.title.bold())
-//            
-//            Button {
-//                selectedYear += 1
-//            } label: {
-//                Image(systemName: "chevron.right")
-//                    .font(.title2)
-//                    .fontWeight(.semibold)
-//            }
-//            .disabled(selectedYear >= Calendar.current.component(.year, from: Date()))
-//            
-//        }
-//        .padding(.horizontal)
-//        .padding(.top, 10)
-//        .frame(maxWidth: .infinity)
-//    }
-    
     private func logCell(_ log: CarLog) -> some View {
         HStack {
             RoundedRectangle(cornerRadius: 8)

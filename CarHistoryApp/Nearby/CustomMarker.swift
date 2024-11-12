@@ -25,9 +25,7 @@ struct CustomMarker: View {
                 .frame(width: 18, height: 18)
                 .offset(x: nearby == .parking ? 1.5 : 0, y: -4)
         }
-        
     }
-    
 }
 
 enum AnnotationSign: String, CaseIterable {
@@ -48,9 +46,4 @@ enum AnnotationSign: String, CaseIterable {
             "bubbles.and.sparkles"
         }
     }
-    
-}
- 
-#Preview {
-    CustomMarker(nearby: .parking)
 }
