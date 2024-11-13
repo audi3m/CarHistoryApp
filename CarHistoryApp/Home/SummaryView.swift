@@ -41,7 +41,3 @@ struct SummaryView: View {
         .background(.appBackground)
     }
 }
-
-#Preview {
-    SummaryView()
-}

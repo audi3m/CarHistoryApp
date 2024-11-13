@@ -7,24 +7,41 @@
 
 import Foundation
 
-final class CarViewModel: ObservableObject {
+final class CarViewModel: ObservableObject, CarRepository {
     
-    private let service: CarRepository
+    private let carService: CarRepository
     
     @Published var cars = [CarDomain]()
-    @Published var selectedCar: CarDomain
+    @Published var selectedCarID: String
     
-    init(service: CarRealmService, cars: [CarDomain] = [CarDomain](), selectedCar: CarDomain) {
-        self.service = CarRealmService()
-        self.cars = cars
-        self.selectedCar = selectedCar
+    init(carService: CarRealmService, selectedCarID: String) {
+        self.carService = CarRealmService()
+        self.selectedCarID = selectedCarID
     }
     
+}
+
+extension CarViewModel {
     
+    @discardableResult
+    func fetchCars() -> [CarDomain] {
+        cars = carService.fetchCars()
+        return []
+    }
     
+    func createCar(car: CarDomain) {
+        cars.append(car)
+        carService.createCar(car: car)
+    }
     
+    func deleteCar(car: CarDomain) {
+        cars.removeAll { $0.id == car.id }
+        carService.deleteCar(car: car)
+    }
     
-    
-    
+    func updateCar(car: CarDomain) {
+        
+        carService.updateCar(car: car)
+    }
     
 }
