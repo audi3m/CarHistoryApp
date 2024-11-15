@@ -70,7 +70,7 @@ struct SettingsView: View {
                 HStack {
                     Text("버전정보")
                     Spacer()
-                    Text("1.0.5")
+                    Text("1.0.6")
                 }
             }
             
