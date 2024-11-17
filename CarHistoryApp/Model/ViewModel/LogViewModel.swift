@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LogViewModel: ObservableObject, LogRepository {
+final class LogViewModel: ObservableObject {
     
     private let logService: LogRepository
     

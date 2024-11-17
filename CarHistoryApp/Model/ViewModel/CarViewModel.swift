@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CarViewModel: ObservableObject, CarRepository {
+final class CarViewModel: ObservableObject {
     
     private let carService: CarRepository
     

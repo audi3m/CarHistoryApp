@@ -16,10 +16,9 @@ final class AllDataManager: ObservableObject {
     @Published var selectedCar: CarDomain?
     @Published var logs = [LogDomain]()
     
-    init(carService: CarRepository, logService: LogRepository, selectedCar: CarDomain? = nil) {
+    init(carService: CarRepository, logService: LogRepository) {
         self.carService = carService
         self.logService = logService
-        self.selectedCar = selectedCar
     }
     
 }
@@ -27,8 +26,16 @@ final class AllDataManager: ObservableObject {
 // car
 extension AllDataManager {
     
-    func fetchSelectedCar() {
-//        let id = BasicSettingsHelper.selectedCarNumber
+    func fetchSelectedCar() -> CarDomain? {
+        let id = BasicSettingsHelper.selectedCarNumber
+        let car = cars.first { $0.plateNumber == id }
+        return car
+    }
+    
+    func selectCar(car: CarDomain) {
+        BasicSettingsHelper.selectedCarNumber = car.plateNumber
+        selectedCar = car
+        fetchLogs(carID: car.id)
     }
     
     func fetchCars() {
@@ -50,22 +57,13 @@ extension AllDataManager {
         carService.updateCar(car: car)
     }
     
-    
-    
-    
 }
 
 // log
 extension AllDataManager {
-    func fetchLogs() {
-        guard let carID = selectedCar?.id else { return }
-        logs = logService.fetchLogs(carID: carID)
-    }
     
-    @discardableResult
-    func fetchLogs(carID: String) -> [LogDomain] {
+    func fetchLogs(carID: String) {
         logs = logService.fetchLogs(carID: carID)
-        return []
     }
     
     func createLog(log: LogDomain) {
@@ -82,4 +80,19 @@ extension AllDataManager {
         
         logService.updateLog(log: log)
     }
+    
+    //    var filteredLogs: RealmSwift.List<CarLog> {
+    //        let filteredList = RealmSwift.List<CarLog>()
+    //        let calendar = Calendar.current
+    //        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
+    //        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))!
+    //
+    //        for log in car.logList {
+    //            if log.date >= startOfYear && log.date <= endOfYear {
+    //                filteredList.append(log)
+    //            }
+    //        }
+    //        return filteredList
+    //    }
+    
 }

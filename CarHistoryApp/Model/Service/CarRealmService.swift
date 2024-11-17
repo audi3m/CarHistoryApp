@@ -22,6 +22,11 @@ extension CarRealmService {
         return realm.objects(Car.self).map { $0.toDomain() }
     }
     
+    func fetchCarOfInterest(carID: String) -> CarDomain? {
+        let car = realm.object(ofType: Car.self, forPrimaryKey: carID)
+        return car?.toDomain()
+    }
+    
     func createCar(car: CarDomain) {
         let car = car.toDTO()
         do {

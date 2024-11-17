@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct CarDomain: Identifiable {
-    
+struct CarDomain: Identifiable, Equatable {
     var id = UUID().uuidString
     let manufacturer: String
     let name: String
     let plateNumber: String
     let fuelTypeDomain: FuelTypeDomain
     let color: String
-    
 }
 
 extension CarDomain {
