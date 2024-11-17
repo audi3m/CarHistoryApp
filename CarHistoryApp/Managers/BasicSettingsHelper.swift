@@ -7,12 +7,10 @@
 
 import Foundation
 
-final class BasicSettingsHelper {
-    static let shared = BasicSettingsHelper()
-    private init() { }
+enum BasicSettingsHelper {
     
     // 앱 처음 키고 등록한적없을 때
-    var isFirstLaunch: Bool {
+    static var isFirstLaunch: Bool {
         get {
             if UserDefaults.standard.object(forKey: "isFirstLaunch") == nil {
                 return true
@@ -25,7 +23,7 @@ final class BasicSettingsHelper {
     }
     
     // 자동차
-    var selectedCarNumber: String {
+    static var selectedCarNumber: String {
         get {
             return UserDefaults.standard.string(forKey: "selectedCarNumber") ?? ""
         }
@@ -34,18 +32,8 @@ final class BasicSettingsHelper {
         }
     }
     
-    // 시스템 / 라이트 / 다크
-    var appearance: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: "appearance")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "appearance")
-        }
-    }
-    
     // 0: km, 1: mile
-    var distanceUnit: String {
+    static var distanceUnit: String {
         get {
             return UserDefaults.standard.string(forKey: "distanceUnit") ?? "km"
         }
@@ -55,7 +43,7 @@ final class BasicSettingsHelper {
     }
     
     // 0: liter, 1: gallon
-    var volumeUnit: String {
+    static var volumeUnit: String {
         get {
             return UserDefaults.standard.string(forKey: "volumeUnit") ?? "liter"
         }
