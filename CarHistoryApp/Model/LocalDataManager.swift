@@ -42,9 +42,9 @@ extension LocalDataManager {
         cars = carService.fetchAllCars()
     }
     
-    func createCar(car: CarDomain) {
+    func createCar(car: inout CarDomain) {
+        car.id = carService.createCar(car: car)
         cars.append(car)
-        carService.createCar(car: car)
     }
     
     func deleteCar(car: CarDomain) {
@@ -66,10 +66,10 @@ extension LocalDataManager {
         logs = logService.fetchLogs(carID: carID)
     }
     
-    func createLog(log: LogDomain) {
+    func createLog(log: inout LogDomain) {
         guard let selectedCar else { return }
+        log.id = logService.createLog(to: selectedCar.id, log: log)
         logs.append(log)
-        logService.createLog(to: selectedCar.id, log: log)
     }
     
     func deleteLog(logID: String) {
