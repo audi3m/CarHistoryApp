@@ -1,5 +1,5 @@
 //
-//  AllDataManager.swift
+//  LocalDataManager.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 11/16/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class AllDataManager: ObservableObject {
+final class LocalDataManager: ObservableObject {
     
     private let carService: CarRepository
     private let logService: LogRepository
@@ -24,11 +24,11 @@ final class AllDataManager: ObservableObject {
 }
 
 // car
-extension AllDataManager {
+extension LocalDataManager {
     
-    func fetchSelectedCar() -> CarDomain? {
-        let id = BasicSettingsHelper.selectedCarNumber
-        let car = cars.first { $0.plateNumber == id }
+    func fetchCar() -> CarDomain? {
+        let number = BasicSettingsHelper.selectedCarNumber
+        let car = cars.first { $0.plateNumber == number }
         return car
     }
     
@@ -38,8 +38,8 @@ extension AllDataManager {
         fetchLogs(carID: car.id)
     }
     
-    func fetchCars() {
-        cars = carService.fetchCars()
+    func fetchAllCars() {
+        cars = carService.fetchAllCars()
     }
     
     func createCar(car: CarDomain) {
@@ -60,20 +60,22 @@ extension AllDataManager {
 }
 
 // log
-extension AllDataManager {
+extension LocalDataManager {
     
     func fetchLogs(carID: String) {
         logs = logService.fetchLogs(carID: carID)
     }
     
     func createLog(log: LogDomain) {
+        guard let selectedCar else { return }
         logs.append(log)
-        logService.createLog(log: log)
+        logService.createLog(to: selectedCar.id, log: log)
     }
     
     func deleteLog(logID: String) {
+        guard let selectedCar else { return }
         logs.removeAll { $0.id == logID }
-        logService.deleteLog(logID: logID)
+        logService.deleteLog(from: selectedCar.id, logID: logID)
     }
     
     func updateLog(log: LogDomain) {
