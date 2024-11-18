@@ -9,11 +9,20 @@ import Foundation
 
 struct CarDomain: Identifiable, Equatable {
     var id = UUID().uuidString
-    let manufacturer: String
-    let name: String
-    let plateNumber: String
-    let fuelTypeDomain: FuelTypeDomain
-    let color: String
+    var manufacturer: String
+    var name: String
+    var plateNumber: String
+    var fuelTypeDomain: FuelTypeDomain
+    var color: String
+    
+    init(id: String = UUID().uuidString, manufacturer: String = "", name: String = "", plateNumber: String = "", fuelTypeDomain: FuelTypeDomain = .gasoline, color: String = "") {
+        self.id = id
+        self.manufacturer = manufacturer
+        self.name = name
+        self.plateNumber = plateNumber
+        self.fuelTypeDomain = fuelTypeDomain
+        self.color = color
+    }
 }
 
 extension CarDomain {

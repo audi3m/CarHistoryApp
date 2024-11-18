@@ -18,6 +18,19 @@ struct LogDomain: Identifiable {
     var notes = ""
     var latitude = 0.0
     var longitude = 0.0
+    
+    init(id: String = UUID().uuidString, date: Date = Date(), logType: LogType = LogType.refuel, companyName: String = "", mileage: Int = 0, totalCost: Double = 0.0, refuelAmount: Double = 0.0, notes: String = "", latitude: Double = 0.0, longitude: Double = 0.0) {
+        self.date = date
+        self.logType = logType
+        self.companyName = companyName
+        self.mileage = mileage
+        self.totalCost = totalCost
+        self.refuelAmount = refuelAmount
+        self.notes = notes
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
 }
 
 extension LogDomain {
