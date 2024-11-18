@@ -18,11 +18,11 @@ extension LogTestService {
         return []
     }
     
-    func createLog(log: LogDomain) {
-        
+    func createLog(to car: String, log: LogDomain) -> String {
+        return ""
     }
     
-    func deleteLog(logID: String) {
+    func deleteLog(from: String, logID: String) {
         
     }
     
