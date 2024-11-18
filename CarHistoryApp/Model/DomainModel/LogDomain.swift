@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogDomain {
+struct LogDomain: Identifiable {
     var id = UUID().uuidString
     var date = Date()
     var logType = LogType.refuel
