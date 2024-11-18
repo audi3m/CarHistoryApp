@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RepositoryTestView: View {
-    @EnvironmentObject var dataManager: AllDataManager
+    @EnvironmentObject var dataManager: LocalDataManager
     
     var body: some View {
         NavigationStack {
@@ -17,11 +17,10 @@ struct RepositoryTestView: View {
                     Text("Empty")
                 } else {
                     ForEach(dataManager.logs) { log in
-                        VStack {
-                            Text("\(log.totalCost)")
+                        VStack(alignment: .leading) {
+                            Text(log.id)
                             Text(log.companyName)
                             Text(log.date.description)
-                            Text(log.logType.rawValue)
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button("삭제") {
@@ -53,8 +52,14 @@ struct RepositoryTestView: View {
 
 extension RepositoryTestView {
     func addNewLog() {
-        let newLog = LogDomain(companyName: "\(Int.random(in: 1000...9999))")
-        dataManager.createLog(log: newLog)
+        var newLog = LogDomain(companyName: "\(Int.random(in: 1000...9999))")
+        dataManager.createLog(log: &newLog)
+    }
+    
+    func addNewCar() {
+        var car = CarDomain(manufacturer: "현대\(Int.random(in: 1...9))",
+                            plateNumber: "\(Int.random(in: 1000...9999))")
+        dataManager.createCar(car: &car)
     }
 }
 
@@ -72,9 +77,7 @@ extension RepositoryTestView {
     private func carSelector() -> some View {
         if dataManager.cars.isEmpty {
             Button {
-                let car = CarDomain(manufacturer: "현대\(Int.random(in: 1...9))",
-                                    plateNumber: "\(Int.random(in: 1000...9999))")
-                dataManager.createCar(car: car)
+                addNewCar()
             } label: {
                 HStack {
                     Text("차량 등록")
@@ -98,9 +101,7 @@ extension RepositoryTestView {
                 
                 Section{
                     Button {
-                        let car = CarDomain(manufacturer: "현대\(Int.random(in: 1...9))",
-                                            plateNumber: "\(Int.random(in: 1000...9999))")
-                        dataManager.createCar(car: car)
+                        addNewCar()
                     } label: {
                         Label("추가하기", systemImage: "plus.circle")
                     }

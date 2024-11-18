@@ -14,16 +14,16 @@ final class CarTestService: CarRepository {
 
 extension CarTestService {
     
-    func fetchCars() -> [CarDomain] {
+    func fetchAllCars() -> [CarDomain] {
         return []
     }
     
-    func fetchCarOfInterest(carID: String) -> CarDomain? {
+    func fetchCar(carID: String) -> CarDomain? {
         return nil
     }
     
-    func createCar(car: CarDomain) {
-        
+    func createCar(car: CarDomain) -> String {
+        return ""
     }
     
     func deleteCar(car: CarDomain) {
