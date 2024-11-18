@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import RealmSwift
 
 protocol CarRepository {
     func fetchAllCars() -> [CarDomain]
     func fetchCar(carID: String) -> CarDomain?
-    func createCar(car: CarDomain)
+    func createCar(car: CarDomain) -> String
     func deleteCar(car: CarDomain)
     func updateCar(car: CarDomain)
 }
