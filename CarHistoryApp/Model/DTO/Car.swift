@@ -14,11 +14,11 @@ final class Car: Object, ObjectKeyIdentifiable {
     @Persisted var name = ""
     @Persisted var plateNumber = ""
     @Persisted var fuelType = FuelType.gasoline
-    @Persisted var color = "" 
+    @Persisted var color = ""
     
     @Persisted var logList: List<CarLog>
     
-    convenience init(manufacturer: String = "", 
+    convenience init(manufacturer: String = "",
                      name: String = "",
                      plateNumber: String = "",
                      fuelType: FuelType = FuelType.gasoline,
@@ -34,7 +34,8 @@ final class Car: Object, ObjectKeyIdentifiable {
 
 extension Car {
     func toDomain() -> CarDomain {
-        let car = CarDomain(manufacturer: manufacturer,
+        let car = CarDomain(id: id.stringValue,
+                            manufacturer: manufacturer,
                             name: name,
                             plateNumber: plateNumber,
                             fuelTypeDomain: fuelType.toDomain(),
@@ -72,4 +73,4 @@ extension FuelType {
         }
     }
 }
- 
+

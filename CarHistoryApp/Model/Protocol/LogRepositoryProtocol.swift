@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import RealmSwift
 
 protocol LogRepository {
     func fetchLogs(carID: String) -> [LogDomain]
-    func createLog(log: LogDomain)
-    func deleteLog(logID: String)
+    func createLog(to carID: String, log: LogDomain)
+    func deleteLog(from carID: String, logID: String)
     func updateLog(log: LogDomain)
 }

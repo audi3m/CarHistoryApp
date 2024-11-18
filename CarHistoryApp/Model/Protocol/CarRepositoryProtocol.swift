@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 protocol CarRepository {
-    func fetchCars() -> [CarDomain]
-    func fetchCarOfInterest(carID: String) -> CarDomain?
+    func fetchAllCars() -> [CarDomain]
+    func fetchCar(carID: String) -> CarDomain?
     func createCar(car: CarDomain)
     func deleteCar(car: CarDomain)
     func updateCar(car: CarDomain)

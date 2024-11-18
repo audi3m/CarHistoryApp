@@ -10,20 +10,25 @@ import SwiftUI
 struct RepositoryTestView: View {
     @EnvironmentObject var dataManager: AllDataManager
     
-    @State private var showAddNewCarSheet = false
-    
     var body: some View {
         NavigationStack {
             List {
-                ForEach(dataManager.logs) { log in
-                    Text("\(Int.random(in: 100...999))")
-                    
-//                    VStack {
-//                        Text("\(log.totalCost)")
-//                        Text(log.companyName)
-//                        Text(log.date.description)
-//                        Text(log.logType.rawValue)
-//                    }
+                if dataManager.logs.isEmpty {
+                    Text("Empty")
+                } else {
+                    ForEach(dataManager.logs) { log in
+                        VStack {
+                            Text("\(log.totalCost)")
+                            Text(log.companyName)
+                            Text(log.date.description)
+                            Text(log.logType.rawValue)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button("삭제") {
+                                dataManager.deleteLog(logID: log.id)
+                            }
+                        }
+                    }
                 }
             }
             .navigationTitle("Test")
@@ -31,11 +36,15 @@ struct RepositoryTestView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     carSelector()
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    addButton()
+                }
             }
         }
         .onAppear {
-            dataManager.fetchCars()
-            if let car = dataManager.fetchSelectedCar() {
+            dataManager.fetchAllCars()
+            if let car = dataManager.fetchCar() {
                 dataManager.fetchLogs(carID: car.id)
             }
         }
@@ -43,11 +52,29 @@ struct RepositoryTestView: View {
 }
 
 extension RepositoryTestView {
+    func addNewLog() {
+        let newLog = LogDomain(companyName: "\(Int.random(in: 1000...9999))")
+        dataManager.createLog(log: newLog)
+    }
+}
+
+extension RepositoryTestView {
+    @ViewBuilder
+    private func addButton() -> some View {
+        Button {
+            addNewLog()
+        } label: {
+            Image(systemName: "plus")
+        }
+    }
+    
     @ViewBuilder
     private func carSelector() -> some View {
         if dataManager.cars.isEmpty {
             Button {
-                showAddNewCarSheet = true
+                let car = CarDomain(manufacturer: "현대\(Int.random(in: 1...9))",
+                                    plateNumber: "\(Int.random(in: 1000...9999))")
+                dataManager.createCar(car: car)
             } label: {
                 HStack {
                     Text("차량 등록")
@@ -62,7 +89,7 @@ extension RepositoryTestView {
                             dataManager.selectCar(car: car)
                         } label: {
                             Text(car.plateNumber)
-                            if let selectedCar = dataManager.fetchSelectedCar(), selectedCar == car {
+                            if let selectedCar = dataManager.fetchCar(), selectedCar == car {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -71,7 +98,9 @@ extension RepositoryTestView {
                 
                 Section{
                     Button {
-                        showAddNewCarSheet = true
+                        let car = CarDomain(manufacturer: "현대\(Int.random(in: 1...9))",
+                                            plateNumber: "\(Int.random(in: 1000...9999))")
+                        dataManager.createCar(car: car)
                     } label: {
                         Label("추가하기", systemImage: "plus.circle")
                     }
