@@ -8,26 +8,26 @@
 import Foundation
 import RealmSwift
 
-final class CarRealmService: CarRepository {
+struct CarRealmService: CarRepository {
     
     private let realm = try! Realm()
     
-    init() { }
+//    init() { }
     
 }
 
 extension CarRealmService {
     
-    func fetchCars() -> [CarDomain] {
+    func fetchAllCars() -> [CarDomain] {
         return realm.objects(Car.self).map { $0.toDomain() }
     }
     
-    func fetchCarOfInterest(carID: String) -> CarDomain? {
+    func fetchCar(carID: String) -> CarDomain? {
         let car = realm.object(ofType: Car.self, forPrimaryKey: carID)
         return car?.toDomain()
     }
     
-    func createCar(car: CarDomain) {
+    func createCar(car: CarDomain) -> String {
         let car = car.toDTO()
         do {
             try realm.write {
@@ -36,6 +36,7 @@ extension CarRealmService {
         } catch {
             print(error.localizedDescription)
         }
+        return car.id.stringValue
     }
     
     func deleteCar(car: CarDomain) {

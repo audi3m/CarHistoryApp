@@ -8,11 +8,11 @@
 import Foundation
 import RealmSwift
 
-final class LogRealmService: LogRepository {
+struct LogRealmService: LogRepository {
     
     private let realm = try! Realm()
     
-    init() { }
+//    init() { }
     
 }
 
@@ -25,22 +25,30 @@ extension LogRealmService {
         return Array(logs)
     }
     
-    func createLog(log: LogDomain) {
-        let dto = log.toDTO()
+    func createLog(to carID: String, log: LogDomain) -> String {
+        let logDTO = log.toDTO()
+        guard let carID = try? ObjectId(string: carID),
+              let carDTO = realm.object(ofType: Car.self, forPrimaryKey: carID) else { return "Fail to convert to DTO" }
         do {
             try realm.write {
-                realm.add(dto)
+                carDTO.logList.append(logDTO)
             }
         } catch {
             print(error.localizedDescription)
         }
+        return logDTO.id.stringValue
     }
     
-    func deleteLog(logID: String) {
-        guard let objectID = try? ObjectId(string: logID),
-              let logToDelete = realm.object(ofType: CarLog.self, forPrimaryKey: objectID) else { return }
+    func deleteLog(from carID: String, logID: String) {
+        guard let carObjectID = try? ObjectId(string: carID),
+              let linkedCar = realm.object(ofType: Car.self, forPrimaryKey: carObjectID) else { return }
+        guard let logObjectID = try? ObjectId(string: logID),
+              let logToDelete = realm.object(ofType: CarLog.self, forPrimaryKey: logObjectID) else { return }
         do {
             try realm.write {
+                if let index = linkedCar.logList.firstIndex(of: logToDelete) {
+                    linkedCar.logList.remove(at: index)
+                }
                 realm.delete(logToDelete)
             }
         } catch {
