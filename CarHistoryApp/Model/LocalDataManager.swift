@@ -19,28 +19,52 @@ final class LocalDataManager: ObservableObject {
     init(carService: CarRepository, logService: LogRepository) {
         self.carService = carService
         self.logService = logService
+        
+        fetchAllCars()
+        if let selectedCar = fetchRecentCar() {
+            fetchLogs(of: selectedCar.id)
+        }
     }
     
 }
 
-// car
+// 최초 
 extension LocalDataManager {
-    
-    func fetchCar() -> CarDomain? {
-        let number = BasicSettingsHelper.selectedCarNumber
-        let car = cars.first { $0.plateNumber == number }
-        return car
-    }
-    
-    func selectCar(car: CarDomain) {
-        BasicSettingsHelper.selectedCarNumber = car.plateNumber
-        selectedCar = car
-        fetchLogs(carID: car.id)
-    }
     
     func fetchAllCars() {
         cars = carService.fetchAllCars()
     }
+    
+    func setRecentCar() {
+        
+        
+        
+        // selected 설정
+        // 체크 표시
+        // 리스트 불러오기
+    }
+    
+    func fetchLogs(of carID: String) {
+        logs = logService.fetchLogs(carID: carID)
+    }
+    
+}
+    
+// car
+extension LocalDataManager {
+    
+    func fetchRecentCar() -> CarDomain? {
+        let number = BasicSettingsHelper.selectedCarNumber
+        return cars.first { $0.plateNumber == number }
+    }
+    
+    
+    func selectCar(car: CarDomain) {
+        BasicSettingsHelper.selectedCarNumber = car.plateNumber
+        selectedCar = car
+        fetchLogs(of: car.id)
+    }
+    
     
     func createCar(car: inout CarDomain) {
         car.id = carService.createCar(car: car)
@@ -50,6 +74,11 @@ extension LocalDataManager {
     func deleteCar(car: CarDomain) {
         cars.removeAll { $0.id == car.id }
         carService.deleteCar(car: car)
+    }
+    
+    func isSelectedCar(car: CarDomain) -> Bool {
+        if let selectedCar, selectedCar == car { return true }
+        else { return false}
     }
     
     func updateCar(car: CarDomain) {
@@ -62,9 +91,7 @@ extension LocalDataManager {
 // log
 extension LocalDataManager {
     
-    func fetchLogs(carID: String) {
-        logs = logService.fetchLogs(carID: carID)
-    }
+    
     
     func createLog(log: inout LogDomain) {
         guard let selectedCar else { return }
@@ -83,18 +110,21 @@ extension LocalDataManager {
         logService.updateLog(log: log)
     }
     
-    //    var filteredLogs: RealmSwift.List<CarLog> {
-    //        let filteredList = RealmSwift.List<CarLog>()
-    //        let calendar = Calendar.current
-    //        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
-    //        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))!
-    //
-    //        for log in car.logList {
-    //            if log.date >= startOfYear && log.date <= endOfYear {
-    //                filteredList.append(log)
-    //            }
-    //        }
-    //        return filteredList
-    //    }
-    
 }
+
+
+
+
+//    var filteredLogs: RealmSwift.List<CarLog> {
+//        let filteredList = RealmSwift.List<CarLog>()
+//        let calendar = Calendar.current
+//        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
+//        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))!
+//
+//        for log in car.logList {
+//            if log.date >= startOfYear && log.date <= endOfYear {
+//                filteredList.append(log)
+//            }
+//        }
+//        return filteredList
+//    }

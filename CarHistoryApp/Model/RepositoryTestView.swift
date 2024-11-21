@@ -18,9 +18,8 @@ struct RepositoryTestView: View {
                 } else {
                     ForEach(dataManager.logs) { log in
                         VStack(alignment: .leading) {
-                            Text(log.id)
                             Text(log.companyName)
-                            Text(log.date.description)
+                            Text("\(log.date, style: .date)")
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button("삭제") {
@@ -39,12 +38,10 @@ struct RepositoryTestView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     addButton()
                 }
-            }
-        }
-        .onAppear {
-            dataManager.fetchAllCars()
-            if let car = dataManager.fetchCar() {
-                dataManager.fetchLogs(carID: car.id)
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    carList()
+                }
             }
         }
     }
@@ -64,6 +61,17 @@ extension RepositoryTestView {
 }
 
 extension RepositoryTestView {
+    
+    @ViewBuilder
+    private func carList() -> some View {
+        NavigationLink {
+            TestCarListView()
+        } label: {
+            Image(systemName: "line.3.horizontal")
+                .scaleEffect(x: 0.8, y: 1.2)
+        }
+    }
+    
     @ViewBuilder
     private func addButton() -> some View {
         Button {
@@ -92,7 +100,7 @@ extension RepositoryTestView {
                             dataManager.selectCar(car: car)
                         } label: {
                             Text(car.plateNumber)
-                            if let selectedCar = dataManager.fetchCar(), selectedCar == car {
+                            if let currentCar = dataManager.selectedCar, currentCar == car {
                                 Image(systemName: "checkmark")
                             }
                         }
