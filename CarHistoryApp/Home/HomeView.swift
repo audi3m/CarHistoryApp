@@ -53,7 +53,7 @@ struct HomeView: View {
             }
         }
         .onChange(of: selectedCar) {
-            BasicSettingsHelper.shared.selectedCarNumber = selectedCar?.plateNumber ?? ""
+            BasicSettingsHelper.selectedCarNumber = selectedCar?.plateNumber ?? ""
             fetchLogs()
         }
         .onChange(of: cars) {
@@ -64,7 +64,7 @@ struct HomeView: View {
             }
         }
         .onAppear {
-            let plateNumber = BasicSettingsHelper.shared.selectedCarNumber
+            let plateNumber = BasicSettingsHelper.selectedCarNumber
             if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
                 selectedCar = car
                 fetchLogs()

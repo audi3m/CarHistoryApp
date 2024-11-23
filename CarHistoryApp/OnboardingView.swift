@@ -43,7 +43,3 @@ struct OnboardingView: View {
         case sub
     }
 }
-
-#Preview {
-    OnboardingView()
-}

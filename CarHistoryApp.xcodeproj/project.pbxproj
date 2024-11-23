@@ -18,6 +18,11 @@
 		D423451E2C99AFAB0019F434 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D423451D2C99AFAB0019F434 /* RealmSwift */; };
 		D42345202C9AF6400019F434 /* Nearby.swift in Sources */ = {isa = PBXBuildFile; fileRef = D423451F2C9AF6400019F434 /* Nearby.swift */; };
 		D42345232C9B095A0019F434 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = D423451D2C99AFAB0019F434 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D44141D52CE85530005635B6 /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141D42CE85530005635B6 /* LocalDataManager.swift */; };
+		D44141D72CE8E477005635B6 /* RepositoryTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141D62CE8E477005635B6 /* RepositoryTestView.swift */; };
+		D44141D92CE9EBEC005635B6 /* CarTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141D82CE9EBEC005635B6 /* CarTestService.swift */; };
+		D44141DB2CE9EBF7005635B6 /* LogTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141DA2CE9EBF7005635B6 /* LogTestService.swift */; };
+		D44141E32CEC87D3005635B6 /* TestCarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141E22CEC87D3005635B6 /* TestCarListView.swift */; };
 		D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172EB2C9C4175003A1E8C /* CustomTextField.swift */; };
 		D45172EE2C9C6E6A003A1E8C /* MonthlySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172ED2C9C6E6A003A1E8C /* MonthlySummary.swift */; };
 		D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172F02C9D99B9003A1E8C /* ImagePicker.swift */; };
@@ -36,8 +41,6 @@
 		D4641A822CE0C415005DB6F8 /* LogRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A812CE0C415005DB6F8 /* LogRealmService.swift */; };
 		D4641A842CE0F97B005DB6F8 /* CarDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A832CE0F97B005DB6F8 /* CarDomain.swift */; };
 		D4641A862CE0F987005DB6F8 /* LogDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A852CE0F987005DB6F8 /* LogDomain.swift */; };
-		D4641A882CE352CF005DB6F8 /* CarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A872CE352CF005DB6F8 /* CarViewModel.swift */; };
-		D4641A8A2CE352D4005DB6F8 /* LogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A892CE352D4005DB6F8 /* LogViewModel.swift */; };
 		D4C3FE042CACD03E00E751EA /* LinkToApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE032CACD03E00E751EA /* LinkToApp.swift */; };
 		D4C3FE0A2CAEBD4B00E751EA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE092CAEBD4B00E751EA /* SettingsView.swift */; };
 		D4C3FE0C2CAEBFCB00E751EA /* CarManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */; };
@@ -82,6 +85,11 @@
 		D42345102C99A9520019F434 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		D42345172C99AB5E0019F434 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		D423451F2C9AF6400019F434 /* Nearby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nearby.swift; sourceTree = "<group>"; };
+		D44141D42CE85530005635B6 /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
+		D44141D62CE8E477005635B6 /* RepositoryTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTestView.swift; sourceTree = "<group>"; };
+		D44141D82CE9EBEC005635B6 /* CarTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarTestService.swift; sourceTree = "<group>"; };
+		D44141DA2CE9EBF7005635B6 /* LogTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTestService.swift; sourceTree = "<group>"; };
+		D44141E22CEC87D3005635B6 /* TestCarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCarListView.swift; sourceTree = "<group>"; };
 		D45172EB2C9C4175003A1E8C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D45172ED2C9C6E6A003A1E8C /* MonthlySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySummary.swift; sourceTree = "<group>"; };
 		D45172F02C9D99B9003A1E8C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -99,8 +107,6 @@
 		D4641A812CE0C415005DB6F8 /* LogRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogRealmService.swift; sourceTree = "<group>"; };
 		D4641A832CE0F97B005DB6F8 /* CarDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDomain.swift; sourceTree = "<group>"; };
 		D4641A852CE0F987005DB6F8 /* LogDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDomain.swift; sourceTree = "<group>"; };
-		D4641A872CE352CF005DB6F8 /* CarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewModel.swift; sourceTree = "<group>"; };
-		D4641A892CE352D4005DB6F8 /* LogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewModel.swift; sourceTree = "<group>"; };
 		D4C3FE032CACD03E00E751EA /* LinkToApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkToApp.swift; sourceTree = "<group>"; };
 		D4C3FE092CAEBD4B00E751EA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D4C3FE0B2CAEBFCB00E751EA /* CarManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarManageView.swift; sourceTree = "<group>"; };
@@ -210,6 +216,51 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		D44141DC2CE9EBFC005635B6 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				D44141D82CE9EBEC005635B6 /* CarTestService.swift */,
+				D44141DA2CE9EBF7005635B6 /* LogTestService.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		D44141DE2CE9EC1A005635B6 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				D42345172C99AB5E0019F434 /* Car.swift */,
+				D4E1F6352CA69984003169A6 /* CarLog.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		D44141DF2CE9EC28005635B6 /* DomainModel */ = {
+			isa = PBXGroup;
+			children = (
+				D4641A832CE0F97B005DB6F8 /* CarDomain.swift */,
+				D4641A852CE0F987005DB6F8 /* LogDomain.swift */,
+			);
+			path = DomainModel;
+			sourceTree = "<group>";
+		};
+		D44141E02CE9EC37005635B6 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D4CF7D2F2CC540B3009DB083 /* CarRepositoryProtocol.swift */,
+				D4641A7D2CE0B362005DB6F8 /* LogRepositoryProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D44141E12CE9EC42005635B6 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D4641A7F2CE0C40E005DB6F8 /* CarRealmService.swift */,
+				D4641A812CE0C415005DB6F8 /* LogRealmService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		D45172EA2C9C415F003A1E8C /* etc */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,16 +305,14 @@
 		D4641A7C2CE06724005DB6F8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D42345172C99AB5E0019F434 /* Car.swift */,
-				D4E1F6352CA69984003169A6 /* CarLog.swift */,
-				D4641A832CE0F97B005DB6F8 /* CarDomain.swift */,
-				D4641A852CE0F987005DB6F8 /* LogDomain.swift */,
-				D4CF7D2F2CC540B3009DB083 /* CarRepositoryProtocol.swift */,
-				D4641A7D2CE0B362005DB6F8 /* LogRepositoryProtocol.swift */,
-				D4641A7F2CE0C40E005DB6F8 /* CarRealmService.swift */,
-				D4641A812CE0C415005DB6F8 /* LogRealmService.swift */,
-				D4641A872CE352CF005DB6F8 /* CarViewModel.swift */,
-				D4641A892CE352D4005DB6F8 /* LogViewModel.swift */,
+				D44141DE2CE9EC1A005635B6 /* DTO */,
+				D44141DF2CE9EC28005635B6 /* DomainModel */,
+				D44141E02CE9EC37005635B6 /* Protocol */,
+				D44141E12CE9EC42005635B6 /* Service */,
+				D44141DC2CE9EBFC005635B6 /* Test */,
+				D44141D42CE85530005635B6 /* LocalDataManager.swift */,
+				D44141D62CE8E477005635B6 /* RepositoryTestView.swift */,
+				D44141E22CEC87D3005635B6 /* TestCarListView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -399,8 +448,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D45172FA2C9DB1D9003A1E8C /* NavigationLazyView.swift in Sources */,
-				D4641A8A2CE352D4005DB6F8 /* LogViewModel.swift in Sources */,
 				D45172EE2C9C6E6A003A1E8C /* MonthlySummary.swift in Sources */,
+				D44141DB2CE9EBF7005635B6 /* LogTestService.swift in Sources */,
 				D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */,
 				D42345202C9AF6400019F434 /* Nearby.swift in Sources */,
 				D4641A842CE0F97B005DB6F8 /* CarDomain.swift in Sources */,
@@ -420,9 +469,12 @@
 				D408C4E92C97F7D2001464E7 /* LocationSelectView.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
 				D4E1F6402CA7ADD6003169A6 /* SummaryView.swift in Sources */,
+				D44141D92CE9EBEC005635B6 /* CarTestService.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
 				D45173002C9FEB23003A1E8C /* BasicSettingsHelper.swift in Sources */,
 				D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */,
+				D44141D72CE8E477005635B6 /* RepositoryTestView.swift in Sources */,
+				D44141D52CE85530005635B6 /* LocalDataManager.swift in Sources */,
 				D4E1F65E2CA968BD003169A6 /* LocaleManager.swift in Sources */,
 				D4641A822CE0C415005DB6F8 /* LogRealmService.swift in Sources */,
 				D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */,
@@ -432,12 +484,12 @@
 				D42345112C99A9520019F434 /* DummyData.swift in Sources */,
 				D4E1F6632CA9AAE8003169A6 /* YearlyLogView.swift in Sources */,
 				D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */,
+				D44141E32CEC87D3005635B6 /* TestCarListView.swift in Sources */,
 				D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */,
 				D4E1F6602CA96C2C003169A6 /* LogValidator.swift in Sources */,
 				D4E1F6532CA87256003169A6 /* NearbyMapView.swift in Sources */,
 				D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */,
 				D45172F82C9DAEC0003A1E8C /* MaintanenceView.swift in Sources */,
-				D4641A882CE352CF005DB6F8 /* CarViewModel.swift in Sources */,
 				D4C3FE042CACD03E00E751EA /* LinkToApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

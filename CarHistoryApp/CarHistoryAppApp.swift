@@ -12,16 +12,20 @@ import RealmSwift
 @main
 struct CarHistoryAppApp: App {
     @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
+    @StateObject private var dataManager = LocalDataManager(carService: CarRealmService(), logService: LogRealmService())
     
     init() {
         configureRealm()
 //        FirebaseApp.configure()
+        print(Realm.Configuration.defaultConfiguration.fileURL ?? "")
     }
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
+            RepositoryTestView()
+                .environmentObject(dataManager)
+//            HomeView()
+//                .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
             
         }
     }
