@@ -20,32 +20,44 @@ final class LocalDataManager: ObservableObject {
         self.carService = carService
         self.logService = logService
         
-        fetchAllCars()
-        if let selectedCar = fetchRecentCar() {
-            fetchLogs(of: selectedCar.id)
-        }
+        setInitialData()
     }
     
 }
 
-// 최초 
+//
+extension LocalDataManager {
+    private func setInitialData() {
+        cars = fetchAllCars()
+        selectedCar = fetchRecentCar()
+        logs = fetchLogs(of: selectedCar?.id)
+    }
+    
+    func selectCar(car: CarDomain) {
+        // 차번호 저장
+        // selected 변경
+        // 로그 불러오기
+    }
+}
+
+// 최초
 extension LocalDataManager {
     
-    func fetchAllCars() {
-        cars = carService.fetchAllCars()
+    func fetchAllCars() -> [CarDomain] {
+        let list = carService.fetchAllCars()
+        return list
     }
     
-    func setRecentCar() {
-        
-        
-        
-        // selected 설정
-        // 체크 표시
-        // 리스트 불러오기
+    func setRecentCar(car: CarDomain) {
+        BasicSettingsHelper.selectedCarNumber = car.plateNumber
+        selectedCar = car
+        logs = fetchLogs(of: car.id)
     }
     
-    func fetchLogs(of carID: String) {
-        logs = logService.fetchLogs(carID: carID)
+    func fetchLogs(of carID: String?) -> [LogDomain] {
+        guard let carID else { return [] }
+        let list = logService.fetchLogs(carID: carID)
+        return list
     }
     
 }
@@ -55,30 +67,25 @@ extension LocalDataManager {
     
     func fetchRecentCar() -> CarDomain? {
         let number = BasicSettingsHelper.selectedCarNumber
-        return cars.first { $0.plateNumber == number }
+        if let car = cars.first(where: { $0.plateNumber == number }) {
+            return car
+        } else {
+            return cars.first
+        }
     }
-    
-    
-    func selectCar(car: CarDomain) {
-        BasicSettingsHelper.selectedCarNumber = car.plateNumber
-        selectedCar = car
-        fetchLogs(of: car.id)
-    }
-    
     
     func createCar(car: inout CarDomain) {
         car.id = carService.createCar(car: car)
         cars.append(car)
+        selectedCar = car
+        logs = []
     }
     
     func deleteCar(car: CarDomain) {
         cars.removeAll { $0.id == car.id }
         carService.deleteCar(car: car)
-    }
-    
-    func isSelectedCar(car: CarDomain) -> Bool {
-        if let selectedCar, selectedCar == car { return true }
-        else { return false}
+        selectedCar = fetchRecentCar()
+        logs = fetchLogs(of: selectedCar?.id)
     }
     
     func updateCar(car: CarDomain) {
@@ -90,8 +97,6 @@ extension LocalDataManager {
 
 // log
 extension LocalDataManager {
-    
-    
     
     func createLog(log: inout LogDomain) {
         guard let selectedCar else { return }
