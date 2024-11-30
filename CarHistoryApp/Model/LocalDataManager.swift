@@ -121,7 +121,7 @@ extension LocalDataManager {
 
 extension LocalDataManager {
     
-    func sortByDate(yearOfInterest: Int) -> [LogDomain] {
+    func sortByYear(yearOfInterest: Int) -> [LogDomain] {
         var sortedLogs = [LogDomain]()
         let calendar = Calendar.current
         let startOfYear = calendar.date(from: DateComponents(year: yearOfInterest, month: 1, day: 1))!

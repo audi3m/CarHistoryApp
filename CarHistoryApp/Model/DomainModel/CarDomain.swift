@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CarDomain: Identifiable, Equatable {
+struct CarDomain: Identifiable, Equatable, Hashable {
     var id = UUID().uuidString
     var manufacturer: String
     var name: String

@@ -11,17 +11,19 @@ import RealmSwift
 
 struct CarEnrollView: View {
     
+    @EnvironmentObject var dataManager: LocalDataManager
     @Environment(\.dismiss) private var dismiss
-    @ObservedResults(Car.self) var cars
     
-    @Binding var addedCar: Car?
+//    @ObservedResults(Car.self) var cars
+    
+//    @Binding var addedCar: Car?
     
     @State private var manufacturer = ""
     @State private var plateNumber = ""
     @State private var year = ""
     @State private var name = ""
     @State private var carColor = Color.black
-    @State private var fuelType = FuelType.gasoline
+    @State private var fuelType = FuelTypeDomain.gasoline
     
     @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
@@ -123,24 +125,28 @@ extension CarEnrollView {
 
 extension CarEnrollView {
     private func addNewCar() {
-        let carNumbers = cars.map { $0.plateNumber }
-        guard !carNumbers.contains(plateNumber) else { 
+        let carNumbers = dataManager.cars.map { $0.plateNumber }
+        guard !carNumbers.contains(plateNumber) else {
             carAlreadyExists = true
             return
         }
         
-        let newCar = Car()
-        newCar.plateNumber = plateNumber
-        newCar.manufacturer = manufacturer
-        newCar.name = name
-        newCar.fuelType = fuelType
+        var newCar = CarDomain(manufacturer: manufacturer,
+                               name: name,
+                               plateNumber: plateNumber,
+                               fuelTypeDomain: fuelType)
         
-        $cars.append(newCar)
+        dataManager.createCar(car: &newCar)
+        
+//        let newCar = Car()
+//        newCar.plateNumber = plateNumber
+//        newCar.manufacturer = manufacturer
+//        newCar.name = name
+//        newCar.fuelType = fuelType
+        
         if let selectedImage {
             CarImageManager.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
         }
-        
-        addedCar = newCar
         
         dismiss()
     }

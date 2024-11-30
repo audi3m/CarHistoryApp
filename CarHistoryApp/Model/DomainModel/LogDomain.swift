@@ -5,9 +5,9 @@
 //  Created by J Oh on 11/10/24.
 //
 
-import Foundation
+import SwiftUI
 
-struct LogDomain: Identifiable {
+struct LogDomain: Identifiable, Hashable {
     var id = UUID().uuidString
     var date = Date()
     var logType = LogType.refuel
@@ -46,5 +46,31 @@ extension LogDomain {
                          latitude: latitude,
                          longitude: longitude)
         return dto
+    }
+}
+
+extension LogDomain {
+    var typeColor: Color {
+        switch logType {
+        case .refuel:
+            return .red
+        case .maintenance:
+            return .green
+        case .carWash:
+            return .blue
+        case .etc:
+            return .brown
+        }
+    }
+    
+    var subDescription: String {
+        switch logType {
+        case .refuel:
+            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
+        case .carWash:
+            CurrencyInfo().symbol + "\(totalCost.formatted())"
+        default:
+            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(notes)"
+        }
     }
 }

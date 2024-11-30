@@ -9,27 +9,29 @@ import SwiftUI
 import RealmSwift
 
 struct YearlyLogView: View {
+    @EnvironmentObject var dataManager: LocalDataManager
     
-    @ObservedRealmObject var car: Car
-    @ObservedResults(CarLog.self) var logs
+//    @ObservedRealmObject var car: Car
+//    @ObservedResults(CarLog.self) var logs
     
     @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
+    @State private var filteredLogs = [LogDomain]()
     
-    var filteredLogs: RealmSwift.List<CarLog> {
-        let filteredList = RealmSwift.List<CarLog>()
-        let calendar = Calendar.current
-        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
-        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))! 
-        
-        for log in car.logList {
-            if log.date >= startOfYear && log.date <= endOfYear {
-                filteredList.append(log)
-            }
-        }
-        return filteredList
-    }
+//    var filteredLogs: RealmSwift.List<CarLog> {
+//        let filteredList = RealmSwift.List<CarLog>()
+//        let calendar = Calendar.current
+//        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
+//        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))! 
+//        
+//        for log in car.logList {
+//            if log.date >= startOfYear && log.date <= endOfYear {
+//                filteredList.append(log)
+//            }
+//        }
+//        return filteredList
+//    }
     
-    var monthlyLogs: [Int: [CarLog]] {
+    var monthlyLogs: [Int: [LogDomain]] {
         let filteredList = filteredLogs
         var groupedLogs = Dictionary(grouping: filteredList, by: { log in
             Calendar.current.component(.month, from: log.date)
@@ -101,17 +103,21 @@ struct YearlyLogView: View {
             }
         }
         .background(.appBackground)
+        .onAppear {
+            filteredLogs = dataManager.sortByYear(yearOfInterest: selectedYear)
+        }
     }
 }
 
 extension YearlyLogView {
-    private func deleteLog(_ log: CarLog) {
-        $logs.remove(log)
+    private func deleteLog(_ log: LogDomain) {
+        dataManager.deleteLog(logID: log.id)
+//        $logs.remove(log)
     }
 }
 
 extension YearlyLogView {
-    private func logCell(_ log: CarLog) -> some View {
+    private func logCell(_ log: LogDomain) -> some View {
         HStack {
             RoundedRectangle(cornerRadius: 8)
                 .frame(width: 2.5, height: 35)

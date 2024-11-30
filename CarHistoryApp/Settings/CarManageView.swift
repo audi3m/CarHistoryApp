@@ -9,16 +9,17 @@ import SwiftUI
 import RealmSwift
 
 struct CarManageView: View {
+    @EnvironmentObject var dataManager: LocalDataManager
     
-    @ObservedResults(Car.self) var cars
-    @ObservedResults(CarLog.self) var logs
+//    @ObservedResults(Car.self) var cars
+//    @ObservedResults(CarLog.self) var logs
     
     @State private var showDeleteConfirmation = false
     @State private var deleteOffsets: IndexSet?
     
     var body: some View {
         List {
-            ForEach(cars) { car in
+            ForEach(dataManager.cars) { car in
                 Text(car.plateNumber)
             }
             .onDelete { offsets in
@@ -44,12 +45,15 @@ struct CarManageView: View {
     
     private func deleteCarLogs(at offsets: IndexSet) {
         for index in offsets {
-            let carToDelete = cars[index]
-            for log in carToDelete.logList {
-                $logs.remove(log)
-            }
+            let carToDelete = dataManager.cars[index]
             CarImageManager.removeImageFromDocument(filename: "\(carToDelete.id)")
-            $cars.remove(carToDelete)
+            dataManager.deleteCar(car: carToDelete)
+            
+//            for log in carToDelete.logList {
+//                $logs.remove(log)
+//            }
+            
+//            $cars.remove(carToDelete)
         }
     }
 }

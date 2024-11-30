@@ -53,15 +53,24 @@ final class LogValidator: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func makeNewLog() -> CarLog {
-        let newLog = CarLog()
-        newLog.logType = logType
-        newLog.date = date
-        newLog.mileage = Int(mileage) ?? 0
-        newLog.companyName = companyName
-        newLog.totalCost = Double(totalCost) ?? 0.0
-        newLog.refuelAmount = refuelInt + refuelPoint * 0.1
-        newLog.notes = notes
+    func makeNewLog() -> LogDomain {
+        var newLog = LogDomain(date: date,
+                               logType: logType,
+                               companyName: companyName,
+                               mileage: Int(mileage) ?? 0,
+                               totalCost: Double(totalCost) ?? 0.0,
+                               refuelAmount: refuelInt + refuelPoint * 0.1,
+                               notes: notes)
+        
+        
+//        let newLog = CarLog()
+//        newLog.logType = logType
+//        newLog.date = date
+//        newLog.mileage = Int(mileage) ?? 0
+//        newLog.companyName = companyName
+//        newLog.totalCost = Double(totalCost) ?? 0.0
+//        newLog.refuelAmount = refuelInt + refuelPoint * 0.1
+//        newLog.notes = notes
         
         if let coordinates {
             newLog.latitude = coordinates.latitude
