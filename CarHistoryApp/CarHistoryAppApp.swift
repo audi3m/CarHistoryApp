@@ -22,10 +22,11 @@ struct CarHistoryAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RepositoryTestView()
+//            RepositoryTestView()
+//                .environmentObject(dataManager)
+            HomeView()
                 .environmentObject(dataManager)
-//            HomeView()
-//                .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
+                .preferredColorScheme(colorScheme(for: selectedAppearanceMode))
             
         }
     }

@@ -10,10 +10,11 @@ import CoreLocation
 import RealmSwift
 
 struct NewLogSheet: View {
+    @EnvironmentObject var dataManager: LocalDataManager
     @Environment(\.dismiss) private var dismiss
     @StateObject private var logValidator = LogValidator()
     
-    @ObservedRealmObject var car: Car
+//    @ObservedRealmObject var car: Car
     
     var body: some View {
         NavigationStack {
@@ -46,18 +47,19 @@ struct NewLogSheet: View {
 // 함수
 extension NewLogSheet {
     private func addNewLog() {
-        let newLog = logValidator.makeNewLog()
-        $car.logList.append(newLog)
+        var newLog = logValidator.makeNewLog()
+        dataManager.createLog(log: &newLog)
+//        $car.logList.append(newLog)
     }
     
-    private func getLastMileage() -> String {
-        if let log = car.logList.last {
-            return "\(log.mileage)"
-        } else {
-            return "0"
-        }
-        
-    }
+//    private func getLastMileage() -> String {
+//        if let log = car.logList.last {
+//            return "\(log.mileage)"
+//        } else {
+//            return "0"
+//        }
+//        
+//    }
 }
 
 // SubViews
@@ -90,14 +92,14 @@ extension NewLogSheet {
                     .frame(width: 23, height: 23)
                 
                 HStack {
-                    Text(getLastMileage() + "km")
-                    
-                    Spacer(minLength: 10)
-                    
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.placeholder)
-                    
-                    Spacer(minLength: 10)
+//                    Text(getLastMileage() + "km")
+//                    
+//                    Spacer(minLength: 10)
+//                    
+//                    Image(systemName: "chevron.right")
+//                        .foregroundStyle(.placeholder)
+//                    
+//                    Spacer(minLength: 10)
                     
                     TextField("주행거리", text: $logValidator.mileage)
                         .keyboardType(.numberPad)

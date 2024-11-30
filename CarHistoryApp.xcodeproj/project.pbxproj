@@ -23,6 +23,7 @@
 		D44141D92CE9EBEC005635B6 /* CarTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141D82CE9EBEC005635B6 /* CarTestService.swift */; };
 		D44141DB2CE9EBF7005635B6 /* LogTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141DA2CE9EBF7005635B6 /* LogTestService.swift */; };
 		D44141E32CEC87D3005635B6 /* TestCarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44141E22CEC87D3005635B6 /* TestCarListView.swift */; };
+		D44142AC2CF2347B005635B6 /* CarDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44142AB2CF2347B005635B6 /* CarDataTests.swift */; };
 		D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172EB2C9C4175003A1E8C /* CustomTextField.swift */; };
 		D45172EE2C9C6E6A003A1E8C /* MonthlySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172ED2C9C6E6A003A1E8C /* MonthlySummary.swift */; };
 		D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172F02C9D99B9003A1E8C /* ImagePicker.swift */; };
@@ -60,6 +61,16 @@
 		D4E1F6632CA9AAE8003169A6 /* YearlyLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E1F6622CA9AAE8003169A6 /* YearlyLogView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D44142AD2CF2347B005635B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D408C44E2C9081CA001464E7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D408C4552C9081CA001464E7;
+			remoteInfo = CarHistoryApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		D42345242C9B095B0019F434 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -90,6 +101,8 @@
 		D44141D82CE9EBEC005635B6 /* CarTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarTestService.swift; sourceTree = "<group>"; };
 		D44141DA2CE9EBF7005635B6 /* LogTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTestService.swift; sourceTree = "<group>"; };
 		D44141E22CEC87D3005635B6 /* TestCarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCarListView.swift; sourceTree = "<group>"; };
+		D44142A92CF2347B005635B6 /* CarDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D44142AB2CF2347B005635B6 /* CarDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDataTests.swift; sourceTree = "<group>"; };
 		D45172EB2C9C4175003A1E8C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D45172ED2C9C6E6A003A1E8C /* MonthlySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySummary.swift; sourceTree = "<group>"; };
 		D45172F02C9D99B9003A1E8C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -137,6 +150,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D44142A62CF2347B005635B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -145,6 +165,7 @@
 			children = (
 				D4CF7D2B2CC397F5009DB083 /* .gitignore */,
 				D408C4582C9081CA001464E7 /* CarHistoryApp */,
+				D44142AA2CF2347B005635B6 /* CarDataTests */,
 				D408C4572C9081CA001464E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				D408C4562C9081CA001464E7 /* CarHistoryApp.app */,
+				D44142A92CF2347B005635B6 /* CarDataTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,6 +281,14 @@
 				D4641A812CE0C415005DB6F8 /* LogRealmService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		D44142AA2CF2347B005635B6 /* CarDataTests */ = {
+			isa = PBXGroup;
+			children = (
+				D44142AB2CF2347B005635B6 /* CarDataTests.swift */,
+			);
+			path = CarDataTests;
 			sourceTree = "<group>";
 		};
 		D45172EA2C9C415F003A1E8C /* etc */ = {
@@ -390,6 +420,24 @@
 			productReference = D408C4562C9081CA001464E7 /* CarHistoryApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D44142A82CF2347B005635B6 /* CarDataTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D44142AF2CF2347B005635B6 /* Build configuration list for PBXNativeTarget "CarDataTests" */;
+			buildPhases = (
+				D44142A52CF2347B005635B6 /* Sources */,
+				D44142A62CF2347B005635B6 /* Frameworks */,
+				D44142A72CF2347B005635B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D44142AE2CF2347B005635B6 /* PBXTargetDependency */,
+			);
+			name = CarDataTests;
+			productName = CarDataTests;
+			productReference = D44142A92CF2347B005635B6 /* CarDataTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -402,6 +450,10 @@
 				TargetAttributes = {
 					D408C4552C9081CA001464E7 = {
 						CreatedOnToolsVersion = 15.4;
+					};
+					D44142A82CF2347B005635B6 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = D408C4552C9081CA001464E7;
 					};
 				};
 			};
@@ -425,6 +477,7 @@
 			projectRoot = "";
 			targets = (
 				D408C4552C9081CA001464E7 /* CarHistoryApp */,
+				D44142A82CF2347B005635B6 /* CarDataTests */,
 			);
 		};
 /* End PBXProject section */
@@ -437,6 +490,13 @@
 				D408C4612C9081CC001464E7 /* Preview Assets.xcassets in Resources */,
 				D4CF7D2C2CC397F5009DB083 /* .gitignore in Resources */,
 				D408C45E2C9081CC001464E7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D44142A72CF2347B005635B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +554,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D44142A52CF2347B005635B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D44142AC2CF2347B005635B6 /* CarDataTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D44142AE2CF2347B005635B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D408C4552C9081CA001464E7 /* CarHistoryApp */;
+			targetProxy = D44142AD2CF2347B005635B6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D408C4622C9081CC001464E7 /* Debug */ = {
@@ -695,6 +771,42 @@
 			};
 			name = Release;
 		};
+		D44142B02CF2347B005635B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NWL6WKXWCJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarDataTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarHistoryApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CarHistoryApp";
+			};
+			name = Debug;
+		};
+		D44142B12CF2347B005635B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NWL6WKXWCJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Ray.CarDataTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CarHistoryApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CarHistoryApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -712,6 +824,15 @@
 			buildConfigurations = (
 				D408C4652C9081CC001464E7 /* Debug */,
 				D408C4662C9081CC001464E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D44142AF2CF2347B005635B6 /* Build configuration list for PBXNativeTarget "CarDataTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D44142B02CF2347B005635B6 /* Debug */,
+				D44142B12CF2347B005635B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

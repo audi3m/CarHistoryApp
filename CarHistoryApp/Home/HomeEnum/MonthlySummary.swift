@@ -18,9 +18,9 @@ enum MonthlySummary: CaseIterable, Hashable {
 //        case .mileage:
 //            "1,123 km"
         case .fuelCost:
-            "₩ 120,000"
+            return "₩ 120,000"
         case .carWash:
-            "9월 10일"
+            return "9월 10일"
         }
     }
     

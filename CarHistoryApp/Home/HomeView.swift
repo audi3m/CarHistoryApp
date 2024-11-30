@@ -9,13 +9,19 @@ import SwiftUI
 import RealmSwift
 
 struct HomeView: View {
-    @ObservedResults(Car.self) var cars
-    @State private var filteredLogs = RealmSwift.List<CarLog>()
+    @EnvironmentObject var dataManager: LocalDataManager
+    
+    
+    
+    
+    
+    //    @ObservedResults(Car.self) var cars
+//    @State private var filteredLogs = RealmSwift.List<CarLog>()
     
     @State private var addedCar: Car?
     
-    @State private var selectedCar: Car?
-//    @ObservedRealmObject var selectedCar: Car?
+//    @State private var selectedCar: Car?
+    //    @ObservedRealmObject var selectedCar: Car?
     
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
@@ -48,43 +54,43 @@ struct HomeView: View {
             .navigationDestination(for: Nearby.self) { nearby in
                 NearbyMapView(nearby: nearby)
             }
-            .navigationDestination(for: Car.self) { car in
-                YearlyLogView(car: car)
+//            .navigationDestination(for: Car.self) { car in
+//                YearlyLogView(car: car)
+//            }
+            .navigationDestination(for: CarDomain.self) { car in
+                YearlyLogView()
             }
         }
-        .onChange(of: selectedCar) {
-            BasicSettingsHelper.selectedCarNumber = selectedCar?.plateNumber ?? ""
-            fetchLogs()
-        }
-        .onChange(of: cars) {
-            if let car = selectedCar {
-                selectedCar = cars.first { $0.id == car.id } ?? cars.first
-            } else {
-                selectedCar = cars.first
-            }
-        }
-        .onAppear {
-            let plateNumber = BasicSettingsHelper.selectedCarNumber
-            if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
-                selectedCar = car
-                fetchLogs()
-            }
-        }
+//        .onChange(of: selectedCar) {
+//            BasicSettingsHelper.selectedCarNumber = selectedCar?.plateNumber ?? ""
+//            fetchLogs()
+//        }
+//        .onChange(of: cars) {
+//            if let car = selectedCar {
+//                selectedCar = cars.first { $0.id == car.id } ?? cars.first
+//            } else {
+//                selectedCar = cars.first
+//            }
+//        }
+//        .onAppear {
+//            let plateNumber = BasicSettingsHelper.selectedCarNumber
+//            if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
+//                selectedCar = car
+//                fetchLogs()
+//            }
+//        }
         .sheet(isPresented: $showAddNewLogSheet) {
-            if let selectedCar {
-                NewLogSheet(car: selectedCar)
-                    .onDisappear {
-                        fetchLogs()
-                    }
+            if dataManager.selectedCar != nil {
+                NewLogSheet()
             }
         }
         .sheet(isPresented: $showAddNewCarSheet) {
-            CarEnrollView(addedCar: $addedCar)
-                .onDisappear {
-                    if let addedCar {
-                        selectedCar = addedCar
-                    }
-                }
+            CarEnrollView()
+//                .onDisappear {
+//                    if let addedCar {
+//                        selectedCar = addedCar
+//                    }
+//                }
         }
         .alert("등록된 차량이 없습니다", isPresented: $noEnrolledCar) {
             Button("차량 등록") { showAddNewCarSheet = true }
@@ -95,15 +101,15 @@ struct HomeView: View {
         
     }
     
-    private func fetchLogs() {
-        guard let selectedCar else { return }
-        let sortedLogs = RealmSwift.List<CarLog>()
-        let sortedArray = selectedCar.logList.sorted(byKeyPath: "date", ascending: false)
-        for log in sortedArray {
-            sortedLogs.append(log)
-        }
-        filteredLogs = sortedLogs
-    }
+//    private func fetchLogs() {
+//        guard let selectedCar else { return }
+//        let sortedLogs = RealmSwift.List<CarLog>()
+//        let sortedArray = selectedCar.logList.sorted(byKeyPath: "date", ascending: false)
+//        for log in sortedArray {
+//            sortedLogs.append(log)
+//        }
+//        filteredLogs = sortedLogs
+//    }
     
 }
 
@@ -113,7 +119,7 @@ extension HomeView {
     private func getMileage() { }
     
     private func getFuelExpense() -> some View {
-        guard let selectedCar else {
+        guard dataManager.selectedCar != nil else {
             return Text("₩0")
                 .font(.footnote)
                 .foregroundStyle(.placeholder)
@@ -125,7 +131,7 @@ extension HomeView {
         let currentYear = calendar.component(.year, from: Date())
         let currentMonth = calendar.component(.month, from: Date())
         
-        let refuelList = selectedCar.logList
+        let refuelList = dataManager.logs
             .filter { $0.logType == .refuel }
             .filter {
                 let logYear = calendar.component(.year, from: $0.date)
@@ -141,16 +147,8 @@ extension HomeView {
             .minimumScaleFactor(0.8)
     }
     
-    //    private func getLatestWashThisMonth() {
-    //        if let selectedCar, let wash = selectedCar.logList.last(where: { $0.logType == .carWash }) {
-    //            monthlyMileage = wash.date.toSep30()
-    //        } else {
-    //            monthlyMileage = nil
-    //        }
-    //    }
-    
     private func getLatestWash() -> some View {
-        if let selectedCar, let wash = selectedCar.logList.last(where: { $0.logType == .carWash }) {
+        if let wash = dataManager.logs.last(where: { $0.logType == .carWash }) {
             Text(wash.date.toSep30())
                 .font(.footnote)
                 .fontWeight(.semibold)
@@ -188,6 +186,20 @@ extension HomeView {
             }
             .padding(.horizontal, 6)
             
+            HStack {
+                Group {
+                    
+                }
+                .foregroundStyle(.blackWhite)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(.cellBG)
+                        .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
+                )
+            }
+            
             LazyVGrid(columns: columns2) {
                 ForEach(MonthlySummary.allCases, id: \.self) { summary in
                     VStack(spacing: 8) {
@@ -195,8 +207,8 @@ extension HomeView {
                             .frame(height: 15)
                         
                         switch summary {
-//                        case .mileage:
-//                            getMileage()
+                            //                        case .mileage:
+                            //                            getMileage()
                         case .fuelCost:
                             getFuelExpense()
                         case .carWash:
@@ -216,6 +228,7 @@ extension HomeView {
         }
         .padding()
     }
+    
     private func nearby() -> some View {
         VStack(alignment: .leading) {
             HStack(spacing: 10) {
@@ -259,22 +272,22 @@ extension HomeView {
                 Text("최근 기록")
                     .font(.system(size: 18, weight: .bold))
                 Spacer()
-                if let selectedCar {
-                    NavigationLink(value: selectedCar) {
-                        HStack {
-                            Text("All")
-                                .font(.footnote)
-                            Image(systemName: "chevron.right")
-                                .font(.footnote)
-                        }
-                        .foregroundStyle(.blackWhite)
+                NavigationLink{
+                    YearlyLogView()
+                } label: {
+                    HStack {
+                        Text("All")
+                            .font(.footnote)
+                        Image(systemName: "chevron.right")
+                            .font(.footnote)
                     }
+                    .foregroundStyle(.blackWhite)
                 }
             }
             .padding(.horizontal, 6)
             
             VStack {
-                if filteredLogs.isEmpty {
+                if dataManager.logs.isEmpty {
                     HStack {
                         Text("기록 없음")
                             .foregroundStyle(.placeholder)
@@ -285,7 +298,7 @@ extension HomeView {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 
-                ForEach(filteredLogs.prefix(5)) { log in
+                ForEach(dataManager.logs.prefix(5)) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
@@ -318,9 +331,11 @@ extension HomeView {
         }
         .padding()
     }
+    
     private func carProfile() -> some View {
         VStack {
-            if let selectedCar, let image = CarImageManager.loadImageToDocument(filename: "\(selectedCar.id)") {
+            if let currentCar = dataManager.selectedCar,
+               let image = CarImageManager.loadImageToDocument(filename: "\(currentCar.id)") {
                 ZStack(alignment: .bottom) {
                     Image(uiImage: image)
                         .resizable()
@@ -353,7 +368,7 @@ extension HomeView {
 extension HomeView {
     @ViewBuilder
     private func carSelector() -> some View {
-        if cars.isEmpty {
+        if dataManager.cars.isEmpty {
             Button {
                 showAddNewCarSheet = true
             } label: {
@@ -365,13 +380,12 @@ extension HomeView {
         } else {
             Menu {
                 Section {
-                    ForEach(cars) { car in
+                    ForEach(dataManager.cars) { car in
                         Button {
-                            selectedCar = car
-                            fetchLogs()
+                            dataManager.setRecentCar(car: car)
                         } label: {
                             Text(car.plateNumber)
-                            if let selectedCar, selectedCar == car {
+                            if let currentCar = dataManager.selectedCar, currentCar == car {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -388,7 +402,7 @@ extension HomeView {
                 
             } label: {
                 HStack {
-                    Text(selectedCar?.plateNumber ?? "None")
+                    Text(dataManager.selectedCar?.plateNumber ?? "None")
                         .font(.title2)
                         .bold()
                     Image(systemName: "chevron.down")
@@ -415,7 +429,7 @@ extension HomeView {
 extension HomeView {
     private func addNewLogButton() -> some View {
         Button {
-            if selectedCar != nil {
+            if dataManager.selectedCar != nil {
                 showAddNewLogSheet = true
             } else {
                 noEnrolledCar = true
@@ -429,4 +443,4 @@ extension HomeView {
         .padding()
     }
 }
- 
+

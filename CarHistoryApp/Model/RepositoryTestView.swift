@@ -97,7 +97,7 @@ extension RepositoryTestView {
                 Section {
                     ForEach(dataManager.cars) { car in
                         Button {
-                            dataManager.selectCar(car: car)
+                            dataManager.setRecentCar(car: car)
                         } label: {
                             Text(car.plateNumber)
                             if let currentCar = dataManager.selectedCar, currentCar == car {

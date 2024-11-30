@@ -43,9 +43,8 @@ extension LocalDataManager {
 // 최초
 extension LocalDataManager {
     
-    func fetchAllCars() -> [CarDomain] {
-        let list = carService.fetchAllCars()
-        return list
+    private func fetchAllCars() -> [CarDomain] {
+        return carService.fetchAllCars()
     }
     
     func setRecentCar(car: CarDomain) {
@@ -65,7 +64,7 @@ extension LocalDataManager {
 // car
 extension LocalDataManager {
     
-    func fetchRecentCar() -> CarDomain? {
+    private func fetchRecentCar() -> CarDomain? {
         let number = BasicSettingsHelper.selectedCarNumber
         if let car = cars.first(where: { $0.plateNumber == number }) {
             return car
@@ -78,6 +77,7 @@ extension LocalDataManager {
         car.id = carService.createCar(car: car)
         cars.append(car)
         selectedCar = car
+        BasicSettingsHelper.selectedCarNumber = car.plateNumber
         logs = []
     }
     
@@ -102,6 +102,7 @@ extension LocalDataManager {
         guard let selectedCar else { return }
         log.id = logService.createLog(to: selectedCar.id, log: log)
         logs.append(log)
+        logs.sort { $0.date < $1.date }
     }
     
     func deleteLog(logID: String) {
@@ -118,18 +119,25 @@ extension LocalDataManager {
 }
 
 
-
-
-//    var filteredLogs: RealmSwift.List<CarLog> {
-//        let filteredList = RealmSwift.List<CarLog>()
-//        let calendar = Calendar.current
-//        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
-//        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))!
-//
-//        for log in car.logList {
-//            if log.date >= startOfYear && log.date <= endOfYear {
-//                filteredList.append(log)
-//            }
-//        }
-//        return filteredList
-//    }
+extension LocalDataManager {
+    
+    func sortByYear(yearOfInterest: Int) -> [LogDomain] {
+        var sortedLogs = [LogDomain]()
+        let calendar = Calendar.current
+        let startOfYear = calendar.date(from: DateComponents(year: yearOfInterest, month: 1, day: 1))!
+        let endOfYear = calendar.date(from: DateComponents(year: yearOfInterest, month: 12, day: 31))!
+        
+        for log in self.logs {
+            if log.date >= startOfYear && log.date <= endOfYear {
+                sortedLogs.append(log)
+            }
+        }
+        
+        return sortedLogs
+    }
+    
+    func getFuelExpense() {
+        
+    }
+    
+}
