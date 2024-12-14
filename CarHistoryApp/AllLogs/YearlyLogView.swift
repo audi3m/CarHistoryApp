@@ -11,43 +11,15 @@ import RealmSwift
 struct YearlyLogView: View {
     @EnvironmentObject var dataManager: LocalDataManager
     
-//    @ObservedRealmObject var car: Car
-//    @ObservedResults(CarLog.self) var logs
-    
     @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
-    @State private var filteredLogs = [LogDomain]()
-    
-//    var filteredLogs: RealmSwift.List<CarLog> {
-//        let filteredList = RealmSwift.List<CarLog>()
-//        let calendar = Calendar.current
-//        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
-//        let endOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 12, day: 31))! 
-//        
-//        for log in car.logList {
-//            if log.date >= startOfYear && log.date <= endOfYear {
-//                filteredList.append(log)
-//            }
-//        }
-//        return filteredList
-//    }
-    
-    var monthlyLogs: [Int: [LogDomain]] {
-        let filteredList = filteredLogs
-        var groupedLogs = Dictionary(grouping: filteredList, by: { log in
-            Calendar.current.component(.month, from: log.date)
-        })
-        
-        for (month, logs) in groupedLogs {
-            groupedLogs[month] = logs.sorted(by: { $0.date > $1.date })
-        }
-        
-        return groupedLogs
-    }
+    @State private var monthlyLogs = [Int: [LogDomain]]()
     
     var body: some View {
         VStack {
-            if filteredLogs.isEmpty {
-                ContentUnavailableView("비어있음", systemImage: "tray.2", description: Text("\(String(selectedYear))년 기록이 없습니다"))
+            if monthlyLogs.isEmpty {
+                ContentUnavailableView("비어있음",
+                                       systemImage: "tray.2",
+                                       description: Text("\(String(selectedYear))년 기록이 없습니다"))
                     .padding(.bottom, 100)
             } else {
                 List {
@@ -103,16 +75,29 @@ struct YearlyLogView: View {
             }
         }
         .background(.appBackground)
+        .onChange(of: selectedYear, { oldValue, newValue in
+            monthlyLogs = getMonthlyLogs(year: selectedYear)
+        })
         .onAppear {
-            filteredLogs = dataManager.sortByYear(yearOfInterest: selectedYear)
+            monthlyLogs = getMonthlyLogs(year: selectedYear)
         }
     }
 }
 
 extension YearlyLogView {
+    private func getMonthlyLogs(year: Int) -> [Int: [LogDomain]] {
+        let logs = dataManager.sortByYear(yearOfInterest: year)
+        var groupedLogs = Dictionary(grouping: logs, by: { log in
+            Calendar.current.component(.month, from: log.date)
+        })
+        for (month, logs) in groupedLogs {
+            groupedLogs[month] = logs.sorted(by: { $0.date > $1.date })
+        }
+        return groupedLogs
+    }
+    
     private func deleteLog(_ log: LogDomain) {
         dataManager.deleteLog(logID: log.id)
-//        $logs.remove(log)
     }
 }
 
@@ -148,4 +133,5 @@ extension YearlyLogView {
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .listRowBackground(Color.clear)
     }
+    
 }

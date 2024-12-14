@@ -11,18 +11,6 @@ import RealmSwift
 struct HomeView: View {
     @EnvironmentObject var dataManager: LocalDataManager
     
-    
-    
-    
-    
-    //    @ObservedResults(Car.self) var cars
-//    @State private var filteredLogs = RealmSwift.List<CarLog>()
-    
-    @State private var addedCar: Car?
-    
-//    @State private var selectedCar: Car?
-    //    @ObservedRealmObject var selectedCar: Car?
-    
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
     
@@ -54,31 +42,10 @@ struct HomeView: View {
             .navigationDestination(for: Nearby.self) { nearby in
                 NearbyMapView(nearby: nearby)
             }
-//            .navigationDestination(for: Car.self) { car in
-//                YearlyLogView(car: car)
-//            }
             .navigationDestination(for: CarDomain.self) { car in
                 YearlyLogView()
             }
         }
-//        .onChange(of: selectedCar) {
-//            BasicSettingsHelper.selectedCarNumber = selectedCar?.plateNumber ?? ""
-//            fetchLogs()
-//        }
-//        .onChange(of: cars) {
-//            if let car = selectedCar {
-//                selectedCar = cars.first { $0.id == car.id } ?? cars.first
-//            } else {
-//                selectedCar = cars.first
-//            }
-//        }
-//        .onAppear {
-//            let plateNumber = BasicSettingsHelper.selectedCarNumber
-//            if let car = cars.first(where: { $0.plateNumber == plateNumber }) {
-//                selectedCar = car
-//                fetchLogs()
-//            }
-//        }
         .sheet(isPresented: $showAddNewLogSheet) {
             if dataManager.selectedCar != nil {
                 NewLogSheet()
@@ -86,11 +53,6 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showAddNewCarSheet) {
             CarEnrollView()
-//                .onDisappear {
-//                    if let addedCar {
-//                        selectedCar = addedCar
-//                    }
-//                }
         }
         .alert("등록된 차량이 없습니다", isPresented: $noEnrolledCar) {
             Button("차량 등록") { showAddNewCarSheet = true }
@@ -100,16 +62,6 @@ struct HomeView: View {
         }
         
     }
-    
-//    private func fetchLogs() {
-//        guard let selectedCar else { return }
-//        let sortedLogs = RealmSwift.List<CarLog>()
-//        let sortedArray = selectedCar.logList.sorted(byKeyPath: "date", ascending: false)
-//        for log in sortedArray {
-//            sortedLogs.append(log)
-//        }
-//        filteredLogs = sortedLogs
-//    }
     
 }
 
@@ -127,19 +79,7 @@ extension HomeView {
                 .minimumScaleFactor(0.8)
         }
         
-        let calendar = Calendar.current
-        let currentYear = calendar.component(.year, from: Date())
-        let currentMonth = calendar.component(.month, from: Date())
-        
-        let refuelList = dataManager.logs
-            .filter { $0.logType == .refuel }
-            .filter {
-                let logYear = calendar.component(.year, from: $0.date)
-                let logMonth = calendar.component(.month, from: $0.date)
-                return logYear == currentYear && logMonth == currentMonth
-            }
-        
-        let totalCost = refuelList.reduce(0) { $0 + $1.totalCost }
+        let totalCost = dataManager.getFuelExpense()
         
         return Text("₩\(Int(totalCost))")
             .font(.footnote)
@@ -167,6 +107,7 @@ extension HomeView {
 extension HomeView {
     private func monthlySummary() -> some View {
         VStack(alignment: .leading) {
+            
             HStack(spacing: 10) {
                 Image(systemName: "gauge.open.with.lines.needle.33percent")
                     .font(.title2)
@@ -185,20 +126,6 @@ extension HomeView {
                 //                .foregroundStyle(.blackWhite)
             }
             .padding(.horizontal, 6)
-            
-            HStack {
-                Group {
-                    
-                }
-                .foregroundStyle(.blackWhite)
-                .padding(.vertical, 12)
-                .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(.cellBG)
-                        .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
-                )
-            }
             
             LazyVGrid(columns: columns2) {
                 ForEach(MonthlySummary.allCases, id: \.self) { summary in
@@ -298,7 +225,7 @@ extension HomeView {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 
-                ForEach(dataManager.logs.prefix(5)) { log in
+                ForEach(dataManager.logs.suffix(5).reversed()) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
