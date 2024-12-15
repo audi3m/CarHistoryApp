@@ -70,37 +70,6 @@ extension HomeView {
     
     private func getMileage() { }
     
-    private func getFuelExpense() -> some View {
-        guard dataManager.selectedCar != nil else {
-            return Text("₩0")
-                .font(.footnote)
-                .foregroundStyle(.placeholder)
-                .fontWeight(.semibold)
-                .minimumScaleFactor(0.8)
-        }
-        
-        let totalCost = dataManager.getFuelExpense()
-        
-        return Text("₩\(Int(totalCost))")
-            .font(.footnote)
-            .fontWeight(.semibold)
-            .minimumScaleFactor(0.8)
-    }
-    
-    private func getLatestWash() -> some View {
-        if let wash = dataManager.logs.last(where: { $0.logType == .carWash }) {
-            Text(wash.date.toSep30())
-                .font(.footnote)
-                .fontWeight(.semibold)
-                .minimumScaleFactor(0.8)
-        } else {
-            Text("기록 없음")
-                .font(.footnote)
-                .foregroundStyle(.placeholder)
-                .fontWeight(.semibold)
-                .minimumScaleFactor(0.8)
-        }
-    }
 }
 
 // Main Views
@@ -116,41 +85,47 @@ extension HomeView {
                 
                 Spacer()
                 
-                //                NavigationLink {
-                //                    SummaryView()
-                //                } label: {
-                //                    Image(systemName: "chart.bar.xaxis")
-                //                    Image(systemName: "chevron.right")
-                //                        .font(.footnote)
-                //                }
-                //                .foregroundStyle(.blackWhite)
+                NavigationLink {
+                    SummaryView()
+                } label: {
+                    Image(systemName: "chart.bar.xaxis")
+                    Image(systemName: "chevron.right")
+                        .font(.footnote)
+                }
+                .foregroundStyle(.blackWhite)
             }
             .padding(.horizontal, 6)
             
-            LazyVGrid(columns: columns2) {
-                ForEach(MonthlySummary.allCases, id: \.self) { summary in
+            HStack {
+                Group {
                     VStack(spacing: 8) {
-                        Image(systemName: summary.image)
+                        Image(systemName: "fuelpump.fill")
                             .frame(height: 15)
                         
-                        switch summary {
-                            //                        case .mileage:
-                            //                            getMileage()
-                        case .fuelCost:
-                            getFuelExpense()
-                        case .carWash:
-                            getLatestWash()
-                        }
+                        Text(dataManager.getFuelExpense())
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .minimumScaleFactor(0.8)
                     }
-                    .foregroundStyle(.blackWhite)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(.cellBG)
-                            .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
-                    )
+                    
+                    VStack(spacing: 8) {
+                        Image(systemName: "bubbles.and.sparkles")
+                            .frame(height: 15)
+                        
+                        Text(dataManager.getLatestWash())
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .minimumScaleFactor(0.8)
+                    }
                 }
+                .foregroundStyle(.blackWhite)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(.cellBG)
+                        .shadow(color: .blackWhite.opacity(0.07), radius: 1, x: 2, y: 2)
+                )
             }
         }
         .padding()
