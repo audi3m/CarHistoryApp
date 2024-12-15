@@ -22,7 +22,7 @@ extension LogRealmService {
         guard let objectID = try? ObjectId(string: carID),
               let car = realm.object(ofType: Car.self, forPrimaryKey: objectID) else { return [] }
         let logs = car.logList.map { $0.toDomain() }
-        return Array(logs)
+        return Array(logs).sorted { $0.date < $1.date }
     }
     
     func createLog(to carID: String, log: LogDomain) -> String {
