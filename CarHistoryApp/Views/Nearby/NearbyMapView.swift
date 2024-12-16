@@ -154,7 +154,7 @@ extension NearbyMapView {
             
             Button {
                 if let selectedPlace {
-                    LinkToApp.openInAppleMaps(place: selectedPlace)
+                    openInAppleMaps(place: selectedPlace)
                 }
             } label: {
                 Image(systemName: "arrow.right")
@@ -172,5 +172,15 @@ extension NearbyMapView {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 3)
         .padding(.bottom, 10)
+    }
+}
+
+extension NearbyMapView {
+    private func openInAppleMaps(place: Place) {
+        let mapItem = MKMapItem(placemark: place.placemark)
+        mapItem.name = place.name
+        mapItem.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
     }
 }

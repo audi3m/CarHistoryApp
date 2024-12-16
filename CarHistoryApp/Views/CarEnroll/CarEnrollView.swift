@@ -138,12 +138,6 @@ extension CarEnrollView {
         
         dataManager.createCar(car: &newCar)
         
-//        let newCar = Car()
-//        newCar.plateNumber = plateNumber
-//        newCar.manufacturer = manufacturer
-//        newCar.name = name
-//        newCar.fuelType = fuelType
-        
         if let selectedImage {
             CarImageManager.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
         }

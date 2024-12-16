@@ -11,9 +11,6 @@ import RealmSwift
 struct CarManageView: View {
     @EnvironmentObject var dataManager: LocalDataManager
     
-//    @ObservedResults(Car.self) var cars
-//    @ObservedResults(CarLog.self) var logs
-    
     @State private var showDeleteConfirmation = false
     @State private var deleteOffsets: IndexSet?
     
@@ -47,13 +44,7 @@ struct CarManageView: View {
         for index in offsets {
             let carToDelete = dataManager.cars[index]
             CarImageManager.removeImageFromDocument(filename: "\(carToDelete.id)")
-            dataManager.deleteCar(car: carToDelete)
-            
-//            for log in carToDelete.logList {
-//                $logs.remove(log)
-//            }
-            
-//            $cars.remove(carToDelete)
+            dataManager.deleteCar(car: carToDelete) 
         }
     }
 }
