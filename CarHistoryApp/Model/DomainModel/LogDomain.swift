@@ -64,13 +64,6 @@ extension LogDomain {
     }
     
     var subDescription: String {
-        switch logType {
-        case .refuel:
-            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
-        case .carWash:
-            CurrencyInfo().symbol + "\(totalCost.formatted())"
-        default:
-            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(notes)"
-        }
+        return "₩" + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
     }
 }

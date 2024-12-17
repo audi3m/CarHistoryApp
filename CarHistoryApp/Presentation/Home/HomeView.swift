@@ -16,8 +16,6 @@ struct HomeView: View {
     
     @State private var noEnrolledCar = false
     
-    let columns2 = Array(repeating: GridItem(.flexible()), count: 2)
-    let columns3 = Array(repeating: GridItem(.flexible()), count: 3)
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     
     var body: some View {

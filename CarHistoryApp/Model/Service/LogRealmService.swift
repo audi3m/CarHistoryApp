@@ -8,11 +8,9 @@
 import Foundation
 import RealmSwift
 
-struct LogRealmService: LogRepository {
+final class LogRealmService: LogRepository {
     
     private let realm = try! Realm()
-    
-//    init() { }
     
 }
 

@@ -32,23 +32,4 @@ enum BasicSettingsHelper {
         }
     }
     
-    // 0: km, 1: mile
-    static var distanceUnit: String {
-        get {
-            return UserDefaults.standard.string(forKey: "distanceUnit") ?? "km"
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "distanceUnit")
-        }
-    }
-    
-    // 0: liter, 1: gallon
-    static var volumeUnit: String {
-        get {
-            return UserDefaults.standard.string(forKey: "volumeUnit") ?? "liter"
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "volumeUnit")
-        }
-    }
 }

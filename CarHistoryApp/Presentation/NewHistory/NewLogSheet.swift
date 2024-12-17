@@ -14,8 +14,6 @@ struct NewLogSheet: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var logValidator = LogValidator()
     
-//    @ObservedRealmObject var car: Car
-    
     var body: some View {
         NavigationStack {
             List {
@@ -49,17 +47,8 @@ extension NewLogSheet {
     private func addNewLog() {
         var newLog = logValidator.makeNewLog()
         dataManager.createLog(log: &newLog)
-//        $car.logList.append(newLog)
     }
-    
-//    private func getLastMileage() -> String {
-//        if let log = car.logList.last {
-//            return "\(log.mileage)"
-//        } else {
-//            return "0"
-//        }
-//        
-//    }
+     
 }
 
 // SubViews

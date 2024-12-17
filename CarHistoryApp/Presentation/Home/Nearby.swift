@@ -10,9 +10,13 @@ import SwiftUI
 enum Nearby: String, CaseIterable {
     case parking = "주차장"
     case gasStation = "주유/충전"
-//    case evCharge = "EV 충전소"
+    //    case evCharge = "EV 충전소"
     case repairShop = "정비소"
     case carWash = "세차장"
+    
+}
+
+extension Nearby {
     
     var color: Color {
         switch self {
