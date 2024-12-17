@@ -8,11 +8,9 @@
 import Foundation
 import RealmSwift
 
-struct CarRealmService: CarRepository {
+final class CarRealmService: CarRepository {
     
     private let realm = try! Realm()
-    
-//    init() { }
     
 }
 
