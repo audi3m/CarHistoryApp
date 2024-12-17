@@ -62,36 +62,6 @@ extension CarLog {
     }
 }
 
-extension CarLog {
-    var toCLLocation: CLLocation {
-        return CLLocation(latitude: latitude, longitude: longitude)
-    }
-    
-    var typeColor: Color {
-        switch logType {
-        case .refuel:
-            return .red
-        case .maintenance:
-            return .green
-        case .carWash:
-            return .blue
-        case .etc:
-            return .brown
-        }
-    }
-    
-    var subDescription: String {
-        switch logType {
-        case .refuel:
-            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
-        case .carWash:
-            CurrencyInfo().symbol + "\(totalCost.formatted())"
-        default:
-            CurrencyInfo().symbol + "\(totalCost.formatted()) · \(notes)"
-        }
-    }
-}
-
 enum LogType: String, PersistableEnum, CaseIterable {
     case refuel = "주유/충전"
     case maintenance = "정비"
