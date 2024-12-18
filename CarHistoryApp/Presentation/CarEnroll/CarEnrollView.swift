@@ -14,10 +14,6 @@ struct CarEnrollView: View {
     @EnvironmentObject var dataManager: LocalDataManager
     @Environment(\.dismiss) private var dismiss
     
-//    @ObservedResults(Car.self) var cars
-    
-//    @Binding var addedCar: Car?
-    
     @State private var manufacturer = ""
     @State private var plateNumber = ""
     @State private var year = ""

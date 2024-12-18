@@ -1,14 +1,14 @@
 //
-//  SummaryView.swift
+//  LogChartView.swift
 //  CarHistoryApp
 //
-//  Created by J Oh on 9/28/24.
+//  Created by J Oh on 12/18/24.
 //
 
 import SwiftUI
 import Charts
 
-struct SummaryView: View {
+struct LogChartView: View {
     let calendar = Calendar.current
     let currentDate = Date()
     
@@ -40,4 +40,8 @@ struct SummaryView: View {
         .navigationTitle("Chart")
         .background(.appBackground)
     }
+}
+
+#Preview {
+    LogChartView()
 }

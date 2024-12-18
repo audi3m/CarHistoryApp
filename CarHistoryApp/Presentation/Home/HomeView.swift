@@ -37,7 +37,7 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarLeading) { carSelector() }
                 ToolbarItem(placement: .topBarTrailing) { goToSettingsButton() }
             }
-            .navigationDestination(for: Nearby.self) { nearby in
+            .navigationDestination(for: NearbyEnum.self) { nearby in
                 NearbyMapView(nearby: nearby)
             }
             .navigationDestination(for: CarDomain.self) { car in
@@ -84,7 +84,7 @@ extension HomeView {
                 Spacer()
                 
                 NavigationLink {
-                    SummaryView()
+                    LogChartView()
                 } label: {
                     Image(systemName: "chart.bar.xaxis")
                     Image(systemName: "chevron.right")
@@ -138,7 +138,7 @@ extension HomeView {
             .padding(.horizontal, 6)
             
             LazyVGrid(columns: columns4) {
-                ForEach(Nearby.allCases, id: \.self) { nearby in
+                ForEach(NearbyEnum.allCases, id: \.self) { nearby in
                     NavigationLink(value: nearby) {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
