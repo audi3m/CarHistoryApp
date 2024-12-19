@@ -1,5 +1,5 @@
 //
-//  LogValidator.swift
+//  NewLogViewModel.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 9/29/24.
@@ -10,13 +10,13 @@ import Combine
 import CoreLocation
 import RealmSwift
 
-final class LogValidator: ObservableObject {
+final class NewLogViewModel: ObservableObject {
     
     @Published var logType = LogType.refuel
     @Published var date = Date()
     @Published var mileage = ""
     @Published var companyName = ""
-    @Published var totalCost = "" 
+    @Published var totalCost = ""
     @Published var refuelInt = 30.0
     @Published var refuelPoint = 0.0
     @Published var notes = ""
@@ -32,6 +32,14 @@ final class LogValidator: ObservableObject {
     init() {
         combineStart()
     }
+    
+    deinit {
+        print("Deinit NewLogViewModel")
+    }
+    
+}
+
+extension NewLogViewModel {
     
     private var validUsernamePublisher: AnyPublisher<Bool, Never> {
         $mileage
@@ -61,16 +69,6 @@ final class LogValidator: ObservableObject {
                                totalCost: Double(totalCost) ?? 0.0,
                                refuelAmount: refuelInt + refuelPoint * 0.1,
                                notes: notes)
-        
-        
-//        let newLog = CarLog()
-//        newLog.logType = logType
-//        newLog.date = date
-//        newLog.mileage = Int(mileage) ?? 0
-//        newLog.companyName = companyName
-//        newLog.totalCost = Double(totalCost) ?? 0.0
-//        newLog.refuelAmount = refuelInt + refuelPoint * 0.1
-//        newLog.notes = notes
         
         if let coordinates {
             newLog.latitude = coordinates.latitude

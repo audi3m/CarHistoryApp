@@ -9,4 +9,21 @@ import Foundation
 
 final class LogChartViewModel {
     
+    
+    
+    
+    
+    init() {
+        
+    }
+    
+    deinit {
+        print("Deinit LogChartViewModel")
+    }
+    
+}
+
+extension LogChartViewModel {
+    
+    
 }
