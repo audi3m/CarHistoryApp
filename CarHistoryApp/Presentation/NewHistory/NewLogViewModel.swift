@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import CoreLocation
-import RealmSwift
 
 final class NewLogViewModel: ObservableObject {
     
