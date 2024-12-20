@@ -10,11 +10,16 @@ import RealmSwift
 
 struct HomeView: View {
     @EnvironmentObject var dataManager: LocalDataManager
+    @StateObject var viewModel: HomeViewModel
     
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
     
     @State private var noEnrolledCar = false
+    
+    init(dataManager: LocalDataManager) {
+        _viewModel = StateObject(wrappedValue: HomeViewModel(dataManager: dataManager))
+    }
     
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     
@@ -41,7 +46,7 @@ struct HomeView: View {
                 NearbyMapView(nearby: nearby)
             }
             .navigationDestination(for: CarDomain.self) { car in
-                YearlyLogView()
+                YearlyLogsView()
             }
         }
         .sheet(isPresented: $showAddNewLogSheet) {
@@ -173,7 +178,7 @@ extension HomeView {
                     .font(.system(size: 18, weight: .bold))
                 Spacer()
                 NavigationLink{
-                    YearlyLogView()
+                    YearlyLogsView()
                 } label: {
                     HStack {
                         Text("All")
@@ -198,7 +203,8 @@ extension HomeView {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 
-                ForEach(dataManager.logs.suffix(5).reversed()) { log in
+                ForEach(viewModel.recentFive) { log in
+//                ForEach(dataManager.logs.suffix(5).reversed()) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
@@ -282,7 +288,7 @@ extension HomeView {
                 Section {
                     ForEach(dataManager.cars) { car in
                         Button {
-                            dataManager.setRecentCar(car: car)
+                            dataManager.selectCar(car: car)
                         } label: {
                             Text(car.plateNumber)
                             if let currentCar = dataManager.selectedCar, currentCar == car {
