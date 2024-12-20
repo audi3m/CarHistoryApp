@@ -21,42 +21,68 @@ final class NewLogViewModel: ObservableObject {
     @Published var notes = ""
     @Published var coordinates: CLLocationCoordinate2D?
     
-    @Published var mileageErrorMessage = ""
-    @Published var costErrorMessage = ""
+    @Published var mileageErrorMessage: String?
+    @Published var costErrorMessage: String?
     
     @Published var isValid: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        combineStart()
+        print("init NewLogViewModel")
+        combine()
     }
     
     deinit {
-        print("Deinit NewLogViewModel")
+        print("deinit NewLogViewModel")
     }
     
 }
 
 extension NewLogViewModel {
-    
-    private var validUsernamePublisher: AnyPublisher<Bool, Never> {
+     
+    private func combine() {
         $mileage
-            .debounce(for: 0.5, scheduler: RunLoop.main)
-            .removeDuplicates()
-            .map { Int($0) != nil }
-            .eraseToAnyPublisher()
-    }
-    
-    private func combineStart() {
+            .map { mileage -> String? in
+                if mileage.isEmpty {
+                    return nil
+                } else if Int(mileage) != nil {
+                    return nil
+                } else {
+                    return "[주행거리] 정수로 입력해주세요"
+                }
+            }
+            .sink { [weak self] message in
+                guard let self else { return }
+                self.mileageErrorMessage = message
+            }
+            .store(in: &cancellables)
+        
+        $totalCost
+            .map { cost -> String? in
+                if cost.isEmpty {
+                    return nil
+                } else if Int(cost) != nil {
+                    return nil
+                } else {
+                    return "[총비용] 정수로 입력해주세요"
+                }
+            }
+            .sink { [weak self] message in
+                guard let self else { return }
+                self.costErrorMessage = message
+            }
+            .store(in: &cancellables)
+        
         Publishers.CombineLatest($mileage, $totalCost)
             .map { mileage, totalCost in
-                guard let _ = Int(mileage), let _ = Double(totalCost) else {
-                    return false
-                }
+                guard let _ = Int(mileage), let _ = Double(totalCost) else { return false }
                 return true
             }
-            .assign(to: \.isValid, on: self)
+            .sink { [weak self] isValid in
+                guard let self else { return }
+                self.isValid = isValid
+            }
             .store(in: &cancellables)
     }
     
@@ -76,5 +102,10 @@ extension NewLogViewModel {
         
         return newLog
         
+    }
+    
+    func clearSubscription() {
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
     }
 }
