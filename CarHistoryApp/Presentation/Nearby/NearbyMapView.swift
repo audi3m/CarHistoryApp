@@ -13,7 +13,7 @@ struct NearbyMapView: View {
     
     @ObservedObject var locationManager = LocationManager()
     
-    let nearby: Nearby
+    let nearby: NearbyEnum
     
     @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var region: MKCoordinateRegion = .init()
