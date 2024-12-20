@@ -19,10 +19,8 @@ final class LocalDataManager: ObservableObject {
     init(carService: CarRepository, logService: LogRepository) {
         self.carService = carService
         self.logService = logService
-        
         setInitialData()
     }
-    
 }
 
 //
@@ -31,12 +29,6 @@ extension LocalDataManager {
         cars = fetchAllCars()
         selectedCar = fetchRecentCar()
         logs = fetchLogs(of: selectedCar?.id)
-    }
-    
-    func selectCar(car: CarDomain) {
-        // 차번호 저장
-        // selected 변경
-        // 로그 불러오기
     }
 }
 
@@ -47,7 +39,7 @@ extension LocalDataManager {
         return carService.fetchAllCars()
     }
     
-    func setRecentCar(car: CarDomain) {
+    func selectCar(car: CarDomain) {
         BasicSettingsHelper.selectedCarNumber = car.plateNumber
         selectedCar = car
         logs = fetchLogs(of: car.id)
@@ -55,7 +47,7 @@ extension LocalDataManager {
     
     func fetchLogs(of carID: String?) -> [LogDomain] {
         guard let carID else { return [] }
-        let list = logService.fetchLogs(carID: carID)
+        let list = logService.fetchLogs(carID: carID).sorted { $0.date < $1.date }
         return list
     }
     
@@ -89,7 +81,6 @@ extension LocalDataManager {
     }
     
     func updateCar(car: CarDomain) {
-        
         carService.updateCar(car: car)
     }
     
@@ -112,7 +103,6 @@ extension LocalDataManager {
     }
     
     func updateLog(log: LogDomain) {
-        
         logService.updateLog(log: log)
     }
     
