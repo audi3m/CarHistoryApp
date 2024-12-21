@@ -10,11 +10,16 @@ import RealmSwift
 
 struct HomeView: View {
     @EnvironmentObject var dataManager: LocalDataManager
+    @StateObject var viewModel: HomeViewModel
     
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
     
     @State private var noEnrolledCar = false
+    
+    init(dataManager: LocalDataManager) {
+        _viewModel = StateObject(wrappedValue: HomeViewModel(dataManager: dataManager))
+    }
     
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
     
@@ -37,11 +42,11 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarLeading) { carSelector() }
                 ToolbarItem(placement: .topBarTrailing) { goToSettingsButton() }
             }
-            .navigationDestination(for: Nearby.self) { nearby in
+            .navigationDestination(for: NearbyEnum.self) { nearby in
                 NearbyMapView(nearby: nearby)
             }
             .navigationDestination(for: CarDomain.self) { car in
-                YearlyLogView()
+                YearlyLogsView()
             }
         }
         .sheet(isPresented: $showAddNewLogSheet) {
@@ -84,7 +89,7 @@ extension HomeView {
                 Spacer()
                 
                 NavigationLink {
-                    SummaryView()
+                    LogChartView()
                 } label: {
                     Image(systemName: "chart.bar.xaxis")
                     Image(systemName: "chevron.right")
@@ -138,7 +143,7 @@ extension HomeView {
             .padding(.horizontal, 6)
             
             LazyVGrid(columns: columns4) {
-                ForEach(Nearby.allCases, id: \.self) { nearby in
+                ForEach(NearbyEnum.allCases, id: \.self) { nearby in
                     NavigationLink(value: nearby) {
                         VStack(spacing: 8) {
                             Image(systemName: nearby.image)
@@ -173,7 +178,7 @@ extension HomeView {
                     .font(.system(size: 18, weight: .bold))
                 Spacer()
                 NavigationLink{
-                    YearlyLogView()
+                    YearlyLogsView()
                 } label: {
                     HStack {
                         Text("All")
@@ -198,7 +203,8 @@ extension HomeView {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 
-                ForEach(dataManager.logs.suffix(5).reversed()) { log in
+                ForEach(viewModel.recentFive) { log in
+//                ForEach(dataManager.logs.suffix(5).reversed()) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
@@ -282,7 +288,7 @@ extension HomeView {
                 Section {
                     ForEach(dataManager.cars) { car in
                         Button {
-                            dataManager.setRecentCar(car: car)
+                            dataManager.selectCar(car: car)
                         } label: {
                             Text(car.plateNumber)
                             if let currentCar = dataManager.selectedCar, currentCar == car {

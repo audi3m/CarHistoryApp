@@ -10,9 +10,10 @@ import CoreLocation
 import RealmSwift
 
 struct NewLogSheet: View {
-    @EnvironmentObject var dataManager: LocalDataManager
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var logValidator = LogValidator()
+    
+    @EnvironmentObject var dataManager: LocalDataManager
+    @StateObject private var logValidator = NewLogViewModel()
     
     var body: some View {
         NavigationStack {
@@ -39,6 +40,9 @@ struct NewLogSheet: View {
             }
         }
         .interactiveDismissDisabled(true)
+        .onDisappear {
+            logValidator.clearSubscription()
+        }
     }
 }
 
@@ -90,10 +94,15 @@ extension NewLogSheet {
 //                    
 //                    Spacer(minLength: 10)
                     
-                    TextField("주행거리", text: $logValidator.mileage)
+                    TextField("[필수] 주행거리", text: $logValidator.mileage)
                         .keyboardType(.numberPad)
                 }
                 .minimumScaleFactor(0.8)
+            }
+        } footer: {
+            if let message = logValidator.mileageErrorMessage {
+                Text(message)
+                    .foregroundStyle(.red)
             }
         }
     }
@@ -120,7 +129,7 @@ extension NewLogSheet {
                 logValidator.notes = ""
             }
             
-            CustomTextField(image: "creditcard.fill", placeHolder: "총 비용", text: $logValidator.totalCost)
+            CustomTextField(image: "creditcard.fill", placeHolder: "[필수] 총 비용", text: $logValidator.totalCost)
             
             if logValidator.logType == .refuel {
                 HStack {
@@ -157,8 +166,11 @@ extension NewLogSheet {
             }
             
         } footer: {
-            Text("정확한 정보를 입력해주세요")
-                .frame(maxWidth: .infinity, alignment: .leading)
+//            Text("정확한 정보를 입력해주세요")
+            if let message = logValidator.costErrorMessage {
+                Text(message)
+                    .foregroundStyle(.red)
+            }
         }
     }
     

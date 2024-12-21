@@ -1,5 +1,5 @@
 //
-//  YearlyLogView.swift
+//  YearlyLogsView.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 9/30/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-struct YearlyLogView: View {
+struct YearlyLogsView: View {
     @EnvironmentObject var dataManager: LocalDataManager
     
     @State private var selectedYear: Int = Calendar.current.component(.year, from: Date())
@@ -84,7 +84,7 @@ struct YearlyLogView: View {
     }
 }
 
-extension YearlyLogView {
+extension YearlyLogsView {
     private func getMonthlyLogs(year: Int) -> [Int: [LogDomain]] {
         let logs = dataManager.sortByYear(yearOfInterest: year)
         var groupedLogs = Dictionary(grouping: logs, by: { log in
@@ -101,7 +101,7 @@ extension YearlyLogView {
     }
 }
 
-extension YearlyLogView {
+extension YearlyLogsView {
     private func logCell(_ log: LogDomain) -> some View {
         HStack {
             RoundedRectangle(cornerRadius: 8)

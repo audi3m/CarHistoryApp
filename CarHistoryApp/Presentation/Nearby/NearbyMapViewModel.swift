@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+final class NearbyMapViewModel: ObservableObject {
+    init() {
+        
+    }
+    
+    deinit {
+        print("Deinit NearbyMapViewModel")
+    }
+}
+
+extension NearbyMapViewModel {
+    
+}

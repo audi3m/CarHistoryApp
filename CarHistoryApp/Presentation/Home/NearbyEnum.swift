@@ -1,5 +1,5 @@
 //
-//  Nearby.swift
+//  NearbyEnum.swift
 //  CarHistoryApp
 //
 //  Created by J Oh on 9/18/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Nearby: String, CaseIterable {
+enum NearbyEnum: String, CaseIterable {
     case parking = "주차장"
     case gasStation = "주유/충전"
     //    case evCharge = "EV 충전소"
@@ -16,7 +16,7 @@ enum Nearby: String, CaseIterable {
     
 }
 
-extension Nearby {
+extension NearbyEnum {
     
     var color: Color {
         switch self {
