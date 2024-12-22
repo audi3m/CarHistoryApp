@@ -12,36 +12,77 @@ struct LogChartView: View {
     let calendar = Calendar.current
     let currentDate = Date()
     
+    @State private var category = Category.all
+    @State private var summaryList = [MonthlySummary]()
+     
     var body: some View {
-        let filteredMileage = DummyData.mileage.filter { data in
-            guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: currentDate) else { return false }
-            return data.date >= threeMonthsAgo
-        }
         
-        ScrollView {
-            Chart {
-                ForEach(filteredMileage) { data in
-                    LineMark(
-                        x: .value("Date", data.date),
-                        y: .value("Mileage", data.mileage)
-                    )
-                }
+        NavigationStack {
+            ScrollView {
+                categoryPicker()
+                charts()
+                summaryData()
+                
             }
-            .frame(height: 250)
-            .chartYScale(domain: 15000...18000)
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .month)) { value in
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month())
-                }
-            }
-            .padding()
+            .navigationTitle("Charts")
+            .background(.appBackground)
         }
-        .navigationTitle("Chart")
-        .background(.appBackground)
+        .onAppear {
+            summaryList = DummyData.summary
+        }
+    }
+}
+
+extension LogChartView {
+    @ViewBuilder
+    private func categoryPicker() -> some View {
+        Picker(selection: $category) {
+            ForEach(Category.allCases, id: \.self) { category in
+                Text(category.rawValue)
+            }
+        } label: {
+            Text(category.rawValue)
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private func charts() -> some View {
+        Chart {
+            ForEach(summaryList) { data in
+                BarMark(
+                    x: .value("Date", data.month),
+                    y: .value("Fuel Amt", category == .fuelCost ? data.fuelCost : data.repairCost)
+                )
+            }
+        }
+        .frame(height: 250)
+//                .chartXAxis {
+//                    AxisMarks(values: .stride(by: .month)) { value in
+//                        AxisGridLine()
+//                        AxisValueLabel(format: .dateTime.month())
+//                    }
+//                }
+        .padding()
+    }
+    
+    @ViewBuilder
+    private func summaryData() -> some View {
+        Text("월별 평균 주유 비용")
+        Text("연비")
+        Text("평균")
+        Text("평균")
     }
 }
 
 #Preview {
     LogChartView()
+}
+
+enum Category: String, CaseIterable {
+    case all = "전체"
+//    case mileage = "키로수"
+    case fuelCost = "주유 비용"
+    case repair = "정비 비용"
 }
