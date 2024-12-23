@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 enum Appearance: String, CaseIterable {
     case system, light, dark
@@ -25,7 +24,6 @@ enum Appearance: String, CaseIterable {
 
 struct SettingsView: View {
     @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode = "system"
-    @Namespace private var pickerSpace
     
     var body: some View {
         List {

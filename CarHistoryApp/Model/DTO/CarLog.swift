@@ -50,7 +50,7 @@ extension CarLog {
     func toDomain() -> LogDomain {
         let log = LogDomain(id: id.stringValue,
                             date: date,
-                            logType: logType,
+                            logType: logType.toDomain(),
                             companyName: companyName,
                             mileage: mileage,
                             totalCost: totalCost,
@@ -67,6 +67,19 @@ enum LogType: String, PersistableEnum, CaseIterable {
     case maintenance = "정비"
     case carWash = "세차"
     case etc = "기타"
+    
+    func toDomain() -> LogTypeDomain {
+        switch self {
+        case .refuel:
+            return .refuel
+        case .maintenance:
+            return .maintenance
+        case .carWash:
+            return .carWash
+        case .etc:
+            return .etc
+        }
+    }
     
     var color: Color {
         switch self {

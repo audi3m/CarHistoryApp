@@ -9,11 +9,11 @@ import Foundation
 
 final class NearbyMapViewModel: ObservableObject {
     init() {
-        
+        print("init NearbyMapViewModel")
     }
     
     deinit {
-        print("Deinit NearbyMapViewModel")
+        print("deinit NearbyMapViewModel")
     }
 }
 

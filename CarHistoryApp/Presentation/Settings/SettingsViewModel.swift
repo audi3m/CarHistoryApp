@@ -9,11 +9,11 @@ import Foundation
 
 final class SettingsViewModel: ObservableObject {
     init() {
-        
+        print("init SettingsViewModel")
     }
     
     deinit {
-        print("Deinit SettingsViewModel")
+        print("deinit SettingsViewModel")
     }
 }
 

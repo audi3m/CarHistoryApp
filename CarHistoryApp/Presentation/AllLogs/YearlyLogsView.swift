@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 struct YearlyLogsView: View {
     @EnvironmentObject var dataManager: LocalDataManager

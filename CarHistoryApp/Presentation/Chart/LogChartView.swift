@@ -12,36 +12,66 @@ struct LogChartView: View {
     let calendar = Calendar.current
     let currentDate = Date()
     
+    @StateObject private var vm = LogChartViewModel()
+     
     var body: some View {
-        let filteredMileage = DummyData.mileage.filter { data in
-            guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: currentDate) else { return false }
-            return data.date >= threeMonthsAgo
-        }
         
-        ScrollView {
-            Chart {
-                ForEach(filteredMileage) { data in
-                    LineMark(
-                        x: .value("Date", data.date),
-                        y: .value("Mileage", data.mileage)
-                    )
-                }
+        NavigationStack {
+            ScrollView {
+                categoryPicker()
+                charts()
+                summaryData()
             }
-            .frame(height: 250)
-            .chartYScale(domain: 15000...18000)
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .month)) { value in
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month())
-                }
-            }
-            .padding()
+            .navigationTitle("Charts")
+            .background(.appBackground)
         }
-        .navigationTitle("Chart")
-        .background(.appBackground)
+    }
+}
+
+extension LogChartView {
+    @ViewBuilder
+    private func categoryPicker() -> some View {
+        Picker(selection: $vm.category) {
+            ForEach(Category.allCases, id: \.self) { category in
+                Text(category.rawValue)
+            }
+        } label: {
+            Text(vm.category.rawValue)
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private func charts() -> some View {
+        Chart {
+            ForEach(vm.filteredData) { data in
+                BarMark(
+                    x: .value("Date", data.month),
+                    y: .value("Fuel Amt", data.value)
+                )
+            }
+        }
+        .frame(height: 250)
+//                .chartXAxis {
+//                    AxisMarks(values: .stride(by: .month)) { value in
+//                        AxisGridLine()
+//                        AxisValueLabel(format: .dateTime.month())
+//                    }
+//                }
+        .padding()
+    }
+    
+    @ViewBuilder
+    private func summaryData() -> some View {
+        Text("월평균 주유 비용")
+        Text("평균 연비")
+        Text("평균")
     }
 }
 
 #Preview {
     LogChartView()
 }
+
+

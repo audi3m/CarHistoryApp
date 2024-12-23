@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import Combine
 
 final class YearlyLogsViewModel {
     init() {
-        
+        print("init YearlyLogsViewModel")
     }
     
     deinit {
-        print("Deinit YearlyLogsViewModel")
+        print("deinit YearlyLogsViewModel")
     }
 }
 
