@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class CarEnrollViewModel: ObservableObject {
+final class CarEnrollViewModel: ObservableObject { 
     
     @Published var manufacturer = ""
     @Published var plateNumber = ""
@@ -22,34 +22,34 @@ final class CarEnrollViewModel: ObservableObject {
     @Published var carAlreadyExists = false
     
     init() {
-        
+        print("init CarEnrollViewModel")
     }
     
     deinit {
-        print("Deinit CarEnrollViewModel")
+        print("deinit CarEnrollViewModel")
     }
     
     
     
 }
 
-extension CarEnrollViewModel {
-    func addNewCar() {
-        let carNumbers = dataManager.cars.map { $0.plateNumber }
-        guard !carNumbers.contains(plateNumber) else {
-            carAlreadyExists = true
-            return
-        }
-        
-        var newCar = CarDomain(manufacturer: manufacturer,
-                               name: name,
-                               plateNumber: plateNumber,
-                               fuelTypeDomain: fuelType)
-        
-        dataManager.createCar(car: &newCar)
-        
-        if let image = selectedImage {
-            CarImageManager.saveImageToDocument(image: image, filename: "\(newCar.id)")
-        }
-    }
-}
+//extension CarEnrollViewModel {
+//    func addNewCar() {
+//        let carNumbers = dataManager.cars.map { $0.plateNumber }
+//        guard !carNumbers.contains(plateNumber) else {
+//            carAlreadyExists = true
+//            return
+//        }
+//        
+//        var newCar = CarDomain(manufacturer: manufacturer,
+//                               name: name,
+//                               plateNumber: plateNumber,
+//                               fuelTypeDomain: fuelType)
+//        
+//        dataManager.createCar(car: &newCar)
+//        
+//        if let image = selectedImage {
+//            CarImageManager.saveImageToDocument(image: image, filename: "\(newCar.id)")
+//        }
+//    }
+//}

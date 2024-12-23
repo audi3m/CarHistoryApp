@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomMarker: View {
-    let nearby: Nearby
+    let nearby: NearbyEnum
     
     var body: some View {
         ZStack {

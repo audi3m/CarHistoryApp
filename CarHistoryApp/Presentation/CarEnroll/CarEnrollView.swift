@@ -6,25 +6,13 @@
 //
 
 import SwiftUI
-import PhotosUI
-import RealmSwift
 
 struct CarEnrollView: View {
     
     @EnvironmentObject var dataManager: LocalDataManager
     @Environment(\.dismiss) private var dismiss
     
-    @State private var manufacturer = ""
-    @State private var plateNumber = ""
-    @State private var year = ""
-    @State private var name = ""
-    @State private var carColor = Color.black
-    @State private var fuelType = FuelTypeDomain.gasoline
-    
-    @State private var showImagePicker = false
-    @State private var selectedImage: UIImage?
-    
-    @State private var carAlreadyExists = false
+    @StateObject private var vm = CarEnrollViewModel()
     
     var body: some View {
         NavigationStack {
@@ -48,16 +36,16 @@ struct CarEnrollView: View {
                     Button("완료") {
                         addNewCar()
                     }
-                    .disabled(plateNumber.isEmpty)
+                    .disabled(vm.plateNumber.isEmpty)
                 }
             }
         }
         .interactiveDismissDisabled(true)
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(selectedImage: $selectedImage)
+        .sheet(isPresented: $vm.showImagePicker) {
+            ImagePicker(selectedImage: $vm.selectedImage)
                 .interactiveDismissDisabled(true)
         }
-        .alert("이미 등록된 차량입니다", isPresented: $carAlreadyExists) { }
+        .alert("이미 등록된 차량입니다", isPresented: $vm.carAlreadyExists) { }
     }
 }
 
@@ -66,10 +54,10 @@ extension CarEnrollView {
     private func imagePickerSection() -> some View {
         Section {
             Button {
-                showImagePicker = true
+                vm.showImagePicker = true
             } label: {
-                if let selectedImage {
-                    Image(uiImage: selectedImage)
+                if let image = vm.selectedImage {
+                    Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 300, height: 150)
@@ -99,7 +87,7 @@ extension CarEnrollView {
     
     private func fuelTypeSelectSection() -> some View {
         Section {
-            Picker("", systemImage: fuelType.image, selection: $fuelType) {
+            Picker("", systemImage: vm.fuelType.image, selection: $vm.fuelType) {
                 ForEach(FuelType.allCases, id: \.self) { type in
                     Text(type.rawValue)
                 }
@@ -111,10 +99,10 @@ extension CarEnrollView {
     
     private func carDetailSection() -> some View {
         Section {
-            CustomTextField(image: "licenseplate", placeHolder: "[필수] 차량번호", keyboardType: .default, text: $plateNumber)
-            CustomTextField(image: "building.2", placeHolder: "제조사", keyboardType: .default, text: $manufacturer)
-            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $name)
-            CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $year)
+            CustomTextField(image: "licenseplate", placeHolder: "[필수] 차량번호", keyboardType: .default, text: $vm.plateNumber)
+            CustomTextField(image: "building.2", placeHolder: "제조사", keyboardType: .default, text: $vm.manufacturer)
+            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $vm.name)
+            CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $vm.year)
         }
     }
 }
@@ -122,20 +110,20 @@ extension CarEnrollView {
 extension CarEnrollView {
     private func addNewCar() {
         let carNumbers = dataManager.cars.map { $0.plateNumber }
-        guard !carNumbers.contains(plateNumber) else {
-            carAlreadyExists = true
+        guard !carNumbers.contains(vm.plateNumber) else {
+            vm.carAlreadyExists = true
             return
         }
         
-        var newCar = CarDomain(manufacturer: manufacturer,
-                               name: name,
-                               plateNumber: plateNumber,
-                               fuelTypeDomain: fuelType)
+        var newCar = CarDomain(manufacturer: vm.manufacturer,
+                               name: vm.name,
+                               plateNumber: vm.plateNumber,
+                               fuelTypeDomain: vm.fuelType)
         
         dataManager.createCar(car: &newCar)
         
-        if let selectedImage {
-            CarImageManager.saveImageToDocument(image: selectedImage, filename: "\(newCar.id)")
+        if let image = vm.selectedImage {
+            CarImageManager.saveImageToDocument(image: image, filename: "\(newCar.id)")
         }
         
         dismiss()

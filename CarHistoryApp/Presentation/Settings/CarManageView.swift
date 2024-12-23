@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 struct CarManageView: View {
     @EnvironmentObject var dataManager: LocalDataManager
