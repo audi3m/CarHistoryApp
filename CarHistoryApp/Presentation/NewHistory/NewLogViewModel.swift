@@ -88,7 +88,7 @@ extension NewLogViewModel {
     
     func makeNewLog() -> LogDomain {
         var newLog = LogDomain(date: date,
-                               logType: logType,
+                               logType: logType.toDomain(),
                                companyName: companyName,
                                mileage: Int(mileage) ?? 0,
                                totalCost: Double(totalCost) ?? 0.0,

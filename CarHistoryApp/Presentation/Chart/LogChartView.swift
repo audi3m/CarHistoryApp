@@ -12,8 +12,7 @@ struct LogChartView: View {
     let calendar = Calendar.current
     let currentDate = Date()
     
-    @State private var category = Category.all
-    @State private var summaryList = [MonthlySummary]()
+    @StateObject private var vm = LogChartViewModel()
      
     var body: some View {
         
@@ -22,13 +21,9 @@ struct LogChartView: View {
                 categoryPicker()
                 charts()
                 summaryData()
-                
             }
             .navigationTitle("Charts")
             .background(.appBackground)
-        }
-        .onAppear {
-            summaryList = DummyData.summary
         }
     }
 }
@@ -36,12 +31,12 @@ struct LogChartView: View {
 extension LogChartView {
     @ViewBuilder
     private func categoryPicker() -> some View {
-        Picker(selection: $category) {
+        Picker(selection: $vm.category) {
             ForEach(Category.allCases, id: \.self) { category in
                 Text(category.rawValue)
             }
         } label: {
-            Text(category.rawValue)
+            Text(vm.category.rawValue)
         }
         .pickerStyle(.segmented)
         .padding(.horizontal)
@@ -50,10 +45,10 @@ extension LogChartView {
     @ViewBuilder
     private func charts() -> some View {
         Chart {
-            ForEach(summaryList) { data in
+            ForEach(vm.filteredData) { data in
                 BarMark(
                     x: .value("Date", data.month),
-                    y: .value("Fuel Amt", category == .fuelCost ? data.fuelCost : data.repairCost)
+                    y: .value("Fuel Amt", data.value)
                 )
             }
         }
@@ -69,9 +64,8 @@ extension LogChartView {
     
     @ViewBuilder
     private func summaryData() -> some View {
-        Text("월별 평균 주유 비용")
-        Text("연비")
-        Text("평균")
+        Text("월평균 주유 비용")
+        Text("평균 연비")
         Text("평균")
     }
 }
@@ -80,9 +74,4 @@ extension LogChartView {
     LogChartView()
 }
 
-enum Category: String, CaseIterable {
-    case all = "전체"
-//    case mileage = "키로수"
-    case fuelCost = "주유 비용"
-    case repair = "정비 비용"
-}
+

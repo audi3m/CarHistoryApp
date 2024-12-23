@@ -19,19 +19,23 @@ struct RecentHistory: Identifiable {
 
 enum DummyData {
     
-    static let summary = [
-        MonthlySummary(month: "2024-01", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-02", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 0, totalRefuelAmount: 30),
-        MonthlySummary(month: "2024-03", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-04", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-05", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 22),
-        MonthlySummary(month: "2024-06", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 0, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-07", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-08", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 55),
-        MonthlySummary(month: "2024-09", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 0, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-10", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 50),
-        MonthlySummary(month: "2024-11", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 500000, totalRefuelAmount: 40),
-        MonthlySummary(month: "2024-12", fuelCost: Double.random(in: 10...100) * 1000.0, repairCost: 0, totalRefuelAmount: 10)
+    static let logSample: [LogDomain] = [
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
+        LogDomain.randomLog(),
     ]
     
     static let mileage = [
@@ -87,6 +91,21 @@ enum DummyData {
         RepairCost(cost: Double.random(in: 50000...1000000), date: Calendar.current.date(byAdding: .month, value: -1, to: Date())!),
         RepairCost(cost: Double.random(in: 50000...1000000), date: Calendar.current.date(byAdding: .month, value: 0, to: Date())!)
     ]
+    
+    static func randomDate() -> Date {
+        let calendar = Calendar.current
+        let now = Date()
+
+        guard let fiveMonthsAgo = calendar.date(byAdding: .month, value: -6, to: now) else {
+            fatalError("Cannot calculate the date 5 months ago")
+        }
+
+        let timeIntervalSinceFiveMonthsAgo = now.timeIntervalSince(fiveMonthsAgo)
+        let randomTimeInterval = TimeInterval.random(in: 0...timeIntervalSinceFiveMonthsAgo)
+        let randomDate = fiveMonthsAgo.addingTimeInterval(randomTimeInterval)
+        
+        return randomDate
+    }
 }
 
 struct Mileage: Identifiable {

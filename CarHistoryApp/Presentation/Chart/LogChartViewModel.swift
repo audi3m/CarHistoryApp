@@ -9,14 +9,27 @@ import Foundation
 
 final class LogChartViewModel: ObservableObject {
     
-    @Published var monthlySummary = [MonthlySummary]()
+    @Published var category = Category.all
+    @Published var summaryList = [MonthlySummary]()
     
-    
-    
+    var filteredData: [BarData] {
+        summaryList.map { summary in
+            switch category {
+            case .all:
+                return BarData(month: summary.month, value: summary.fuelCost + summary.repairCost + summary.totalRefuelAmount)
+            case .fuelCost:
+                return BarData(month: summary.month, value: summary.fuelCost)
+            case .repair:
+                return BarData(month: summary.month, value: summary.repairCost)
+            case .fuelAmount:
+                return BarData(month: summary.month, value: summary.totalRefuelAmount)
+            }
+        }
+    }
     
     init() {
         print("init LogChartViewModel")
-        monthlySummary = aggregateDataByMonth(logs: [])
+        summaryList = aggregateDataByMonth(logs: DummyData.logSample)
     }
     
     deinit {
@@ -29,7 +42,7 @@ extension LogChartViewModel {
     
     func aggregateDataByMonth(logs: [LogDomain]) -> [MonthlySummary] {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM"
+        dateFormatter.dateFormat = "yy.MM"
 
         let groupedLogs = Dictionary(grouping: logs) { log in
             dateFormatter.string(from: log.date)
@@ -70,4 +83,18 @@ struct MonthlySummary: Identifiable {
     let repairCost: Double
 //    let totalMileage: Int
     let totalRefuelAmount: Double
+}
+
+struct BarData: Identifiable {
+    let id = UUID()
+    let month: String
+    let value: Double
+}
+
+enum Category: String, CaseIterable {
+    case all = "전체"
+//    case mileage = "키로수"
+    case fuelCost = "주유 비용"
+    case repair = "정비 비용"
+    case fuelAmount = "주유량"
 }
