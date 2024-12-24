@@ -26,11 +26,12 @@ struct YearlyLogsView: View {
                         if let logs = monthlyLogs[month], !logs.isEmpty {
                             Section(header: Text("\(month)월")) {
                                 ForEach(logs, id: \.self) { log in
-                                    logCell(log)
+                                    LogCell(log: log)
                                         .listRowSeparator(.hidden)
                                         .swipeActions(edge: .trailing) {
                                             Button(role: .destructive) {
-                                                deleteLog(log)
+                                                dataManager.deleteLog(logID: log.id)
+                                                monthlyLogs[month]?.removeAll { $0.id == log.id }
                                             } label: {
                                                 Label("삭제", systemImage: "trash")
                                             }
@@ -94,43 +95,43 @@ extension YearlyLogsView {
         }
         return groupedLogs
     }
-    
-    private func deleteLog(_ log: LogDomain) {
-        dataManager.deleteLog(logID: log.id)
-    }
 }
 
 extension YearlyLogsView {
     private func logCell(_ log: LogDomain) -> some View {
-        HStack {
-            RoundedRectangle(cornerRadius: 8)
-                .frame(width: 2.5, height: 35)
-                .foregroundStyle(log.typeColor)
-            
-            Image(systemName: log.logType.image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20, height: 20)
-                .padding(5)
-            
-            VStack(alignment: .leading) {
-                Text(log.companyName)
-                    .font(.footnote)
+        VStack {
+            HStack {
+                // 앞 표시
+                RoundedRectangle(cornerRadius: 8)
+                    .frame(width: 2.5, height: 35)
+                    .foregroundStyle(log.typeColor)
                 
-                Text(log.subDescription)
+                Image(systemName: log.logType.image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .padding(5)
+                
+                // 상호+가격
+                VStack(alignment: .leading) {
+                    Text(log.companyName)
+                        .font(.footnote)
+                    
+                    Text(log.subDescription)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Spacer()
+                Text(DateHelper.shortFormat(date: log.date))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
             }
-            
-            Spacer()
-            Text(DateHelper.shortFormat(date: log.date))
-                .font(.caption)
+            .padding(.horizontal, 10)
+            .frame(height: 60)
+            .background(.cellBG)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .listRowBackground(Color.clear)
         }
-        .padding(.horizontal, 10)
-        .frame(height: 60)
-        .background(.cellBG)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .listRowBackground(Color.clear)
     }
     
 }
