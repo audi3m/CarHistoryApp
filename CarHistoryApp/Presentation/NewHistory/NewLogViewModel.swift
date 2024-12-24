@@ -26,6 +26,14 @@ final class NewLogViewModel: ObservableObject {
     
     @Published var isValid: Bool = false
     
+    var price: Double {
+        if let cost = Double(totalCost) {
+            return cost / (refuelInt + refuelPoint)
+        } else {
+            return 0.0
+        }
+    }
+    
     private var cancellables = Set<AnyCancellable>()
     
     init() {

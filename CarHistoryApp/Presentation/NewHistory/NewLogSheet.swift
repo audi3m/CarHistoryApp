@@ -13,7 +13,7 @@ struct NewLogSheet: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject var dataManager: LocalDataManager
-    @StateObject private var logValidator = NewLogViewModel()
+    @StateObject private var vm = NewLogViewModel()
     
     var body: some View {
         NavigationStack {
@@ -35,13 +35,13 @@ struct NewLogSheet: View {
                         addNewLog()
                         dismiss()
                     }
-                    .disabled(!logValidator.isValid)
+                    .disabled(!vm.isValid)
                 }
             }
         }
         .interactiveDismissDisabled(true)
         .onDisappear {
-            logValidator.clearSubscription()
+            vm.clearSubscription()
         }
     }
 }
@@ -49,7 +49,7 @@ struct NewLogSheet: View {
 // 함수
 extension NewLogSheet {
     private func addNewLog() {
-        var newLog = logValidator.makeNewLog()
+        var newLog = vm.makeNewLog()
         dataManager.createLog(log: &newLog)
     }
      
@@ -62,7 +62,7 @@ extension NewLogSheet {
         Section {
             DisclosureGroup(
                 content: {
-                    DatePicker("날짜", selection: $logValidator.date, displayedComponents: .date)
+                    DatePicker("날짜", selection: $vm.date, displayedComponents: .date)
                         .datePickerStyle(.graphical)
                 }, label: {
                     HStack(spacing: 16) {
@@ -72,7 +72,7 @@ extension NewLogSheet {
                             .foregroundStyle(.blackWhite.opacity(0.7))
                             .frame(width: 23, height: 23)
                         
-                        Text(DateHelper.shortFormat(date: logValidator.date))
+                        Text(DateHelper.shortFormat(date: vm.date))
                     }
                 }
             )
@@ -94,13 +94,13 @@ extension NewLogSheet {
 //                    
 //                    Spacer(minLength: 10)
                     
-                    TextField("[필수] 주행거리", text: $logValidator.mileage)
+                    TextField("[필수] 주행거리", text: $vm.mileage)
                         .keyboardType(.numberPad)
                 }
                 .minimumScaleFactor(0.8)
             }
         } footer: {
-            if let message = logValidator.mileageErrorMessage {
+            if let message = vm.mileageErrorMessage {
                 Text(message)
                     .foregroundStyle(.red)
             }
@@ -109,35 +109,35 @@ extension NewLogSheet {
     
     private func companyNameSection() -> some View {
         Section {
-            CustomTextField(image: "building.2.fill", placeHolder: "상호명", keyboardType: .default, text: $logValidator.companyName)
+            CustomTextField(image: "building.2.fill", placeHolder: "상호명", keyboardType: .default, text: $vm.companyName)
         }
     }
     
     private func typeAndValueSection() -> some View {
         Section {
-            Picker("", systemImage: logValidator.logType.image, selection: $logValidator.logType) {
+            Picker("", systemImage: vm.logType.image, selection: $vm.logType) {
                 ForEach(LogType.allCases, id: \.self) { type in
                     Text(type.rawValue)
                 }
             }
             .foregroundStyle(.blackWhite.opacity(0.7))
             .tint(.blackWhite)
-            .onChange(of: logValidator.logType) { oldValue, newValue in
-                logValidator.totalCost = ""
-                logValidator.refuelInt = 30.0
-                logValidator.refuelPoint = 0.0
-                logValidator.notes = ""
+            .onChange(of: vm.logType) { oldValue, newValue in
+                vm.totalCost = ""
+                vm.refuelInt = 30.0
+                vm.refuelPoint = 0.0
+                vm.notes = ""
             }
             
-            CustomTextField(image: "creditcard.fill", placeHolder: "[필수] 총 비용", text: $logValidator.totalCost)
+            CustomTextField(image: "creditcard.fill", placeHolder: "[필수] 총 비용", text: $vm.totalCost)
             
-            if logValidator.logType == .refuel {
+            if vm.logType == .refuel {
                 HStack {
                     Image(systemName: "fuelpump")
                     Spacer()
                     HStack(spacing: 0) {
-                        Picker("주유량", selection: $logValidator.refuelInt) {
-                            ForEach(Array(stride(from: 0.0, through: 200.0, by: 1)), id: \.self) { num in
+                        Picker("주유량", selection: $vm.refuelInt) {
+                            ForEach(Array(stride(from: 1.0, through: 200.0, by: 1)), id: \.self) { num in
                                 Text("\(num, specifier: "%.f")")
                             }
                         }
@@ -147,7 +147,7 @@ extension NewLogSheet {
                         Text(".")
                             .frame(width: 7)
                         
-                        Picker("주유량", selection: $logValidator.refuelPoint) {
+                        Picker("주유량", selection: $vm.refuelPoint) {
                             ForEach(Array(stride(from: 0.0, through: 9.0, by: 1)), id: \.self) { num in
                                 Text("\(num, specifier: "%.f")")
                             }
@@ -158,16 +158,18 @@ extension NewLogSheet {
                     Text("L")
                 }
                 .frame(height: 100)
+            } else {
+                CustomTextField(image: "text.bubble", placeHolder: "내용", axis: .vertical, keyboardType: .default, text: $vm.notes)
+                    .lineLimit(5...)
             }
             
-            if !(logValidator.logType == .refuel) {
-                CustomTextField(image: "text.bubble", placeHolder: "내용", axis: .vertical, keyboardType: .default, text: $logValidator.notes)
-                    .lineLimit(5...)
+            if vm.logType == .refuel {
+                PriceCell(price: vm.price)
             }
             
         } footer: {
 //            Text("정확한 정보를 입력해주세요")
-            if let message = logValidator.costErrorMessage {
+            if let message = vm.costErrorMessage {
                 Text(message)
                     .foregroundStyle(.red)
             }
