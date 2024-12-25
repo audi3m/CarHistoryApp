@@ -51,9 +51,11 @@ extension LogDomain {
     static func randomLog() -> LogDomain {
         let log = LogDomain(date: DummyData.randomDate(),
                             logType: LogTypeDomain.allCases.randomElement()!,
+                            companyName: "현대 블루핸즈",
                             mileage: 50000,
-                            totalCost: Double.random(in: 10000...500000),
-                            refuelAmount: Double.random(in: 20...55))
+                            totalCost: Double(Int.random(in: 10000...500000)),
+                            refuelAmount: Double(Int.random(in: 20...55)),
+                            notes: "Random Notes 123")
         return log
     }
 }
@@ -73,7 +75,19 @@ extension LogDomain {
     }
     
     var subDescription: String {
-        return "₩" + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
+        if logType == .refuel {
+            return "₩" + "\(totalCost.formatted()) · \(refuelAmount.formatted())L"
+        } else {
+            return "₩" + "\(totalCost.formatted())"
+        }
+    }
+    
+    var price: Double {
+        if logType == .refuel {
+            return totalCost / refuelAmount
+        } else {
+            return 0.0
+        }
     }
 }
 
