@@ -66,7 +66,6 @@ struct HomeView: View {
         } message: {
             Text("차량을 등록한 후에 기록을 추가할 수 있습니다")
         }
-        
     }
     
 }
@@ -92,7 +91,7 @@ extension HomeView {
                 Spacer()
                 
                 NavigationLink {
-                    LogChartView()
+                    LogChartView(dataManager: dataManager)
                 } label: {
                     Image(systemName: "chart.bar.xaxis")
                     Image(systemName: "chevron.right")
