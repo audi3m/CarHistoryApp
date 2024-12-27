@@ -9,6 +9,8 @@ import Foundation
 
 final class LogChartViewModel: ObservableObject {
     
+    private let dataManager: LocalDataManager
+    
     @Published var category = Category.all
     @Published var summaryList = [MonthlySummary]()
     
@@ -16,20 +18,21 @@ final class LogChartViewModel: ObservableObject {
         summaryList.map { summary in
             switch category {
             case .all:
-                return BarData(month: summary.month, value: summary.fuelCost + summary.repairCost + summary.totalRefuelAmount)
+                return BarData(month: summary.month, value: summary.fuelCost + summary.repairCost + summary.fuelAmount)
             case .fuelCost:
                 return BarData(month: summary.month, value: summary.fuelCost)
             case .repair:
                 return BarData(month: summary.month, value: summary.repairCost)
             case .fuelAmount:
-                return BarData(month: summary.month, value: summary.totalRefuelAmount)
+                return BarData(month: summary.month, value: summary.fuelAmount)
             }
         }
     }
     
-    init() {
+    init(dataManager: LocalDataManager) {
         print("init LogChartViewModel")
-        summaryList = aggregateDataByMonth(logs: DummyData.logSample)
+        self.dataManager = dataManager
+        summaryList = aggregateDataByMonth(logs: dataManager.logs)
     }
     
     deinit {
@@ -41,12 +44,10 @@ final class LogChartViewModel: ObservableObject {
 extension LogChartViewModel {
     
     func aggregateDataByMonth(logs: [LogDomain]) -> [MonthlySummary] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy.MM"
 
-        let groupedLogs = Dictionary(grouping: logs) { log in
-            dateFormatter.string(from: log.date)
-        }
+        let groupedLogs = Dictionary(grouping: logs) { formatter.string(from: $0.date) }
 
         return groupedLogs.map { (month, logs) in
             let fuelCost = logs
@@ -68,7 +69,7 @@ extension LogChartViewModel {
                 fuelCost: fuelCost,
                 repairCost: repairCost,
 //                totalMileage: totalMileage,
-                totalRefuelAmount: totalRefuelAmount
+                fuelAmount: totalRefuelAmount
             )
         }
         .sorted { $0.month < $1.month }
@@ -82,7 +83,7 @@ struct MonthlySummary: Identifiable {
     let fuelCost: Double
     let repairCost: Double
 //    let totalMileage: Int
-    let totalRefuelAmount: Double
+    let fuelAmount: Double
 }
 
 struct BarData: Identifiable {

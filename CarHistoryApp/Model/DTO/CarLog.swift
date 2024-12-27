@@ -67,7 +67,9 @@ enum LogType: String, PersistableEnum, CaseIterable {
     case maintenance = "정비"
     case carWash = "세차"
     case etc = "기타"
-    
+}
+
+extension LogType {
     func toDomain() -> LogTypeDomain {
         switch self {
         case .refuel:
@@ -78,32 +80,6 @@ enum LogType: String, PersistableEnum, CaseIterable {
             return .carWash
         case .etc:
             return .etc
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .refuel:
-            return .red
-        case .maintenance:
-            return .green
-        case .carWash:
-            return .blue
-        case .etc:
-            return .brown
-        }
-    }
-    
-    var image: String {
-        switch self {
-        case .refuel:
-            return "fuelpump"
-        case .maintenance:
-            return "wrench.and.screwdriver"
-        case .carWash:
-            return "bubbles.and.sparkles"
-        case .etc:
-            return "ellipsis.circle"
         }
     }
 }

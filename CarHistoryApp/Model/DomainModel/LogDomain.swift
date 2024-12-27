@@ -89,13 +89,16 @@ extension LogDomain {
             return 0.0
         }
     }
-}
+} 
 
 enum LogTypeDomain: String, CaseIterable {
     case refuel = "주유/충전"
     case maintenance = "정비"
     case carWash = "세차"
     case etc = "기타"
+}
+
+extension LogTypeDomain {
     
     func toDTO() -> LogType {
         switch self {

@@ -11,7 +11,7 @@ import CoreLocation
 
 final class NewLogViewModel: ObservableObject {
     
-    @Published var logType = LogType.refuel
+    @Published var logType = LogTypeDomain.refuel
     @Published var date = Date()
     @Published var mileage = ""
     @Published var companyName = ""
@@ -96,7 +96,7 @@ extension NewLogViewModel {
     
     func makeNewLog() -> LogDomain {
         var newLog = LogDomain(date: date,
-                               logType: logType.toDomain(),
+                               logType: logType,
                                companyName: companyName,
                                mileage: Int(mileage) ?? 0,
                                totalCost: Double(totalCost) ?? 0.0,

@@ -10,18 +10,18 @@ import RealmSwift
 
 struct HomeView: View {
     @EnvironmentObject var dataManager: LocalDataManager
-    @StateObject var viewModel: HomeViewModel
+    @StateObject var vm: HomeViewModel
     
     @State private var showAddNewLogSheet = false
     @State private var showAddNewCarSheet = false
-    
     @State private var noEnrolledCar = false
     
-    init(dataManager: LocalDataManager) {
-        _viewModel = StateObject(wrappedValue: HomeViewModel(dataManager: dataManager))
-    }
-    
     let columns4 = Array(repeating: GridItem(.flexible()), count: 4)
+    
+    init(dataManager: LocalDataManager) {
+        _vm = StateObject(wrappedValue: HomeViewModel(dataManager: dataManager))
+        print("init HomeView")
+    }
     
     var body: some View {
         NavigationStack {
@@ -48,6 +48,9 @@ struct HomeView: View {
             .navigationDestination(for: CarDomain.self) { car in
                 YearlyLogsView()
             }
+            .navigationDestination(for: String.self) { _ in
+                SettingsView()
+            }
         }
         .sheet(isPresented: $showAddNewLogSheet) {
             if dataManager.selectedCar != nil {
@@ -63,7 +66,6 @@ struct HomeView: View {
         } message: {
             Text("차량을 등록한 후에 기록을 추가할 수 있습니다")
         }
-        
     }
     
 }
@@ -89,7 +91,7 @@ extension HomeView {
                 Spacer()
                 
                 NavigationLink {
-                    LogChartView()
+                    LogChartView(dataManager: dataManager)
                 } label: {
                     Image(systemName: "chart.bar.xaxis")
                     Image(systemName: "chevron.right")
@@ -105,7 +107,7 @@ extension HomeView {
                         Image(systemName: "fuelpump.fill")
                             .frame(height: 15)
                         
-                        Text(dataManager.getFuelExpense())
+                        Text(vm.fuelExpense)
                             .font(.footnote)
                             .fontWeight(.semibold)
                             .minimumScaleFactor(0.8)
@@ -115,7 +117,7 @@ extension HomeView {
                         Image(systemName: "bubbles.and.sparkles")
                             .frame(height: 15)
                         
-                        Text(dataManager.getLatestWash())
+                        Text(vm.lastWash)
                             .font(.footnote)
                             .fontWeight(.semibold)
                             .minimumScaleFactor(0.8)
@@ -171,6 +173,7 @@ extension HomeView {
         }
         .padding()
     }
+    
     private func recent() -> some View {
         VStack(alignment: .leading) {
             HStack {
@@ -192,7 +195,7 @@ extension HomeView {
             .padding(.horizontal, 6)
             
             VStack {
-                if dataManager.logs.isEmpty {
+                if vm.recentFiveLogs.isEmpty {
                     HStack {
                         Text("기록 없음")
                             .foregroundStyle(.placeholder)
@@ -203,8 +206,7 @@ extension HomeView {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
                 
-                ForEach(viewModel.recentFive) { log in
-//                ForEach(dataManager.logs.suffix(5).reversed()) { log in
+                ForEach(vm.recentFiveLogs) { log in
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .frame(width: 2.5, height: 35)
@@ -288,10 +290,10 @@ extension HomeView {
                 Section {
                     ForEach(dataManager.cars) { car in
                         Button {
-                            dataManager.selectCar(car: car)
+                            vm.selectCar(car: car)
                         } label: {
                             Text(car.plateNumber)
-                            if let currentCar = dataManager.selectedCar, currentCar == car {
+                            if let currentCar = vm.selectedCar, currentCar == car {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -335,7 +337,7 @@ extension HomeView {
 extension HomeView {
     private func addNewLogButton() -> some View {
         Button {
-            if dataManager.selectedCar != nil {
+            if vm.selectedCar != nil {
                 showAddNewLogSheet = true
             } else {
                 noEnrolledCar = true
@@ -349,4 +351,3 @@ extension HomeView {
         .padding()
     }
 }
-
