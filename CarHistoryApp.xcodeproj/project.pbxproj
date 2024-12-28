@@ -56,6 +56,9 @@
 		D4F62DA52D130E6500BC8150 /* LogChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DA42D130E6500BC8150 /* LogChartViewModel.swift */; };
 		D4F62DA92D13A26300BC8150 /* CarEnrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DA82D13A26300BC8150 /* CarEnrollViewModel.swift */; };
 		D4F62DAB2D13B89F00BC8150 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DAA2D13B89F00BC8150 /* SettingsViewModel.swift */; };
+		D4F62DCD2D1A80E800BC8150 /* PriceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DCC2D1A80E800BC8150 /* PriceCell.swift */; };
+		D4F62DCF2D1A966100BC8150 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DCE2D1A966100BC8150 /* LogCell.swift */; };
+		D4F62DD12D1AA63A00BC8150 /* LogCellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F62DD02D1AA63A00BC8150 /* LogCellTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +134,9 @@
 		D4F62DA42D130E6500BC8150 /* LogChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogChartViewModel.swift; sourceTree = "<group>"; };
 		D4F62DA82D13A26300BC8150 /* CarEnrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarEnrollViewModel.swift; sourceTree = "<group>"; };
 		D4F62DAA2D13B89F00BC8150 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D4F62DCC2D1A80E800BC8150 /* PriceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceCell.swift; sourceTree = "<group>"; };
+		D4F62DCE2D1A966100BC8150 /* LogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
+		D4F62DD02D1AA63A00BC8150 /* LogCellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCellTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,10 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				D451730A2CA110F8003A1E8C /* Info.plist */,
-				D408C4592C9081CA001464E7 /* CarHistoryAppApp.swift */,
-				D45173012C9FEF2E003A1E8C /* OnboardingView.swift */,
+				D4F62DEE2D20408200BC8150 /* App */,
 				D4641A7C2CE06724005DB6F8 /* Model */,
-				D42345142C99A97D0019F434 /* Data */,
 				D4F62D982D0E810800BC8150 /* Presentation */,
 				D4E1F6032CA46500003169A6 /* Managers */,
 				D45172EA2C9C415F003A1E8C /* etc */,
@@ -218,13 +222,6 @@
 			path = NewHistory;
 			sourceTree = "<group>";
 		};
-		D42345142C99A97D0019F434 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		D44141DC2CE9EBFC005635B6 /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,22 +231,22 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
-		D44141DE2CE9EC1A005635B6 /* DTO */ = {
+		D44141DE2CE9EC1A005635B6 /* RealmDTO */ = {
 			isa = PBXGroup;
 			children = (
 				D42345172C99AB5E0019F434 /* Car.swift */,
 				D4E1F6352CA69984003169A6 /* CarLog.swift */,
 			);
-			path = DTO;
+			path = RealmDTO;
 			sourceTree = "<group>";
 		};
-		D44141DF2CE9EC28005635B6 /* DomainModel */ = {
+		D44141DF2CE9EC28005635B6 /* RealmDomainModel */ = {
 			isa = PBXGroup;
 			children = (
 				D4641A832CE0F97B005DB6F8 /* CarDomain.swift */,
 				D4641A852CE0F987005DB6F8 /* LogDomain.swift */,
 			);
-			path = DomainModel;
+			path = RealmDomainModel;
 			sourceTree = "<group>";
 		};
 		D44141E02CE9EC37005635B6 /* Protocol */ = {
@@ -282,6 +279,9 @@
 			isa = PBXGroup;
 			children = (
 				D45172EB2C9C4175003A1E8C /* CustomTextField.swift */,
+				D4F62DCC2D1A80E800BC8150 /* PriceCell.swift */,
+				D4F62DCE2D1A966100BC8150 /* LogCell.swift */,
+				D4F62DD02D1AA63A00BC8150 /* LogCellTest.swift */,
 				D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */,
 				D4E1F6372CA69A11003169A6 /* Color+Ex.swift */,
 				D4E1F6012CA431F9003169A6 /* TestView.swift */,
@@ -314,8 +314,8 @@
 		D4641A7C2CE06724005DB6F8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D44141DE2CE9EC1A005635B6 /* DTO */,
-				D44141DF2CE9EC28005635B6 /* DomainModel */,
+				D44141DE2CE9EC1A005635B6 /* RealmDTO */,
+				D44141DF2CE9EC28005635B6 /* RealmDomainModel */,
 				D44141E02CE9EC37005635B6 /* Protocol */,
 				D44141E12CE9EC42005635B6 /* Service */,
 				D44141DC2CE9EBFC005635B6 /* Test */,
@@ -365,7 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				D45173032CA02CAF003A1E8C /* Home */,
-				D4F62DA12D130E4600BC8150 /* Chart */,
+				D4F62DA12D130E4600BC8150 /* Charts */,
 				D4E1F6462CA7C217003169A6 /* Nearby */,
 				D4E1F6612CA9AACE003169A6 /* AllLogs */,
 				D408C4E52C97E7CE001464E7 /* Settings */,
@@ -375,14 +375,23 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		D4F62DA12D130E4600BC8150 /* Chart */ = {
+		D4F62DA12D130E4600BC8150 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
 				D4F62DA22D130E5100BC8150 /* LogChartView.swift */,
 				D4F62DA42D130E6500BC8150 /* LogChartViewModel.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
 			);
-			path = Chart;
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		D4F62DEE2D20408200BC8150 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D408C4592C9081CA001464E7 /* CarHistoryAppApp.swift */,
+				D45173012C9FEF2E003A1E8C /* OnboardingView.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D44141DB2CE9EBF7005635B6 /* LogTestService.swift in Sources */,
+				D4F62DCD2D1A80E800BC8150 /* PriceCell.swift in Sources */,
 				D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */,
 				D42345202C9AF6400019F434 /* NearbyEnum.swift in Sources */,
 				D4641A842CE0F97B005DB6F8 /* CarDomain.swift in Sources */,
@@ -515,8 +525,10 @@
 				D4C3FE0A2CAEBD4B00E751EA /* SettingsView.swift in Sources */,
 				D4F62DAB2D13B89F00BC8150 /* SettingsViewModel.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
+				D4F62DD12D1AA63A00BC8150 /* LogCellTest.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
 				D44141D92CE9EBEC005635B6 /* CarTestService.swift in Sources */,
+				D4F62DCF2D1A966100BC8150 /* LogCell.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
 				D4F62D9E2D0FD5FD00BC8150 /* HomeViewModel.swift in Sources */,
 				D45173002C9FEB23003A1E8C /* BasicSettingsHelper.swift in Sources */,

@@ -125,24 +125,6 @@ extension LocalDataManager {
         return sortedLogs
     }
     
-    func getFuelExpense() -> String {
-        let calendar = Calendar.current
-        let currentYear = calendar.component(.year, from: Date())
-        let currentMonth = calendar.component(.month, from: Date())
-        
-        let refuelList = logs
-            .filter { $0.logType == .refuel }
-            .filter {
-                let logYear = calendar.component(.year, from: $0.date)
-                let logMonth = calendar.component(.month, from: $0.date)
-                return logYear == currentYear && logMonth == currentMonth
-            }
-        
-        let totalCost = refuelList.reduce(0) { $0 + $1.totalCost }
-        
-        return "₩\(Int(totalCost).formatted())"
-    }
-    
     func getLatestWash() -> String {
         if let wash = logs.last(where: { $0.logType == .carWash }) {
             return wash.date.toSep30()

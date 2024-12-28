@@ -9,17 +9,7 @@ import SwiftUI
 
 final class CarEnrollViewModel: ObservableObject { 
     
-    @Published var manufacturer = ""
-    @Published var plateNumber = ""
-    @Published var year = ""
-    @Published var name = ""
-    @Published var carColor = Color.black
-    @Published var fuelType = FuelTypeDomain.gasoline
     
-    @Published var showImagePicker = false
-    @Published var selectedImage: UIImage?
-    
-    @Published var carAlreadyExists = false
     
     init() {
         print("init CarEnrollViewModel")
@@ -28,8 +18,6 @@ final class CarEnrollViewModel: ObservableObject {
     deinit {
         print("deinit CarEnrollViewModel")
     }
-    
-    
     
 }
 
