@@ -23,13 +23,12 @@
 		D44142AC2CF2347B005635B6 /* CarDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44142AB2CF2347B005635B6 /* CarDataTests.swift */; };
 		D45172EC2C9C4175003A1E8C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172EB2C9C4175003A1E8C /* CustomTextField.swift */; };
 		D45172F12C9D99B9003A1E8C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172F02C9D99B9003A1E8C /* ImagePicker.swift */; };
-		D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */; };
 		D45173002C9FEB23003A1E8C /* BasicSettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */; };
 		D45173022C9FEF2E003A1E8C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173012C9FEF2E003A1E8C /* OnboardingView.swift */; };
 		D45173072CA04CB9003A1E8C /* NewLogSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173062CA04CB9003A1E8C /* NewLogSheet.swift */; };
 		D45173092CA0519D003A1E8C /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45173082CA0519D003A1E8C /* DateHelper.swift */; };
-		D4641A782CDF9C38005DB6F8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D4641A772CDF9C38005DB6F8 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		D4641A7A2CDF9C38005DB6F8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D4641A792CDF9C38005DB6F8 /* FirebaseCrashlytics */; };
+		D45321AA2D22E6A60050CA17 /* ChartsTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45321A92D22E6A30050CA17 /* ChartsTestView.swift */; };
+		D45321AC2D22E6C70050CA17 /* ChartsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45321AB2D22E6C70050CA17 /* ChartsTest.swift */; };
 		D4641A7E2CE0B362005DB6F8 /* LogRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A7D2CE0B362005DB6F8 /* LogRepositoryProtocol.swift */; };
 		D4641A802CE0C40E005DB6F8 /* CarRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A7F2CE0C40E005DB6F8 /* CarRealmService.swift */; };
 		D4641A822CE0C415005DB6F8 /* LogRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4641A812CE0C415005DB6F8 /* LogRealmService.swift */; };
@@ -102,12 +101,13 @@
 		D44142AB2CF2347B005635B6 /* CarDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDataTests.swift; sourceTree = "<group>"; };
 		D45172EB2C9C4175003A1E8C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D45172F02C9D99B9003A1E8C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Ex.swift"; sourceTree = "<group>"; };
 		D45172FF2C9FEB23003A1E8C /* BasicSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSettingsHelper.swift; sourceTree = "<group>"; };
 		D45173012C9FEF2E003A1E8C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		D45173062CA04CB9003A1E8C /* NewLogSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogSheet.swift; sourceTree = "<group>"; };
 		D45173082CA0519D003A1E8C /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		D451730A2CA110F8003A1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D45321A92D22E6A30050CA17 /* ChartsTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsTestView.swift; sourceTree = "<group>"; };
+		D45321AB2D22E6C70050CA17 /* ChartsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsTest.swift; sourceTree = "<group>"; };
 		D4641A7D2CE0B362005DB6F8 /* LogRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogRepositoryProtocol.swift; sourceTree = "<group>"; };
 		D4641A7F2CE0C40E005DB6F8 /* CarRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRealmService.swift; sourceTree = "<group>"; };
 		D4641A812CE0C415005DB6F8 /* LogRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogRealmService.swift; sourceTree = "<group>"; };
@@ -144,9 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4641A7A2CDF9C38005DB6F8 /* FirebaseCrashlytics in Frameworks */,
 				D423451E2C99AFAB0019F434 /* RealmSwift in Frameworks */,
-				D4641A782CDF9C38005DB6F8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +280,6 @@
 				D4F62DCC2D1A80E800BC8150 /* PriceCell.swift */,
 				D4F62DCE2D1A966100BC8150 /* LogCell.swift */,
 				D4F62DD02D1AA63A00BC8150 /* LogCellTest.swift */,
-				D45172FD2C9F0EEB003A1E8C /* MKMapItem+Ex.swift */,
 				D4E1F6372CA69A11003169A6 /* Color+Ex.swift */,
 				D4E1F6012CA431F9003169A6 /* TestView.swift */,
 				D4E1F6072CA58020003169A6 /* CalendarView.swift */,
@@ -381,6 +378,8 @@
 				D4F62DA22D130E5100BC8150 /* LogChartView.swift */,
 				D4F62DA42D130E6500BC8150 /* LogChartViewModel.swift */,
 				D42345102C99A9520019F434 /* DummyData.swift */,
+				D45321A92D22E6A30050CA17 /* ChartsTestView.swift */,
+				D45321AB2D22E6C70050CA17 /* ChartsTest.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -413,8 +412,6 @@
 			name = CarHistoryApp;
 			packageProductDependencies = (
 				D423451D2C99AFAB0019F434 /* RealmSwift */,
-				D4641A772CDF9C38005DB6F8 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				D4641A792CDF9C38005DB6F8 /* FirebaseCrashlytics */,
 			);
 			productName = CarHistoryApp;
 			productReference = D408C4562C9081CA001464E7 /* CarHistoryApp.app */;
@@ -446,7 +443,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					D408C4552C9081CA001464E7 = {
 						CreatedOnToolsVersion = 15.4;
@@ -470,7 +467,6 @@
 			mainGroup = D408C44D2C9081CA001464E7;
 			packageReferences = (
 				D423451C2C99AFAB0019F434 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				D4641A762CDF9C38005DB6F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = D408C4572C9081CA001464E7 /* Products */;
 			projectDirPath = "";
@@ -525,8 +521,10 @@
 				D4C3FE0A2CAEBD4B00E751EA /* SettingsView.swift in Sources */,
 				D4F62DAB2D13B89F00BC8150 /* SettingsViewModel.swift in Sources */,
 				D42345182C99AB5E0019F434 /* Car.swift in Sources */,
+				D45321AA2D22E6A60050CA17 /* ChartsTestView.swift in Sources */,
 				D4F62DD12D1AA63A00BC8150 /* LogCellTest.swift in Sources */,
 				D408C46A2C908740001464E7 /* HomeView.swift in Sources */,
+				D45321AC2D22E6C70050CA17 /* ChartsTest.swift in Sources */,
 				D44141D92CE9EBEC005635B6 /* CarTestService.swift in Sources */,
 				D4F62DCF2D1A966100BC8150 /* LogCell.swift in Sources */,
 				D408C45A2C9081CA001464E7 /* CarHistoryAppApp.swift in Sources */,
@@ -545,7 +543,6 @@
 				D4F62DA02D12F8BA00BC8150 /* AllLogViewModel.swift in Sources */,
 				D42345112C99A9520019F434 /* DummyData.swift in Sources */,
 				D4E1F6632CA9AAE8003169A6 /* YearlyLogsView.swift in Sources */,
-				D45172FE2C9F0EEB003A1E8C /* MKMapItem+Ex.swift in Sources */,
 				D4E1F6022CA431F9003169A6 /* TestView.swift in Sources */,
 				D4E1F6602CA96C2C003169A6 /* NewLogViewModel.swift in Sources */,
 				D4F62DA32D130E5100BC8150 /* LogChartView.swift in Sources */,
@@ -578,6 +575,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -641,6 +639,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -848,14 +847,6 @@
 				version = 20.0.0;
 			};
 		};
-		D4641A762CDF9C38005DB6F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.4.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -863,16 +854,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D423451C2C99AFAB0019F434 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
-		};
-		D4641A772CDF9C38005DB6F8 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D4641A762CDF9C38005DB6F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		D4641A792CDF9C38005DB6F8 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D4641A762CDF9C38005DB6F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
