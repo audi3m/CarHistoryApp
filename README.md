@@ -1,9 +1,9 @@
 ## 프로젝트 소개
 - 내 차량을 등록하고 주유, 정비 등의 기록을 저장하고 연도별, 월별로 통계를 볼 수 있는 앱
   
-|1. 홈 화면 | 2. 연도별 기록 | 3. 주변 업장 검색 |
-| -- | -- | -- |
-| <img width="200" src="https://github.com/user-attachments/assets/98d8e6b0-ea3e-4f04-bc77-d2163df41dfa" /> | <img width="200" src="https://github.com/user-attachments/assets/f53880bc-10ce-4c59-9fcd-acd31e184935" /> | <img width="200" src="https://github.com/user-attachments/assets/840f13ee-ac64-47ae-90db-fc0d623fa57a" /> |
+|1. 홈 화면 | 2. 연도별 기록 | 3. 차트로 보기 | 4. 주변 업장 검색
+| -- | -- | -- | -- |
+| <img width="200" src="https://github.com/user-attachments/assets/98d8e6b0-ea3e-4f04-bc77-d2163df41dfa" /> | <img width="200" src="https://github.com/user-attachments/assets/f53880bc-10ce-4c59-9fcd-acd31e184935" /> | <img width="200" src="https://github.com/user-attachments/assets/a582f592-e6e6-446b-a840-4b1c1c0755e0" /> | <img width="200" src="https://github.com/user-attachments/assets/840f13ee-ac64-47ae-90db-fc0d623fa57a" /> |
 </br>
 
 ## 프로젝트 정보
