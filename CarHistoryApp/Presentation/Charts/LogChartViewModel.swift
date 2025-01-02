@@ -12,7 +12,21 @@ final class LogChartViewModel: ObservableObject {
     private let dataManager: LocalDataManager
     
     @Published var category = Category.all
+    @Published var sixMonthList = [LogDomain]()
     @Published var summaryList = [MonthlySummary]()
+    
+    var newFilteredData: [LogDomain] {
+        switch category {
+        case .all:
+            return dataManager.logs
+        case .fuelCost:
+            return dataManager.logs.filter { $0.logType == .refuel }
+        case .repair:
+            return dataManager.logs.filter { $0.logType == .maintenance }
+        case .fuelAmount:
+            <#code#>
+        }
+    }
     
     var filteredData: [BarData] {
         summaryList.map { summary in
