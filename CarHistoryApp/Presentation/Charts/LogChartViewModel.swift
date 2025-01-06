@@ -11,28 +11,28 @@ final class LogChartViewModel: ObservableObject {
     
     private let dataManager: LocalDataManager
     
-    @Published var category = Category.all
-    @Published var summaryList = [MonthlySummary]()
+    @Published var logsForBarChart: [BarChartData] = []
     
-    var filteredData: [BarData] {
-        summaryList.map { summary in
-            switch category {
-            case .all:
-                return BarData(month: summary.month, value: summary.fuelCost + summary.repairCost + summary.fuelAmount)
-            case .fuelCost:
-                return BarData(month: summary.month, value: summary.fuelCost)
-            case .repair:
-                return BarData(month: summary.month, value: summary.repairCost)
-            case .fuelAmount:
-                return BarData(month: summary.month, value: summary.fuelAmount)
-            }
+    @Published var category = Category.all
+    @Published var month = Month.six
+    
+    var newFilteredData: [LogDomain] {
+        switch category {
+        case .all:
+            return dataManager.logs
+        case .fuelCost:
+            return dataManager.logs.filter { $0.logType == .refuel }
+        case .repair:
+            return dataManager.logs.filter { $0.logType == .maintenance }
+        case .fuelAmount:
+            return []
         }
     }
     
     init(dataManager: LocalDataManager) {
         print("init LogChartViewModel")
         self.dataManager = dataManager
-        summaryList = aggregateDataByMonth(logs: dataManager.logs)
+        
     }
     
     deinit {
@@ -42,54 +42,27 @@ final class LogChartViewModel: ObservableObject {
 }
 
 extension LogChartViewModel {
-    
-    func aggregateDataByMonth(logs: [LogDomain]) -> [MonthlySummary] {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yy.MM"
+    func groupLogsByMonth(logs: [LogDomain]) -> [Int: [LogDomain]] {
+        var groupedLogs: [Int: [LogDomain]] = [:]
+        let calendar = Calendar.current
 
-        let groupedLogs = Dictionary(grouping: logs) { formatter.string(from: $0.date) }
+        for log in logs {
+            let month = calendar.component(.month, from: log.date)
 
-        return groupedLogs.map { (month, logs) in
-            let fuelCost = logs
-                .filter { $0.logType == .refuel }
-                .reduce(0) { $0 + $1.totalCost }
-
-            let repairCost = logs
-                .filter { $0.logType == .maintenance }
-                .reduce(0) { $0 + $1.totalCost }
-
-//            let totalMileage = logs.reduce(0) { $0 + $1.mileage }
-            
-            let totalRefuelAmount = logs
-                .filter { $0.logType == .refuel }
-                .reduce(0) { $0 + $1.refuelAmount }
-
-            return MonthlySummary(
-                month: month,
-                fuelCost: fuelCost,
-                repairCost: repairCost,
-//                totalMileage: totalMileage,
-                fuelAmount: totalRefuelAmount
-            )
+            if groupedLogs[month] != nil {
+                groupedLogs[month]?.append(log)
+            } else {
+                groupedLogs[month] = [log]
+            }
         }
-        .sorted { $0.month < $1.month }
+
+        return groupedLogs
     }
-
 }
 
-struct MonthlySummary: Identifiable {
-    let id = UUID()
-    let month: String
-    let fuelCost: Double
-    let repairCost: Double
-//    let totalMileage: Int
-    let fuelAmount: Double
-}
-
-struct BarData: Identifiable {
-    let id = UUID()
-    let month: String
-    let value: Double
+struct BarChartData {
+    let date: Date
+    let logs: [LogDomain]
 }
 
 enum Category: String, CaseIterable {
@@ -98,4 +71,10 @@ enum Category: String, CaseIterable {
     case fuelCost = "주유 비용"
     case repair = "정비 비용"
     case fuelAmount = "주유량"
+}
+
+enum Month: CaseIterable {
+    case three
+    case six
+    case twelve
 }

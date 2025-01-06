@@ -46,12 +46,15 @@ extension LogChartView {
     
     @ViewBuilder
     private func charts() -> some View {
-        Chart(vm.filteredData) {
+        Chart(vm.newFilteredData) {
             BarMark(
-                x: .value("Date", $0.month),
-                y: .value("Fuel Amt", $0.value)
+                x: .value("Date", $0.date),
+                y: .value("Fuel Amt", $0.totalCost)
             )
-            .foregroundStyle(by: .value("Product Category", $0.value))
+            .foregroundStyle(by: .value("Product Category", $0.totalCost))
+        }
+        .chartXAxis {
+            AxisMarks(format: .dateTime.month(.abbreviated))
         }
         .frame(height: 250)
         .padding()
