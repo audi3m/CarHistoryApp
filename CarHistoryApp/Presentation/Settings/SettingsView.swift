@@ -12,18 +12,15 @@ enum Appearance: String, CaseIterable {
     
     var name: String {
         switch self {
-        case .system:
-            "시스템"
-        case .light:
-            "라이트"
-        case .dark:
-            "다크"
+        case .system: "시스템"
+        case .light: "라이트"
+        case .dark: "다크"
         }
     }
 }
 
 struct SettingsView: View {
-    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode = "system"
+    @AppStorage(StringKeys.appearance) private var selectedAppearanceMode = "system"
     
     var body: some View {
         List {
@@ -77,4 +74,3 @@ struct SettingsView: View {
         
     }
 }
- 
