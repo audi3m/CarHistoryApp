@@ -30,7 +30,7 @@ struct SettingsView: View {
                         
                         VStack(spacing: 8) {
                             Text(item.name)
-                            Image(systemName: selectedAppearanceMode == item.rawValue ? "checkmark.circle.fill" : "circle")
+                            Image(systemName: selectedAppearanceMode == item.rawValue ? SystemNameKeys.checkmarkCircleFill : SystemNameKeys.circle)
                                 .font(.title3)
                         }
                         .frame(maxWidth: .infinity)

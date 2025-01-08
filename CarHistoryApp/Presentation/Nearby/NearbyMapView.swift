@@ -101,7 +101,7 @@ extension NearbyMapView {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "chevron.left.circle.fill")
+            Image(systemName: SystemNameKeys.chevronLeftCircle)
                 .font(.system(size: 40))
                 .foregroundStyle(.white, .gray)
                 .shadow(radius: 3)
@@ -116,7 +116,7 @@ extension NearbyMapView {
             regionChanged = false
         } label: {
             HStack {
-                Image(systemName: "arrow.clockwise")
+                Image(systemName: SystemNameKeys.arrowClockwise)
                 Text("현 지도에서 다시 검색")
             }
             .font(.subheadline)
@@ -157,7 +157,7 @@ extension NearbyMapView {
                     openInAppleMaps(place: selectedPlace)
                 }
             } label: {
-                Image(systemName: "arrow.right")
+                Image(systemName: SystemNameKeys.arrowRight)
                     .font(.title3)
                     .foregroundStyle(.blackWhite)
                     .padding()

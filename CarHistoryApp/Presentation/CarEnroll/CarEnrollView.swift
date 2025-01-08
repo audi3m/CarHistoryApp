@@ -74,7 +74,7 @@ extension CarEnrollView {
                         .frame(width: 300, height: 150)
                 } else {
                     VStack(spacing: 10){
-                        Image(systemName: "car.side")
+                        Image(systemName: SystemNameKeys.car)
                             .font(.system(size: 60, weight: .ultraLight))
                             .foregroundStyle(.secondary)
                         Text("이미지를 선택하려면 탭하세요")
@@ -110,10 +110,10 @@ extension CarEnrollView {
     
     private func carDetailSection() -> some View {
         Section {
-            CustomTextField(image: "licenseplate", placeHolder: "[필수] 차량번호", keyboardType: .default, text: $plateNumber)
-            CustomTextField(image: "building.2", placeHolder: "제조사", keyboardType: .default, text: $manufacturer)
-            CustomTextField(image: "car.fill", placeHolder: "이름", keyboardType: .default, text: $name)
-            CustomTextField(image: "calendar", placeHolder: "연식", keyboardType: .numberPad, text: $year)
+            CustomTextField(image: SystemNameKeys.licenseplate, placeHolder: "[필수] 차량번호", keyboardType: .default, text: $plateNumber)
+            CustomTextField(image: SystemNameKeys.buildings, placeHolder: "제조사", keyboardType: .default, text: $manufacturer)
+            CustomTextField(image: SystemNameKeys.carFill, placeHolder: "이름", keyboardType: .default, text: $name)
+            CustomTextField(image: SystemNameKeys.calendar, placeHolder: "연식", keyboardType: .numberPad, text: $year)
         }
     }
 }

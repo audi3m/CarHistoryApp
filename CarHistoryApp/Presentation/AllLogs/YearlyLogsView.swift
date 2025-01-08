@@ -17,7 +17,7 @@ struct YearlyLogsView: View {
         VStack {
             if monthlyLogs.isEmpty {
                 ContentUnavailableView("비어있음",
-                                       systemImage: "tray.2",
+                                       systemImage: SystemNameKeys.tray2,
                                        description: Text("\(String(selectedYear))년 기록이 없습니다"))
                     .padding(.bottom, 100)
             } else {
@@ -33,7 +33,7 @@ struct YearlyLogsView: View {
                                                 dataManager.deleteLog(logID: log.id)
                                                 monthlyLogs[month]?.removeAll { $0.id == log.id }
                                             } label: {
-                                                Label("삭제", systemImage: "trash")
+                                                Label("삭제", systemImage: SystemNameKeys.trash)
                                             }
                                         }
                                         .listRowInsets(.init(top: 5, leading: 15, bottom: 5, trailing: 15))
@@ -55,7 +55,7 @@ struct YearlyLogsView: View {
                 Button {
                     selectedYear -= 1
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: SystemNameKeys.chevronLeft)
                 }
                 .disabled(selectedYear <= 2000)
             }
@@ -69,7 +69,7 @@ struct YearlyLogsView: View {
                 Button {
                     selectedYear += 1
                 } label: {
-                    Image(systemName: "chevron.right")
+                    Image(systemName: SystemNameKeys.chevronRight)
                 }
                 .disabled(selectedYear >= Calendar.current.component(.year, from: Date()))
             }

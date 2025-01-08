@@ -83,7 +83,7 @@ extension HomeView {
         VStack(alignment: .leading) {
             
             HStack(spacing: 10) {
-                Image(systemName: "gauge.open.with.lines.needle.33percent")
+                Image(systemName: SystemNameKeys.gauge)
                     .font(.title2)
                 Text(DateHelper.currentMonthLong())
                     .font(.system(size: 18, weight: .bold))
@@ -93,8 +93,8 @@ extension HomeView {
                 NavigationLink {
                     LogChartView(dataManager: dataManager)
                 } label: {
-                    Image(systemName: "chart.bar.xaxis")
-                    Image(systemName: "chevron.right")
+                    Image(systemName: SystemNameKeys.chart)
+                    Image(systemName: SystemNameKeys.chevronRight)
                         .font(.footnote)
                 }
                 .foregroundStyle(.blackWhite)
@@ -104,7 +104,7 @@ extension HomeView {
             HStack {
                 Group {
                     VStack(spacing: 8) {
-                        Image(systemName: "fuelpump.fill")
+                        Image(systemName: SystemNameKeys.fuelPumpFill)
                             .frame(height: 15)
                         
                         Text(vm.fuelExpense)
@@ -114,7 +114,7 @@ extension HomeView {
                     }
                     
                     VStack(spacing: 8) {
-                        Image(systemName: "bubbles.and.sparkles")
+                        Image(systemName: SystemNameKeys.bubble)
                             .frame(height: 15)
                         
                         Text(vm.lastWash)
@@ -186,7 +186,7 @@ extension HomeView {
                     HStack {
                         Text("All")
                             .font(.footnote)
-                        Image(systemName: "chevron.right")
+                        Image(systemName: SystemNameKeys.chevronRight)
                             .font(.footnote)
                     }
                     .foregroundStyle(.blackWhite)
@@ -259,7 +259,7 @@ extension HomeView {
                         .zIndex(-1000)
                 }
             } else {
-                Image(systemName: "car.side")
+                Image(systemName: SystemNameKeys.car)
                     .resizable()
                     .fontWeight(.ultraLight)
                     .scaledToFit()
@@ -282,7 +282,7 @@ extension HomeView {
             } label: {
                 HStack {
                     Text("차량 등록")
-                    Image(systemName: "plus.circle")
+                    Image(systemName: SystemNameKeys.plusCircle)
                 }
             }
         } else {
@@ -294,7 +294,7 @@ extension HomeView {
                         } label: {
                             Text(car.plateNumber)
                             if let currentCar = vm.selectedCar, currentCar == car {
-                                Image(systemName: "checkmark")
+                                Image(systemName: SystemNameKeys.checkmark)
                             }
                         }
                     }
@@ -304,7 +304,7 @@ extension HomeView {
                     Button {
                         showAddNewCarSheet = true
                     } label: {
-                        Label("추가하기", systemImage: "plus.circle")
+                        Label("추가하기", systemImage: SystemNameKeys.plusCircle)
                     }
                 }
                 
@@ -313,7 +313,7 @@ extension HomeView {
                     Text(dataManager.selectedCar?.plateNumber ?? "None")
                         .font(.title2)
                         .bold()
-                    Image(systemName: "chevron.down")
+                    Image(systemName: SystemNameKeys.chevronDown)
                         .font(.caption)
                 }
                 .foregroundStyle(.blackWhite)
@@ -325,7 +325,7 @@ extension HomeView {
         NavigationLink {
             SettingsView()
         } label: {
-            Image(systemName: "line.3.horizontal")
+            Image(systemName: SystemNameKeys.line3)
                 .foregroundStyle(.blackWhite)
                 .scaleEffect(y: 1.3)
         }
@@ -343,11 +343,12 @@ extension HomeView {
                 noEnrolledCar = true
             }
         } label: {
-            Image(systemName: "plus.circle.fill")
+            Image(systemName: SystemNameKeys.plusCircleFill)
                 .font(.system(size: 50))
                 .foregroundStyle(.white, .blue)
         }
         .contentShape(Circle())
+        .shadow(radius: 3)
         .padding()
     }
 }
