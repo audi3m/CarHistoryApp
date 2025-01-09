@@ -66,7 +66,7 @@ extension NewLogSheet {
                         .datePickerStyle(.graphical)
                 }, label: {
                     HStack(spacing: 16) {
-                        Image(systemName: "calendar")
+                        Image(systemName: SystemNameKeys.calendar)
                             .resizable()
                             .scaledToFit()
                             .foregroundStyle(.blackWhite.opacity(0.7))
@@ -78,7 +78,7 @@ extension NewLogSheet {
             )
             
             HStack(spacing: 16) {
-                Image(systemName: "road.lanes")
+                Image(systemName: SystemNameKeys.roadLanes)
                     .resizable()
                     .scaledToFit()
                     .foregroundStyle(.blackWhite.opacity(0.7))
@@ -109,14 +109,14 @@ extension NewLogSheet {
     
     private func companyNameSection() -> some View {
         Section {
-            CustomTextField(image: "building.2.fill", placeHolder: "상호명", keyboardType: .default, text: $vm.companyName)
+            CustomTextField(image: SystemNameKeys.buildings, placeHolder: "상호명", keyboardType: .default, text: $vm.companyName)
         }
     }
     
     private func typeAndValueSection() -> some View {
         Section {
             Picker("", systemImage: vm.logType.image, selection: $vm.logType) {
-                ForEach(LogType.allCases, id: \.self) { type in
+                ForEach(LogTypeDomain.allCases, id: \.self) { type in
                     Text(type.rawValue)
                 }
             }
@@ -129,11 +129,11 @@ extension NewLogSheet {
                 vm.notes = ""
             }
             
-            CustomTextField(image: "creditcard.fill", placeHolder: "[필수] 총 비용", text: $vm.totalCost)
+            CustomTextField(image: SystemNameKeys.creditcard, placeHolder: "[필수] 총 비용", text: $vm.totalCost)
             
             if vm.logType == .refuel {
                 HStack {
-                    Image(systemName: "fuelpump")
+                    Image(systemName: SystemNameKeys.fuelPump)
                     Spacer()
                     HStack(spacing: 0) {
                         Picker("주유량", selection: $vm.refuelInt) {
@@ -159,7 +159,7 @@ extension NewLogSheet {
                 }
                 .frame(height: 100)
             } else {
-                CustomTextField(image: "text.bubble", placeHolder: "내용", axis: .vertical, keyboardType: .default, text: $vm.notes)
+                CustomTextField(image: SystemNameKeys.textBubble, placeHolder: "내용", axis: .vertical, keyboardType: .default, text: $vm.notes)
                     .lineLimit(5...)
             }
             

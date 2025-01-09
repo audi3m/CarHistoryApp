@@ -10,7 +10,7 @@ import RealmSwift
 
 @main
 struct CarHistoryAppApp: App {
-    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode: String = "system"
+    @AppStorage(StringKeys.appearance) private var selectedAppearanceMode: String = "system"
     @StateObject private var dataManager = LocalDataManager(carService: CarRealmService(),
                                                             logService: LogRealmService())
     

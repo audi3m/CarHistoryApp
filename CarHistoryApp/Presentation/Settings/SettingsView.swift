@@ -12,18 +12,15 @@ enum Appearance: String, CaseIterable {
     
     var name: String {
         switch self {
-        case .system:
-            "시스템"
-        case .light:
-            "라이트"
-        case .dark:
-            "다크"
+        case .system: "시스템"
+        case .light: "라이트"
+        case .dark: "다크"
         }
     }
 }
 
 struct SettingsView: View {
-    @AppStorage("selectedAppearanceMode") private var selectedAppearanceMode = "system"
+    @AppStorage(StringKeys.appearance) private var selectedAppearanceMode = "system"
     
     var body: some View {
         List {
@@ -33,7 +30,7 @@ struct SettingsView: View {
                         
                         VStack(spacing: 8) {
                             Text(item.name)
-                            Image(systemName: selectedAppearanceMode == item.rawValue ? "checkmark.circle.fill" : "circle")
+                            Image(systemName: selectedAppearanceMode == item.rawValue ? SystemNameKeys.checkmarkCircleFill : SystemNameKeys.circle)
                                 .font(.title3)
                         }
                         .frame(maxWidth: .infinity)
@@ -67,7 +64,7 @@ struct SettingsView: View {
                 HStack {
                     Text("버전정보")
                     Spacer()
-                    Text("1.0.6")
+                    Text("1.1.0")
                 }
             }
             
@@ -77,4 +74,3 @@ struct SettingsView: View {
         
     }
 }
- 
