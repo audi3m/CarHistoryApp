@@ -32,12 +32,35 @@ final class LogChartViewModel: ObservableObject {
     init(dataManager: LocalDataManager) {
         print("init LogChartViewModel")
         self.dataManager = dataManager
-        
     }
     
     deinit {
         print("deinit LogChartViewModel")
     }
+    
+}
+
+extension LogChartViewModel {
+    // 튜플
+    static let tupleList = [("Jan", 1), ("Feb", 2), ("Mar", 3), ("Apr", 4), ("May", 5), ("Jun", 6),
+                            ("Jul", 7), ("Aug", 8), ("Sep", 9), ("Oct", 10), ("Nov", 11), ("Dec", 12)]
+    
+    // 사전 - 순서
+    static let dicList = ["Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
+                          "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12]
+    
+    // 구조체
+    struct BarData: Identifiable {
+        let id = UUID()
+        let month: String
+        var repairCost = Double.random(in: 100000...2000000)
+        var refuelCost = Double.random(in: 10000...90000)
+    }
+    
+    static let structList = [BarData(month: "Jan"), BarData(month: "Feb"), BarData(month: "Mar"),
+                             BarData(month: "Apr"), BarData(month: "May"), BarData(month: "Jun"),
+                             BarData(month: "Jul"), BarData(month: "Aug"), BarData(month: "Sep"),
+                             BarData(month: "Oct"), BarData(month: "Nov"), BarData(month: "Dec")]
     
 }
 
