@@ -41,51 +41,45 @@ final class LogChartViewModel: ObservableObject {
 }
 
 extension LogChartViewModel {
-    // 튜플
-    static let tupleList = [("Jan", 1), ("Feb", 2), ("Mar", 3), ("Apr", 4), ("May", 5), ("Jun", 6),
-                            ("Jul", 7), ("Aug", 8), ("Sep", 9), ("Oct", 10), ("Nov", 11), ("Dec", 12)]
     
-    // 사전 - 순서
-    static let dicList = ["Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
-                          "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12]
-    
-    // 구조체
-    struct BarData: Identifiable {
-        let id = UUID()
-        let month: String
-        var repairCost = Double.random(in: 100000...2000000)
-        var refuelCost = Double.random(in: 10000...90000)
+    private func setBarData() -> [BarData] {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM"
+        
+        var barDataList = [BarData]()
+        
+        let today = Date()
+        var months: [String] = []
+        
+        for i in 0..<12 {
+            if let date = calendar.date(byAdding: .month, value: -i, to: today) {
+                let month = dateFormatter.string(from: date)
+                months.append(month)
+            }
+        }
+        
+        for month in months.reversed() {
+            barDataList.append(BarData(month: month))
+        }
+        
+        return barDataList
     }
     
-    static let structList = [BarData(month: "Jan"), BarData(month: "Feb"), BarData(month: "Mar"),
-                             BarData(month: "Apr"), BarData(month: "May"), BarData(month: "Jun"),
-                             BarData(month: "Jul"), BarData(month: "Aug"), BarData(month: "Sep"),
-                             BarData(month: "Oct"), BarData(month: "Nov"), BarData(month: "Dec")]
+    private func setChartData(logs: [LogDomain]) -> [BarData] {
+        var barDataList = setBarData()
+        
+        for log in logs {
+            
+        }
+        
+        
+    }
     
 }
 
 extension LogChartViewModel {
-    func groupLogsByMonth(logs: [LogDomain]) -> [Int: [LogDomain]] {
-        var groupedLogs: [Int: [LogDomain]] = [:]
-        let calendar = Calendar.current
-
-        for log in logs {
-            let month = calendar.component(.month, from: log.date)
-
-            if groupedLogs[month] != nil {
-                groupedLogs[month]?.append(log)
-            } else {
-                groupedLogs[month] = [log]
-            }
-        }
-
-        return groupedLogs
-    }
-}
-
-struct BarChartData {
-    let date: Date
-    let logs: [LogDomain]
+    
 }
 
 enum Category: String, CaseIterable {
@@ -100,4 +94,12 @@ enum Month: CaseIterable {
     case three
     case six
     case twelve
+}
+
+// 구조체
+struct BarData: Identifiable {
+    let id = UUID()
+    let month: String
+    var repairCost = 0.0
+    var refuelCost = 0.0
 }
