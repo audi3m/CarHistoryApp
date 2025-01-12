@@ -32,7 +32,6 @@ final class LogChartViewModel: ObservableObject {
     init(dataManager: LocalDataManager) {
         print("init LogChartViewModel")
         self.dataManager = dataManager
-        
     }
     
     deinit {
@@ -42,27 +41,45 @@ final class LogChartViewModel: ObservableObject {
 }
 
 extension LogChartViewModel {
-    func groupLogsByMonth(logs: [LogDomain]) -> [Int: [LogDomain]] {
-        var groupedLogs: [Int: [LogDomain]] = [:]
+    
+    private func setBarData() -> [BarData] {
         let calendar = Calendar.current
-
-        for log in logs {
-            let month = calendar.component(.month, from: log.date)
-
-            if groupedLogs[month] != nil {
-                groupedLogs[month]?.append(log)
-            } else {
-                groupedLogs[month] = [log]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM"
+        
+        var barDataList = [BarData]()
+        
+        let today = Date()
+        var months: [String] = []
+        
+        for i in 0..<12 {
+            if let date = calendar.date(byAdding: .month, value: -i, to: today) {
+                let month = dateFormatter.string(from: date)
+                months.append(month)
             }
         }
-
-        return groupedLogs
+        
+        for month in months.reversed() {
+            barDataList.append(BarData(month: month))
+        }
+        
+        return barDataList
     }
+    
+    private func setChartData(logs: [LogDomain]) -> [BarData] {
+        var barDataList = setBarData()
+        
+        for log in logs {
+            
+        }
+        
+        
+    }
+    
 }
 
-struct BarChartData {
-    let date: Date
-    let logs: [LogDomain]
+extension LogChartViewModel {
+    
 }
 
 enum Category: String, CaseIterable {
@@ -77,4 +94,12 @@ enum Month: CaseIterable {
     case three
     case six
     case twelve
+}
+
+// 구조체
+struct BarData: Identifiable {
+    let id = UUID()
+    let month: String
+    var repairCost = 0.0
+    var refuelCost = 0.0
 }
