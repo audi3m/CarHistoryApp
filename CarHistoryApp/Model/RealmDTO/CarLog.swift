@@ -10,78 +10,78 @@ import RealmSwift
 import CoreLocation
 
 final class CarLog: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var date = Date()
-    @Persisted var logType = LogType.refuel
-    @Persisted var companyName = ""
-    @Persisted var mileage = 0
-    @Persisted var totalCost = 0.0
-    @Persisted var refuelAmount = 0.0
-    @Persisted var notes = ""
-    @Persisted var latitude = 0.0
-    @Persisted var longitude = 0.0 
-    
-    @Persisted(originProperty: "logList") var car: LinkingObjects<Car>
-    
-    convenience init(date: Date = Date(),
-                     logType: LogType = LogType.refuel,
-                     companyName: String = "",
-                     mileage: Int = 0,
-                     totalCost: Double = 0.0,
-                     refuelAmount: Double = 0.0,
-                     notes: String = "",
-                     latitude: Double = 0.0,
-                     longitude: Double = 0.0) {
-        self.init()
-        self.date = date
-        self.logType = logType
-        self.companyName = companyName
-        self.mileage = mileage
-        self.totalCost = totalCost
-        self.refuelAmount = refuelAmount
-        self.notes = notes
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-    
+  @Persisted(primaryKey: true) var id: ObjectId
+  @Persisted var date = Date()
+  @Persisted var logType = LogType.refuel
+  @Persisted var companyName = ""
+  @Persisted var mileage = 0
+  @Persisted var totalCost = 0.0
+  @Persisted var refuelAmount = 0.0
+  @Persisted var notes = ""
+  @Persisted var latitude = 0.0
+  @Persisted var longitude = 0.0 
+  
+  @Persisted(originProperty: "logList") var car: LinkingObjects<Car>
+  
+  convenience init(date: Date = Date(),
+                   logType: LogType = LogType.refuel,
+                   companyName: String = "",
+                   mileage: Int = 0,
+                   totalCost: Double = 0.0,
+                   refuelAmount: Double = 0.0,
+                   notes: String = "",
+                   latitude: Double = 0.0,
+                   longitude: Double = 0.0) {
+    self.init()
+    self.date = date
+    self.logType = logType
+    self.companyName = companyName
+    self.mileage = mileage
+    self.totalCost = totalCost
+    self.refuelAmount = refuelAmount
+    self.notes = notes
+    self.latitude = latitude
+    self.longitude = longitude
+  }
+  
 }
 
 extension CarLog {
-    func toDomain() -> LogDomain {
-        let log = LogDomain(id: id.stringValue,
-                            date: date,
-                            logType: logType.toDomain(),
-                            companyName: companyName,
-                            mileage: mileage,
-                            totalCost: totalCost,
-                            refuelAmount: refuelAmount,
-                            notes: notes,
-                            latitude: latitude,
-                            longitude: longitude)
-        return log
-    }
+  func toDomain() -> LogDomain {
+    let log = LogDomain(id: id.stringValue,
+                        date: date,
+                        logType: logType.toDomain(),
+                        companyName: companyName,
+                        mileage: mileage,
+                        totalCost: totalCost,
+                        refuelAmount: refuelAmount,
+                        notes: notes,
+                        latitude: latitude,
+                        longitude: longitude)
+    return log
+  }
 }
 
 enum LogType: String, PersistableEnum, CaseIterable {
-    case refuel = "주유/충전"
-    case maintenance = "정비"
-    case carWash = "세차"
-    case etc = "기타"
+  case refuel = "주유/충전"
+  case maintenance = "정비"
+  case carWash = "세차"
+  case etc = "기타"
 }
 
 extension LogType {
-    func toDomain() -> LogTypeDomain {
-        switch self {
-        case .refuel:
-            return .refuel
-        case .maintenance:
-            return .maintenance
-        case .carWash:
-            return .carWash
-        case .etc:
-            return .etc
-        }
+  func toDomain() -> LogTypeDomain {
+    switch self {
+    case .refuel:
+      return .refuel
+    case .maintenance:
+      return .maintenance
+    case .carWash:
+      return .carWash
+    case .etc:
+      return .etc
     }
+  }
 }
 
 

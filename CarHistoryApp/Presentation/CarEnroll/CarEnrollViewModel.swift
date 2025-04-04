@@ -8,17 +8,17 @@
 import SwiftUI
 
 final class CarEnrollViewModel: ObservableObject { 
-    
-    
-    
-    init() {
-        print("init CarEnrollViewModel")
-    }
-    
-    deinit {
-        print("deinit CarEnrollViewModel")
-    }
-    
+  
+  
+  
+  init() {
+    print("init CarEnrollViewModel")
+  }
+  
+  deinit {
+    print("deinit CarEnrollViewModel")
+  }
+  
 }
 
 //extension CarEnrollViewModel {

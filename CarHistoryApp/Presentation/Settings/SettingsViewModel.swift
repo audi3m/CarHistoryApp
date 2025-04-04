@@ -8,15 +8,15 @@
 import Foundation
 
 final class SettingsViewModel: ObservableObject {
-    init() {
-        print("init SettingsViewModel")
-    }
-    
-    deinit {
-        print("deinit SettingsViewModel")
-    }
+  init() {
+    print("init SettingsViewModel")
+  }
+  
+  deinit {
+    print("deinit SettingsViewModel")
+  }
 }
 
 extension SettingsViewModel {
-    
+  
 }
