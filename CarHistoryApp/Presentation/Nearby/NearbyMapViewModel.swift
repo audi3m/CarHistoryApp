@@ -8,15 +8,15 @@
 import Foundation
 
 final class NearbyMapViewModel: ObservableObject {
-    init() {
-        print("init NearbyMapViewModel")
-    }
-    
-    deinit {
-        print("deinit NearbyMapViewModel")
-    }
+  init() {
+    print("init NearbyMapViewModel")
+  }
+  
+  deinit {
+    print("deinit NearbyMapViewModel")
+  }
 }
 
 extension NearbyMapViewModel {
-    
+  
 }

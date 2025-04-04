@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 final class YearlyLogsViewModel {
-    init() {
-        print("init YearlyLogsViewModel")
-    }
-    
-    deinit {
-        print("deinit YearlyLogsViewModel")
-    }
+  init() {
+    print("init YearlyLogsViewModel")
+  }
+  
+  deinit {
+    print("deinit YearlyLogsViewModel")
+  }
 }
 
 extension YearlyLogsViewModel {
-    
+  
 }
